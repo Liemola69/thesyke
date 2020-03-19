@@ -8,43 +8,60 @@ a {
     text-decoration: none;
 }
 
-/* This class is added on scroll */
-.fixed {
-    position: fixed;
-    top: 0;
-    height: 70px;
-    z-index: 1;
-}
-
 body {
-    color: #fff;
     font-family: 'open-sans-bold', AvenirNext-Medium, sans-serif;
     font-size: 18px;
     text-align: center;
 }
 
-/* Navigation Settings */
-nav {
+#ylaValikko{
+    display: none;
+}
+
+#hampurilaisMenu{
+    color: black;
+    font-size: 24px;
+    width: fit-content;
+    padding: 10px 15px;
     position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
+
+#hampurilaisValikko{
+    height: 0px;
+    width: 100%;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Navigation Settings */
+#ylaNav{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    z-index: 2;
+}
+
+#alaNav {
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: 70px;
     background: #fff;
+    z-index: 2;
 }
 
-nav li {
+#alaNav li {
     display: inline-block;
     padding: 24px 10px;
-    color: black;
 }
 
-nav li a {
+#alaNav li a {
     color: #757575;
     text-transform: uppercase;
-}
-
-section {
-    height: 100vh;
 }
 
 /* Screens Settings */
@@ -52,12 +69,13 @@ section {
     background: #43b29d;
 }
 
-#paasivu p {
-    padding-top: 200px;
+#detailSivu {
+    background: #efc94d;
 }
 
-#detail_sivu {
-    background: #efc94d;
+.swiper-container{
+    height: 100vh;
+    width: 100vw;
 }
 
 @media only screen and (max-width: 520px) {
