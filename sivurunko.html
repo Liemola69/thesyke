@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
     <title>Teh SyKe</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
     <link rel="stylesheet" href="styles/styles_test.css">
 </head>
 <body>
+
     <nav id="ylaNav">
         <div id="hampurilaisMenu">&#9776;</div>
         <div id="hampurilaisValikko">
@@ -21,23 +22,57 @@
             </ul>
         </div>
     </nav>
-    
-    <nav id="alaNav">
-        <ul>
-            <li>Päivä</li>
-            <li>Viikko</li>
-            <li>Kuukausi</li>
-        </ul>
-    </nav>
 
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div id="paasivu" class="swiper-slide"></div>
-            <div id="detailSivu" class="swiper-slide"></div>
+    <!--sisäkkäin, päällimmäinen hoitaa sivut, alempi taso pää/detail-->
+    <div class="swiper-pageContainer">
+        <div class="swiper-wrapper" id="sivuSwipeWrapper">
+                    
+            <!--päiväsivu-->
+            <div id="paivaSivu" class="swiper-slide">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div id="paivaPaasivu" class="swiper-slide">
+                        </div>
+                        <div id="paivaDetailSivu" class="swiper-slide">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--viikkosivu-->
+            <div id="viikkoSivu" class="swiper-slide">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div id="viikkoPaasivu" class="swiper-slide">
+                        </div>
+                        <div id="viikkoDetailSivu" class="swiper-slide">                                </div>
+                        </div>
+                    </div>
+            </div>
+
+            <!--kuukausisivu-->
+            <div id="kuukausiSivu" class="swiper-slide">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div id="kuukausiPaasivu" class="swiper-slide">
+                        </div>
+                        <div id="kuukausiDetailSivu" class="swiper-slide">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="swiper-scrollbar"></div>
     </div>
 
+    <footer id="alaNav">
+        <ul>
+            <li id="paivaNakyma" class="activeNav">Päivä</li>
+            <li id="viikkoNakyma" class="">Viikko</li>
+            <li id="kuukausiNakyma" class="">Kuukausi</li>
+        </ul>
+    </footer>
+    
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
     <script src="js/sivurunko.js"></script>
 </body>
