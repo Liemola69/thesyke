@@ -4,14 +4,15 @@
     margin: 0; padding: 0;
 }
 
-a {
-    text-decoration: none;
-}
-
 body {
     font-family: 'open-sans-bold', AvenirNext-Medium, sans-serif;
     font-size: 18px;
     text-align: center;
+    overflow: hidden;
+}
+
+main{
+    height: 500px;
 }
 
 #ylaValikko{
@@ -39,7 +40,7 @@ body {
 #ylaNav{
     position: fixed;
     top: 0;
-    width: 100%;
+    width: 100vw;
     height: 50px;
     background: #fff;
     z-index: 2;
@@ -48,7 +49,7 @@ body {
 #alaNav {
     position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 100vw;
     height: 70px;
     background: #fff;
     z-index: 2;
@@ -57,20 +58,40 @@ body {
 #alaNav li {
     display: inline-block;
     padding: 24px 10px;
+    cursor: pointer;
 }
 
-#alaNav li a {
-    color: #757575;
-    text-transform: uppercase;
+#alaNav li:hover{
+    background-color: tomato;
+}
+
+.activeNav{
+    background-color: tomato;
 }
 
 /* Screens Settings */
-#paasivu {
+#paivaPaasivu {
     background: #43b29d;
 }
 
-#detailSivu {
-    background: #efc94d;
+#paivaDetailSivu {
+    background: lightgreen;
+}
+
+#viikkoPaasivu {
+    background: blue;
+}
+
+#viikkoDetailSivu {
+    background: lightblue;
+}
+
+#kuukausiPaasivu {
+    background: red;
+}
+
+#kuukausiDetailSivu {
+    background: lightpink;
 }
 
 .swiper-container{
@@ -78,7 +99,12 @@ body {
     width: 100vw;
 }
 
-@media only screen and (max-width: 520px) {
+.swiper-pageContainer{
+    height: 100vh;
+    width: 100vw;
+}
+
+/*@media only screen and (max-width: 520px) {
 
     nav li {
         padding: 24px 4px;
@@ -88,4 +114,4 @@ body {
         font-size: 14px;
     }
 
-}
+}*/
