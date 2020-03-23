@@ -11,12 +11,16 @@ body {
     overflow: hidden;
 }
 
-main{
-    height: 500px;
-}
-
 #ylaValikko{
     display: none;
+}
+
+#sivunNimi{
+    width: 100%;
+}
+
+#ylaValikko li{
+    padding: 10px 0;
 }
 
 #hampurilaisMenu{
@@ -32,6 +36,7 @@ main{
 #hampurilaisValikko{
     height: 0px;
     width: 100%;
+    position: absolute;
     background-color: white;
     cursor: pointer;
 }
@@ -40,6 +45,8 @@ main{
 #ylaNav{
     position: fixed;
     top: 0;
+    display: flex;
+    align-items: center;
     width: 100vw;
     height: 50px;
     background: #fff;
@@ -48,25 +55,12 @@ main{
 
 #alaNav {
     position: fixed;
+    display: flex;
     bottom: 0;
     width: 100vw;
     height: 70px;
     background: #fff;
     z-index: 2;
-}
-
-#alaNav li {
-    display: inline-block;
-    padding: 24px 10px;
-    cursor: pointer;
-}
-
-#alaNav li:hover{
-    background-color: tomato;
-}
-
-.activeNav{
-    background-color: tomato;
 }
 
 /* Screens Settings */
@@ -102,6 +96,27 @@ main{
 .swiper-pageContainer{
     height: 100vh;
     width: 100vw;
+}
+
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{
+    margin: 0px;
+    width: 34%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.swiper-pagination-bullet{
+    background: none;
+    background-color: white;
+    opacity: 1;
+    border-radius: 0px;
+    width: 100px;
+    height: 70px;
+}
+
+.swiper-pagination-bullet-active{
+    background-color: red;
 }
 
 /*@media only screen and (max-width: 520px) {

@@ -2,7 +2,7 @@ let hampurilaisMenu = document.getElementById("hampurilaisMenu");
 let hampurilaisValikko = document.getElementById("hampurilaisValikko");
 let ylaValikko = document.querySelectorAll("ul")[0];
 let ylaNav = document.getElementById("ylaNav");
-let raportitValikkoLinkki = document.getElementById("raportitValikkoLinkki");
+let etusivuValikkoLinkki = document.getElementById("etusivuValikkoLinkki");
 let sivunNimi = document.getElementById("sivunNimi");
 let auki = false;
 
@@ -46,8 +46,8 @@ hampurilaisMenu.addEventListener('click', function(evt){
     
 });
 
-raportitValikkoLinkki.addEventListener('click', function(evt){
-    window.location.href = "raportit.html";
+etusivuValikkoLinkki.addEventListener('click', function(evt){
+    window.location.href = "sivurunko.html";
 });
 
 // Estä sivuswipe, jos detail-sivulla
@@ -80,7 +80,7 @@ nappula[2].addEventListener('click', function(evt){
 });
 
 // Päivitä yläNavin teksti näkymän mukaan
-mySwiper2.on('slideChange', function(evt){
+/*mySwiper2.on('slideChange', function(evt){
     if(mySwiper2.activeIndex == 1){
         sivunNimi.innerText = "Viikkonäkymä";
     } else if(mySwiper2.activeIndex == 2){
@@ -88,4 +88,4 @@ mySwiper2.on('slideChange', function(evt){
     } else{
         sivunNimi.innerText = "Päivänäkymä";
     }
-});
+});*/
