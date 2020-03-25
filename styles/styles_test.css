@@ -1,0 +1,184 @@
+/* Testiversio tyylittelyistä */
+
+:root{
+    --paaTaustavari: dimgrey;
+    --liikennevaloPunainen: #d83a0a;
+    --liikennevaloKeltainen: #ecd71b;
+    --liikennevaloVihrea: #669e27;
+    --liikennevaloHarmaa: lightgray;
+    --ylaValikkovari: #424242;
+    --alaValikkovari: rgba(96, 124, 138, 0.8);
+    --tehosteVari: rgba(0, 184, 212, 0.7);
+    --fonttiVari: white;
+}
+
+* {
+    margin: 0; padding: 0;
+}
+
+body {
+    font-family: 'Baloo Da 2', cursive;
+    font-size: 18px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.ikoni{
+    font-size:60px;
+    margin-top: 55px;
+    margin-left: 20px;
+}
+
+.ikoniHuutomerkki{
+    font-size:20px;
+    color:black;
+    margin-top: 40px;
+}
+
+.hymio{
+    font-size:150px;
+    margin-top:70px;
+}
+
+.paasivuWrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.detailWrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+#ylaValikko{
+    display: none;
+    background-color: var(--ylaValikkovari);
+    color: var(--fonttiVari);
+}
+
+#sivunNimi{
+    width: 100%;
+    color: var(--tehosteVari);
+    font-size: 1.4em;
+}
+
+#ylaValikko li{
+    padding: 10px 0;
+}
+
+#hampurilaisMenu{
+    color: var(--tehosteVari);
+    font-size: 24px;
+    width: fit-content;
+    padding: 10px 15px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
+
+#hampurilaisValikko{
+    height: 0px;
+    width: 100%;
+    position: absolute;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Navigation Settings */
+#ylaNav{
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    height: 50px;
+    background: var(--ylaValikkovari);
+    z-index: 2;
+}
+
+#alaNav {
+    position: fixed;
+    display: flex;
+    bottom: 0;
+    width: 100vw;
+    z-index: 2;
+}
+
+.box{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: var(--fonttiVari);
+    background-color: var(--tehosteVari);
+    margin-top: 20px;
+}
+
+/* Screens Settings */
+#paivaPaasivu {
+    background: var(--paaTaustavari);
+}
+
+#paivaDetailSivu {
+    background: var(--paaTaustavari);
+}
+
+#viikkoPaasivu {
+    background: var(--paaTaustavari);
+}
+
+#viikkoDetailSivu {
+    background: var(--paaTaustavari);
+}
+
+#kuukausiPaasivu {
+    background: var(--paaTaustavari);
+}
+
+#kuukausiDetailSivu {
+    background: var(--paaTaustavari);
+}
+
+.swiper-container{
+    height: 100vh;
+    width: 100vw;
+}
+
+.swiper-pageContainer{
+    height: 100vh;
+    width: 100vw;
+}
+
+.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{
+    margin: 0px;
+    width: 34%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.swiper-pagination-bullet{
+    background: none;
+    background-color: var(--alaValikkovari);
+    opacity: 1;
+    border-radius: 0px;
+    width: 100px;
+    height: 70px;
+}
+
+.swiper-pagination-bullet-active{
+    background-color: var(--tehosteVari);
+}
+
+/*@media only screen and (max-width: 520px) {
+
+    nav li {
+        padding: 24px 4px;
+    }
+
+    nav li a {
+        font-size: 14px;
+    }
+
+}*/
