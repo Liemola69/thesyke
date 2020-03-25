@@ -24,7 +24,7 @@ let mySwiper2 = new Swiper ('.swiper-pageContainer', {
         el: '.swiper-pagination',
         clickable: 'true',
         renderBullet: function (index, className) {
-            let temp = ["Päivä","Viikko","Kuukausi"];
+            let temp = ["PÄIVÄ","VIIKKO","KUUKAUSI"];
             return '<span class="' + className + '">' + (temp[index]) + '</span>';
         }
     }
@@ -82,10 +82,10 @@ nappula[2].addEventListener('click', function(evt){
 // Päivitä yläNavin teksti näkymän mukaan
 mySwiper2.on('slideChange', function(evt){
     if(mySwiper2.activeIndex == 1){
-        sivunNimi.innerText = "Viikkonäkymä";
+        sivunNimi.innerText = "VIIKKONÄKYMÄ";
     } else if(mySwiper2.activeIndex == 2){
-        sivunNimi.innerText = "Kuukausinäkymä";
+        sivunNimi.innerText = "KUUKAUSINÄKYMÄ";
     } else{
-        sivunNimi.innerText = "Päivänäkymä";
+        sivunNimi.innerText = "PÄIVÄNÄKYMÄ";
     }
 });

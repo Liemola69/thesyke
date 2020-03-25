@@ -1,22 +1,65 @@
 /* Testiversio tyylittelyistä */
 
+:root{
+    --paaTaustavari: dimgrey;
+    --liikennevaloPunainen: #d83a0a;
+    --liikennevaloKeltainen: #ecd71b;
+    --liikennevaloVihrea: #669e27;
+    --liikennevaloHarmaa: lightgray;
+    --ylaValikkovari: #424242;
+    --alaValikkovari: rgba(96, 124, 138, 0.8);
+    --tehosteVari: rgba(0, 184, 212, 0.7);
+    --fonttiVari: white;
+}
+
 * {
     margin: 0; padding: 0;
 }
 
 body {
-    font-family: 'open-sans-bold', AvenirNext-Medium, sans-serif;
+    font-family: 'Baloo Da 2', cursive;
     font-size: 18px;
     text-align: center;
     overflow: hidden;
 }
 
+.ikoni{
+    font-size:60px;
+    margin-top: 55px;
+    margin-left: 20px;
+}
+
+.ikoniHuutomerkki{
+    font-size:20px;
+    color:black;
+    margin-top: 40px;
+}
+
+.hymio{
+    font-size:150px;
+    margin-top:70px;
+}
+
+.paasivuWrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.detailWrapper{
+    display: flex;
+    flex-direction: column;
+}
+
 #ylaValikko{
     display: none;
+    background-color: var(--ylaValikkovari);
+    color: var(--fonttiVari);
 }
 
 #sivunNimi{
     width: 100%;
+    color: var(--tehosteVari);
+    font-size: 1.4em;
 }
 
 #ylaValikko li{
@@ -24,7 +67,7 @@ body {
 }
 
 #hampurilaisMenu{
-    color: black;
+    color: var(--tehosteVari);
     font-size: 24px;
     width: fit-content;
     padding: 10px 15px;
@@ -49,7 +92,7 @@ body {
     align-items: center;
     width: 100vw;
     height: 50px;
-    background: #fff;
+    background: var(--ylaValikkovari);
     z-index: 2;
 }
 
@@ -58,34 +101,41 @@ body {
     display: flex;
     bottom: 0;
     width: 100vw;
-    height: 70px;
-    background: #fff;
     z-index: 2;
+}
+
+.box{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: var(--fonttiVari);
+    background-color: var(--tehosteVari);
+    margin-top: 20px;
 }
 
 /* Screens Settings */
 #paivaPaasivu {
-    background: #43b29d;
+    background: var(--paaTaustavari);
 }
 
 #paivaDetailSivu {
-    background: lightgreen;
+    background: var(--paaTaustavari);
 }
 
 #viikkoPaasivu {
-    background: blue;
+    background: var(--paaTaustavari);
 }
 
 #viikkoDetailSivu {
-    background: lightblue;
+    background: var(--paaTaustavari);
 }
 
 #kuukausiPaasivu {
-    background: red;
+    background: var(--paaTaustavari);
 }
 
 #kuukausiDetailSivu {
-    background: lightpink;
+    background: var(--paaTaustavari);
 }
 
 .swiper-container{
@@ -101,14 +151,16 @@ body {
 .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{
     margin: 0px;
     width: 34%;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
 }
 
 .swiper-pagination-bullet{
     background: none;
-    background-color: white;
+    background-color: var(--alaValikkovari);
     opacity: 1;
     border-radius: 0px;
     width: 100px;
@@ -116,7 +168,7 @@ body {
 }
 
 .swiper-pagination-bullet-active{
-    background-color: red;
+    background-color: var(--tehosteVari);
 }
 
 /*@media only screen and (max-width: 520px) {
