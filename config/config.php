@@ -8,9 +8,9 @@
 <body>
 
     
-<h1>1. Tietokantayhteyden avaaminen</h1>
+<h1>1. Tietokantatestailua</h1>
 <?php
-$user = 'minervar';		//Käytäjänimi 
+$user = 'minervar';		// oma Käytäjänimi 
 $pass = 'piF3shua';		//Salasana, ei OMAn vaan phpAdminin
 $host = 'mysql.metropolia.fi';  //Tietokantapalvelin
 $dbname = 'minervar';		//Tietokanta
