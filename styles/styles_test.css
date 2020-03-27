@@ -23,31 +23,19 @@ body {
     overflow: hidden;
 }
 
-.ikoni{
-    font-size:60px;
-    margin-top: 55px;
-    margin-left: 20px;
-}
-
-.ikoniHuutomerkki{
-    font-size:20px;
-    color:black;
-    margin-top: 40px;
-}
-
-.hymio{
-    font-size:150px;
-    margin-top:70px;
-}
-
 .paasivuWrapper{
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    padding: 10px 10px 0 10px;
+    box-sizing: border-box;
+    background-color: var(--paaTaustavari);
 }
 
 .detailWrapper{
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 0 5% 0 5%;
+    box-sizing: border-box;
+    background-color: var(--paaTaustavari);
 }
 
 #ylaValikko{
@@ -82,12 +70,11 @@ body {
     position: absolute;
     background-color: white;
     cursor: pointer;
+    z-index: 2;
 }
 
 /* Navigation Settings */
 #ylaNav{
-    position: fixed;
-    top: 0;
     display: flex;
     align-items: center;
     width: 100vw;
@@ -110,43 +97,59 @@ body {
     justify-content: space-evenly;
     color: var(--fonttiVari);
     background-color: var(--tehosteVari);
-    margin-top: 20px;
+    margin: 10px;
 }
 
-/* Screens Settings */
-#paivaPaasivu {
-    background: var(--paaTaustavari);
+.clear{
+    padding: 10px;
 }
 
-#paivaDetailSivu {
-    background: var(--paaTaustavari);
+.fa-arrow-alt-circle-down{
+    font-size: 4em;
+    color: var(--liikennevaloPunainen);
 }
 
-#viikkoPaasivu {
-    background: var(--paaTaustavari);
+.fa-arrow-alt-circle-up{
+    font-size: 4em;
+    color: var(--liikennevaloVihrea);
 }
 
-#viikkoDetailSivu {
-    background: var(--paaTaustavari);
+.ikoni{
+    font-size: 3em;
+
 }
 
-#kuukausiPaasivu {
-    background: var(--paaTaustavari);
+.ikoniHuutomerkki{
+    font-size:20px;
+    color:black;
+    margin-top: 40px;
 }
 
-#kuukausiDetailSivu {
-    background: var(--paaTaustavari);
+.hymio{
+    font-size: 8em;
+    padding: 10px;
 }
 
+.fa-chevron-down{
+    font-size: 2.8em;
+    color: #00b8d4e6;
+}
+
+.fa-chevron-up{
+    font-size: 2.8em;
+    color: #00b8d4e6;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    margin: 10px;
+}
+/*
 .swiper-container{
     height: 100vh;
-    width: 100vw;
 }
 
 .swiper-pageContainer{
     height: 100vh;
-    width: 100vw;
-}
+}*/
 
 .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{
     margin: 0px;
@@ -171,14 +174,6 @@ body {
     background-color: var(--tehosteVari);
 }
 
-/*@media only screen and (max-width: 520px) {
+@media only screen and (max-width: 320px) {
 
-    nav li {
-        padding: 24px 4px;
-    }
-
-    nav li a {
-        font-size: 14px;
-    }
-
-}*/
+}
