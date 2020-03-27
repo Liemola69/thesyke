@@ -6,14 +6,18 @@ let raportitValikkoLinkki = document.getElementById("raportitValikkoLinkki");
 let sivunNimi = document.getElementById("sivunNimi");
 let auki = false;
 
+let alaNav = document.getElementById("alaNav");
+let swiperContainer = document.querySelectorAll(".swiper-container");
+let swiperPageContainer = document.querySelector(".swiper-pageContainer");
+let paasivuWrapper = document.querySelectorAll(".paasivuWrapper");
+let detailWrapper = document.querySelectorAll(".detailWrapper");
+
 // Luo olion, jolla seurataan vertikaalista swippausta
 let mySwiper = new Swiper ('.swiper-container', {
+    init: false,
     direction: 'vertical',
     loop: false,
     mousewheel: true,
-    scrollbar: {
-      el: '.swiper-scrollbar',
-    }
 });
 
 // Luo olion, jolla seurataan horisontaalista swippausta
@@ -27,6 +31,55 @@ let mySwiper2 = new Swiper ('.swiper-pageContainer', {
             let temp = ["PÄIVÄ","VIIKKO","KUUKAUSI"];
             return '<span class="' + className + '">' + (temp[index]) + '</span>';
         }
+    }
+});
+
+//**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
+swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+for(let i = 0; i < 3; i++){
+    swiperContainer[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+}
+        
+for(let i = 0; i < 3; i++){
+    paasivuWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+}
+            
+for(let i = 0; i < 3; i++){
+    detailWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+}
+/** */
+
+// Käynnistää vertikaaliset swiperit korjatuilla korkeusarvoilla
+for(let i = 0; i < 3; i++){
+    mySwiper[i].init();
+}
+
+// Aseta pääsivun viimeinen grid alaNavin kokoiseksi
+for(let i = 0; i < 3; i++){
+    paasivuWrapper[i].style.gridTemplateRows = "auto 15% auto 10% " + alaNav.clientHeight + "px";
+    detailWrapper[i].style.gridTemplateRows = "auto auto auto auto auto " + alaNav.clientHeight + "px";
+}
+
+window.addEventListener("resize", function(evt){
+    //**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
+    swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    for(let i = 0; i < 3; i++){
+        swiperContainer[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    }
+
+    for(let i = 0; i < 3; i++){
+        paasivuWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    }
+
+    for(let i = 0; i < 3; i++){
+        detailWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    }
+    /** */
+
+    // Korjaa pääsivun viimeinen grid alaNavin kokoiseksi
+    for(let i = 0; i < 3; i++){
+        paasivuWrapper[i].style.gridTemplateRows = "auto 15% auto 10% " + alaNav.clientHeight + "px";
+        detailWrapper[i].style.gridTemplateRows = "60px auto auto auto auto " + alaNav.clientHeight + "px";
     }
 });
 
