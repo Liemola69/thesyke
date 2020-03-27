@@ -1,12 +1,12 @@
 /* Testiversio tyylittelyistä */
 
 :root{
-    --paaTaustavari: dimgrey;
+    --paaTaustavari: rgb(105, 105, 105);
     --liikennevaloPunainen: #d83a0a;
     --liikennevaloKeltainen: #ecd71b;
     --liikennevaloVihrea: #669e27;
     --liikennevaloHarmaa: lightgray;
-    --ylaValikkovari: #424242;
+    --ylaValikkovari: rgb(66, 66, 66);
     --alaValikkovari: rgba(96, 124, 138, 0.8);
     --tehosteVari: rgba(0, 184, 212, 0.7);
     --fonttiVari: white;
@@ -17,7 +17,7 @@
 }
 
 body {
-    font-family: 'Baloo Da 2', cursive;
+    font-family: 'Baloo Da 2', cursive, sans-serif;
     font-size: 18px;
     text-align: center;
     overflow: hidden;
