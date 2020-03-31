@@ -14,7 +14,7 @@
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 
             // Tarkista ettei sposti ole jo olemassa
-            $sql = "SELECT `userName` FROM `ts_user` WHERE `email`=" . "'" . $email . "';";
+            $sql = "SELECT `email` FROM `ts_user` WHERE `email`=" . "'" . $email . "';";
             $kysely = $DBH->prepare($sql);
             $kysely->execute(); 
             $emailKannassa = $kysely->fetch(); //boolean false=ei löytynyt, true=löytyi

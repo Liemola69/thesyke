@@ -21,10 +21,10 @@
         $vastaus = $kysely -> fetch();
 
         // Jos löytyi ja tunnus täsmää, sekä isot/pienet kirjaimet täsmää
-        if($vastaus != NULL && ($data['userName'] == $vastaus->userName)){
+        if($vastaus != NULL && ($data['userName'] == $vastaus->email)){
             
             // Pura salasanan suojaus
-            if(password_verify($_POST['givenPassword'], $vastaus->userPassword)){
+            if(password_verify($_POST['givenPassword'], $vastaus->password)){
                 $_SESSION['loggedIn'] = true;
                 header("Location: sivurunko.php");
             } else{
