@@ -13,7 +13,7 @@
         $data['userName'] = $_POST['givenName'];
 
         // Tarkista onko tunnuksia tietokannassa käyttäjätunnuksen perusteella
-        $sql = "SELECT * FROM `ts_user` WHERE `userName` = :userName;";
+        $sql = "SELECT * FROM `ts_user` WHERE `email` = :userName;";
 
         $kysely = $DBH->prepare($sql);
         $kysely -> execute($data);

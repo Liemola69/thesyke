@@ -14,7 +14,7 @@
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
 
             // Tarkista ettei sposti ole jo olemassa
-            $sql = "SELECT `userName` FROM `ts_user` WHERE `userName`=" . "'" . $email . "';";
+            $sql = "SELECT `userName` FROM `ts_user` WHERE `email`=" . "'" . $email . "';";
             $kysely = $DBH->prepare($sql);
             $kysely->execute(); 
             $emailKannassa = $kysely->fetch(); //boolean false=ei löytynyt, true=löytyi
@@ -30,7 +30,7 @@
 
                     try{
                         // SQL-lause $data-taulukon tiedoille :key -> value
-                        $sql = "INSERT INTO `ts_user` (`user_id`, `userName`, `userPassword`) 
+                        $sql = "INSERT INTO `ts_user` (`user_ID`, `email`, `password`) 
                         VALUES (NULL, :userName, :userPassword)";
                         
                         $kysely = $DBH->prepare($sql);
