@@ -6,9 +6,22 @@
     <title>Teh SyKe</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/styles_test.css">
+    <link rel="stylesheet" href="../styles/styles_test.css">
 </head>
 <body>
+    <?php
+        include_once("../config/https.php");
+        include_once("../config/config.php");
+
+        // Estä uloskirjautumisen jälkeen tälle sivulle pääsy
+        if(!isset($_SESSION['loggedIn'])){
+            header("Location: ../teaser.php");
+        }
+
+        if(isset($_GET['logOut'])){
+            include("logOut.php");
+        }
+    ?>
 
     <nav id="ylaNav">
         <div id="sivunNimi">PÄIVÄNÄKYMÄ</div>
@@ -21,7 +34,7 @@
                 <li>Apua</li>
                 <li>Käyttöehdot</li>
                 <li></li>
-                <li>Kirjaudu ulos</li>
+                <li onclick='window.location.href="sivurunko.php?logOut=true"'>Kirjaudu ulos </li>
             </ul>
         </div>
     </nav>
@@ -331,6 +344,6 @@
     
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-    <script src="js/sivurunko.js"></script>
+    <script src="../js/sivurunko.js"></script>
 </body>
 </html>
