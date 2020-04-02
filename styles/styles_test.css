@@ -36,13 +36,35 @@ body {
     height: 100%;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 80% 10% 10%;
+    grid-template-rows: 1% 20% 54% 10% 10% 5%;
+}
+
+.teaserGridItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.teaserGridItemButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.teaserSmallImage {
+    max-width: 80%;
+    max-height: 80%;
+    margin: 10%;
+    align-self: flex-end;
+    object-fit: contain;
 }
 
 .teaserImage {
-    transform: translate(0, 50%); /* PURKKAA, jotta kuva keskittyy pystysuunnassa, hajoaa kun leveys suurempi kuin korkeus */
-    max-width: 80%;
-    max-height: 80%;
+    max-width: 90%;
+    max-height: 90%;
+    align-self: center;
+    object-fit: contain;
 }
 
 .buttonDiv {
@@ -51,11 +73,12 @@ body {
     display: inline-block;
     text-align: center;
     text-decoration: none;
-    width: 50%;
-    height: 70%;
+    width: 70%;
+    height: 80%;
     border-radius: 5px;
     box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-    transition: 0,5s; 
+    transition: 0,5s;
+    font-size: x-large;
 }
 
 .buttonDiv:hover {
@@ -73,7 +96,6 @@ body {
     height: 70%;
     border-radius: 5px;
     box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-    transition: 0,5s; 
 }
 
 .buttonGeneric:hover {
@@ -85,20 +107,32 @@ body {
     background: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;
+    display: flex;
     position: absolute;
     top: 0;
-    display: none;
+    visibility: hidden;
     justify-content: center;
     align-items: center;
 }
 
 .loginPopupContent {
-    height: 30%;
+    height: 40%;
     width: 80%;
     background: var(--paaTaustavari);
     padding: 20px;
     border-radius: 5px;
     position: relative;
+    top: -50%;
+}
+
+.loginPopupContentAnimation {
+    animation: dropPopup 1.5s ease forwards;
+}
+
+@keyframes dropPopup {
+    0% {opacity: 1}
+    70% {transform: translateY(130%)}
+    100% {transform: translateY(110%); opacity: 1;}
 }
 
 .registerPopup {
@@ -106,19 +140,42 @@ body {
     width: 100%;
     height: 100%;
     position: absolute;
+    display: flex;
     top: 0;
-    display: none;
+    visibility: hidden;
     justify-content: center;
     align-items: center;
 }
 
 .registerPopupContent {
-    height: 30%;
+    height: 45%;
     width: 80%;
     background: var(--paaTaustavari);
     padding: 20px;
     border-radius: 5px;
     position: relative;
+    top: -50%;
+}
+
+.registerPopupContentAnimation {
+    animation: dropRegister 1.5s ease forwards;
+}
+
+@keyframes dropRegister {
+    0% {opacity: 1}
+    70% {transform: translateY(130%)}
+    100% {transform: translateY(110%); opacity: 1;}
+}
+
+.fa-user {
+    font-size: 3em;
+    text-align: center;
+}
+
+.fa-times-circle {
+    font-size: 1.75em;
+    text-align: right;
+    vertical-align: top;
 }
 
 /*tompan jutut*/
