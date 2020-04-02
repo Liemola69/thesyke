@@ -1,12 +1,12 @@
 <form method="post">
-    Email<input type="text" name="givenEmail">
+    <input class="textboxGeneric" type="text" placeholder="Sähköpostiosoite" name="givenEmail">
     <br>
-    Salasana<input type="password" name="givenPassword">
+    <input class="textboxGeneric" type="password" placeholder="Salasana" name="givenPassword">
     <br>
-    Salasana uudelleen<input type="password">
+    <input class="textboxGeneric" type="password" placeholder="Salasana uudestaan">
     <br>
     
-    <input type="submit" name="createAccountSubmit" value="Luo tunnus">
-    <input type="reset" value="Tyhjennä">
+    <input class="buttonGeneric" type="submit" name="createAccountSubmit" value="Luo tunnus">
+    <input class="buttonGeneric" type="reset" value="Tyhjennä">
     </fieldset>
 </form>

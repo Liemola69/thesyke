@@ -1,8 +1,8 @@
 <form method="post">
-    Käyttäjätunnus<input type="text" name="givenName">
+    <input class="textboxGeneric"  type="text" placeholder="Sähköpostiosoite" name="givenName">
     <br>
-    Salasana<input type="password" name="givenPassword">
+    <input class="textboxGeneric"  type="password" placeholder="Salasana" name="givenPassword">
     <br>
-    <input type="submit" value="Kirjaudu sisään" name="logInSubmit">
-    <input type="reset" value="Tyhjennä">
+    <input class="buttonGeneric" type="submit" value="Kirjaudu sisään" name="logInSubmit">
+    <input class="buttonGeneric" type="reset" value="Tyhjennä">
 </form>
