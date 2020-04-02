@@ -15,24 +15,35 @@
     ?>
     
 <div class="teaserDiv">
+
+    <div class="teaserGridItem">
+        </div>
+
+    <div class="teaserGridItem">
+        <img class="teaserSmallImage" src="images/sleep-zzz.png" alt="ZZZ">
+    </div>
     
     <div class="teaserGridItem">
         <img class="teaserImage" src="images/unicorn.png" alt="UNICORN!">
     </div>
     
-    <div class="teaserGridItem">
+    <div class="teaserGridItemButton">
         <a href="#" class="buttonDiv" id="loginButton">KIRJAUDU SISÄÄN</a>
     </div>
     
-    <div class="teaserGridItem">
+    <div class="teaserGridItemButton">
         <a href="#" class="buttonDiv" id="registerButton">REKISTERÖIDY</a>
+    </div>
+
+    <div class="teaserGridItem">
     </div>
 
 </div>
 
 <div class="loginPopup">
-    <div class="loginPopupContent">
+    <div class="loginPopupContent loginPopupContentAnimation">
         <i class="far fa-user"></i>
+        <i class="far fa-times-circle" id="loginClose"></i>
         <?php
         include("forms/formLogIn.php");
 
@@ -60,9 +71,25 @@
                     header("Location: php/sivurunko.php");
                 } else{
                     echo("Väärä salasana!");
+                    ?>
+                    <script>
+                    document.querySelector(".loginPopup").style.visibility = "visible";
+                    document.querySelector(".loginPopupContent").style.top = "5%";
+                
+                    </script>
+                    <?php
                 }
             } else{
-                echo("Väärä tunnus! Varmista isot ja pienet kirjaimet");
+                echo("Väärä tunnus!");
+                echo"<br />";
+                echo("Varmista kirjoitusasu.");
+                ?>
+                <script>
+                document.querySelector(".loginPopup").style.visibility = "visible";
+                document.querySelector(".loginPopupContent").style.top = "5%";
+         
+                </script>
+                <?php
             }
         }
         ?>
@@ -71,6 +98,8 @@
 
 <div class="registerPopup">
     <div class="registerPopupContent">
+    <i class="far fa-user"></i>
+    <i class="far fa-times-circle" id="registerClose"></i>
     <?php
 
     include("forms/formCreateAccount.php");
@@ -112,26 +141,74 @@
                     }
                 } else{
                     echo("Surkee salasana, keksi pidempi");
+                    ?>
+                    <script>
+                      
+                        document.querySelector(".registerPopup").style.visibility = "visible";
+                        document.querySelector(".registerPopupContent").style.top = "5%";
+                    </script>
+                    <?php
                 }
             } else{
                 echo("Sähköposti jo käytössä, keksi uusi");
+                ?>
+                <script>
+           
+                    document.querySelector(".registerPopup").style.visibility = "visible";
+                    document.querySelector(".registerPopupContent").style.top = "5%";
+         
+                </script>
+                <?php
             }
         } else{
             echo("Paska sposti, yritä edes");
+            ?>
+            <script>
+
+                document.querySelector(".registerPopup").style.visibility = "visible";
+                document.querySelector(".registerPopupContent").style.top = "5%";
+               
+                
+            </script>
+            <?php
         }
     }
 ?>
 
     <script>
+        
+        document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", false);
+        document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
+
         document.getElementById("loginButton").addEventListener("click", function(){
-            document.querySelector(".loginPopup").style.display = "flex";
+            document.querySelector(".loginPopup").style.visibility = "visible";
+            document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", true);
+        })
+
+        document.getElementById("loginClose").addEventListener("click", function(){
+            document.querySelector(".loginPopup").style.visibility = "hidden";
+
         })
 
         document.getElementById("registerButton").addEventListener("click", function(){
-            document.querySelector(".registerPopup").style.display = "flex";
+            document.querySelector(".registerPopup").style.visibility = "visible";
+            document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", true);
         })
 
+        document.getElementById("registerClose").addEventListener("click", function(){
+            document.querySelector(".registerPopup").style.visibility = "hidden";
+
+        })
+
+
+
+
+
+
+
     </script>
+
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 </body>
 </html>
