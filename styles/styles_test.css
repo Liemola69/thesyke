@@ -77,7 +77,6 @@ body {
     height: 80%;
     border-radius: 5px;
     box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-    transition: 0,5s;
     font-size: x-large;
 }
 
@@ -122,17 +121,44 @@ body {
     padding: 20px;
     border-radius: 5px;
     position: relative;
-    top: -50%;
+    top: -100%;
 }
 
 .loginPopupContentAnimation {
-    animation: dropPopup 1.5s ease forwards;
+    animation: dropPopup 1.0s ease forwards;
+}
+
+.loginPopupContentAnimation2 {
+    animation: dropPopup2 0.5s ease forwards;
 }
 
 @keyframes dropPopup {
+    0% {opacity: 0.4}
+    70% {transform: translateY(220%)}
+    100% {transform: translateY(210%); opacity: 1;}
+}
+
+@keyframes dropPopup2 {
     0% {opacity: 1}
-    70% {transform: translateY(130%)}
-    100% {transform: translateY(110%); opacity: 1;}
+    10% {transform: translateY(215%)}
+    15% {transform: translateY(205%)}
+    20% {transform: translateY(215%)}
+    25% {transform: translateY(205%)}
+    30% {transform: translateY(215%)}
+    35% {transform: translateY(205%)}
+    40% {transform: translateY(215%)}
+    45% {transform: translateY(205%)}
+    50% {transform: translateY(215%)}
+    55% {transform: translateY(205%)}
+    60% {transform: translateY(215%)}
+    65% {transform: translateY(205%)}
+    70% {transform: translateY(215%)}
+    75% {transform: translateY(205%)}
+    80% {transform: translateY(215%)}
+    85% {transform: translateY(205%)}
+    90% {transform: translateY(215%)}
+    95% {transform: translateY(205%)}
+    100% {transform: translateY(210%)}
 }
 
 .registerPopup {
@@ -154,17 +180,44 @@ body {
     padding: 20px;
     border-radius: 5px;
     position: relative;
-    top: -50%;
+    top: -100%;
 }
 
 .registerPopupContentAnimation {
-    animation: dropRegister 1.5s ease forwards;
+    animation: dropRegister 1.0s ease forwards;
+}
+
+.registerPopupContentAnimation2 {
+    animation: dropRegister2 0.5s ease forwards;
 }
 
 @keyframes dropRegister {
+    0% {opacity: 0.4}
+    70% {transform: translateY(200%)}
+    100% {transform: translateY(190%); opacity: 1;}
+}
+
+@keyframes dropRegister2 {
     0% {opacity: 1}
-    70% {transform: translateY(130%)}
-    100% {transform: translateY(110%); opacity: 1;}
+    10% {transform: translateY(195%)}
+    15% {transform: translateY(185%)}
+    20% {transform: translateY(195%)}
+    25% {transform: translateY(185%)}
+    30% {transform: translateY(195%)}
+    35% {transform: translateY(185%)}
+    40% {transform: translateY(195%)}
+    45% {transform: translateY(185%)}
+    50% {transform: translateY(195%)}
+    55% {transform: translateY(185%)}
+    60% {transform: translateY(195%)}
+    65% {transform: translateY(185%)}
+    70% {transform: translateY(195%)}
+    75% {transform: translateY(185%)}
+    80% {transform: translateY(195%)}
+    85% {transform: translateY(185%)}
+    90% {transform: translateY(195%)}
+    95% {transform: translateY(185%)}
+    100% {transform: translateY(190%)}
 }
 
 .fa-user {
