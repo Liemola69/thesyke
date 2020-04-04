@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <form method="post">
     <input class="textboxGeneric"  type="text" placeholder="Sähköpostiosoite" name="givenName">
     <br>

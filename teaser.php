@@ -1,3 +1,9 @@
+<?php
+session_start();
+include_once("config/https.php");
+include_once("config/config.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,15 +14,13 @@
     <title>teh Syke</title>
 </head>
 <body>
-
-    <?php
-        include_once("config/https.php");
-        include_once("config/config.php");
-    ?>
     
 <div class="teaserDiv">
 
     <div class="teaserGridItem">
+    <?php
+    print_r($POST);
+    ?> 
         </div>
 
     <div class="teaserGridItem">
@@ -35,7 +39,7 @@
         <a href="#" class="buttonDiv" id="registerButton">REKISTERÖIDY</a>
     </div>
 
-    <div class="teaserGridItem">
+    <div class="teaserGridItem"> 
     </div>
 
 </div>
@@ -56,45 +60,53 @@
     </div>
 </div>
 
-    <script>
+<div class="createUserDetailsPopup">
+    <div class="createUserDetailsPopupContent createUserDetailsPopupContentAnimation">
+        <?php
+            include("php/createUserDetails.php");
+        ?>
+    </div>
+</div>
+
+<div class="createUserParametersPopup">
+    <div class="createUserParametersPopupContent createUserParametersPopupContentAnimation">
+        <?php
+            include("php/createUserParameters.php");
+        ?>
+    </div>
+</div>
+
+<script>
+
+    document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", false);
+    document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
+
+    document.getElementById("loginButton").addEventListener("click", function(){
+        document.querySelector(".loginPopup").style.visibility = "visible";
+        document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", true);
         
+    })
+
+    document.getElementById("loginClose").addEventListener("click", function(){
         document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", false);
+        document.querySelector(".loginPopup").style.visibility = "hidden";
+        document.location = 'php/resetVariables.php';
+
+    })
+
+    document.getElementById("registerButton").addEventListener("click", function(){
+        document.querySelector(".registerPopup").style.visibility = "visible";
+        document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", true);
+    })
+
+    document.getElementById("registerClose").addEventListener("click", function(){
         document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
+        document.querySelector(".registerPopup").style.visibility = "hidden";
+        document.location = 'php/resetVariables.php';
 
-        document.getElementById("loginButton").addEventListener("click", function(){
-            document.querySelector(".loginPopup").style.visibility = "visible";
-            document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", true);
-            
-        })
+})</script>
 
-        document.getElementById("loginClose").addEventListener("click", function(){
-            document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", false);
-            document.querySelector(".loginPopup").style.visibility = "hidden";
-            document.location = 'php/resetVariables.php';
-
-        })
-
-        document.getElementById("registerButton").addEventListener("click", function(){
-            document.querySelector(".registerPopup").style.visibility = "visible";
-            document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", true);
-        })
-
-        document.getElementById("registerClose").addEventListener("click", function(){
-            document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
-            document.querySelector(".registerPopup").style.visibility = "hidden";
-            document.location = 'php/resetVariables.php';
-
-        })
-
-
-
-
-
-
-
-    </script>
-
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 </body>
 </html>

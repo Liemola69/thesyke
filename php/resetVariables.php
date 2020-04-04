@@ -1,4 +1,4 @@
 <?php
-session_unset();
+//session_unset();
 header('Location: ../teaser.php'); 
 ?>
