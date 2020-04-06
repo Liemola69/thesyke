@@ -31,5 +31,22 @@ try {     //Avataan yhteys tietokantaan ($DBH on nyt  yhteysolio, nimi vapaasti 
 
 ?>
 
+<h1>Oman taulun testaus</h1>
+<?php
+$henkiloID=1;
+$kysely3 = $DBH->prepare("SELECT ts_user.user_ID, ts_user.age FROM ts_user WHERE ts_user.user_ID = :haluttuID");
+
+$kysely3->bindParam(':haluttuID', $henkiloID);
+$kysely3->execute();
+$kysely3->setFetchMode(PDO::FETCH_OBJ);
+$ekaTulosOlio = $kysely3->fetch();   
+
+//Tuloksena on nyt vain vain yksi rivi (vain yksi tuote  tID:llä 2)
+
+echo ("<br />Haluttu tID = $henkiloID : " . $ekaTulosOlio->user_ID .", henkilön ikä on  " . $ekaTulosOlio->age);
+?>
+<br>
+
+
 </body>
 </html>
