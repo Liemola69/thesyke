@@ -241,12 +241,53 @@ body {
     background-color: var(--paaTaustavari);
 }
 
+.paasivuViikkoWrapper{
+    display: grid;
+    background-color: var(--paaTaustavari);
+}
+
 .detailWrapper{
     display: grid;
     grid-template-columns: auto auto auto;
     padding: 0 5% 0 5%;
     box-sizing: border-box;
     background-color: var(--paaTaustavari);
+}
+
+#paasivuPaivaNav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+#paasivuViikkoNav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+#viikonpaivaLista{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.viikkoNakymaTietue{
+    display: flex;
+    align-items: center;
+    border: solid 1px;
+    color: white;
+    padding: 0 10px;
+    height: 100%;
+}
+
+.viikkoNakymaTietue:hover{
+    background-color: var(--liikennevaloHarmaa);
 }
 
 #ylaValikko{
@@ -341,27 +382,25 @@ body {
     padding: 10px;
 }
 
-.fa-chevron-down{
+.hymio-viikko{
+    font-size: 2em;
+    padding: 10px;
+}
+
+i[class^="fas fa-chevron"]{
     font-size: 2.8em;
     color: #00b8d4e6;
+}
+
+.fa-chevron-down{
     align-self: end;
 }
 
 .fa-chevron-up{
-    font-size: 2.8em;
-    color: #00b8d4e6;
     grid-column-start: 1;
     grid-column-end: 4;
     margin: 10px;
 }
-/*
-.swiper-container{
-    height: 100vh;
-}
-
-.swiper-pageContainer{
-    height: 100vh;
-}*/
 
 .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{
     margin: 0px;
