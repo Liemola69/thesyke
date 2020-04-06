@@ -16,38 +16,278 @@
     margin: 0; padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: 'Baloo Da 2', cursive, sans-serif;
     font-size: 18px;
     text-align: center;
+    text-decoration: none;
     overflow: hidden;
+    height: 100%;
 }
 
-.ikoni{
-    font-size:60px;
-    margin-top: 55px;
-    margin-left: 20px;
+/* Teaser-sivu */
+
+.teaserDiv {
+    background-color: var(--paaTaustavari);
+    height: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1% 20% 54% 10% 10% 5%;
 }
 
-.ikoniHuutomerkki{
-    font-size:20px;
-    color:black;
-    margin-top: 40px;
-}
-
-.hymio{
-    font-size:150px;
-    margin-top:70px;
-}
-
-.paasivuWrapper{
+.teaserGridItem {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.teaserGridItemButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.teaserSmallImage {
+    max-width: 80%;
+    max-height: 80%;
+    margin: 10%;
+    align-self: flex-end;
+    object-fit: contain;
+}
+
+.teaserImage {
+    max-width: 90%;
+    max-height: 90%;
+    align-self: center;
+    object-fit: contain;
+}
+
+.buttonDiv {
+    background: var(--tehosteVari);
+    color: var(--fonttiVari);
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    width: 70%;
+    height: 80%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
+    font-size: x-large;
+}
+
+.buttonDiv:hover {
+    background: var(--fonttiVari);
+    color: var(--tehosteVari);
+}
+
+.buttonGeneric {
+    background: var(--tehosteVari);
+    color: var(--fonttiVari);
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    width: 50%;
+    height: 70%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
+}
+
+.buttonGeneric:hover {
+    background: var(--fonttiVari);
+    color: var(--tehosteVari);
+}
+
+.loginPopup {
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginPopupContent {
+    height: 40%;
+    width: 80%;
+    background: var(--paaTaustavari);
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    top: -100%;
+}
+
+.loginPopupContentAnimation {
+    animation: dropPopup 1.0s ease forwards;
+}
+
+.loginPopupContentAnimation2 {
+    animation: dropPopup2 0.5s ease forwards;
+}
+
+@keyframes dropPopup {
+    0% {opacity: 0.4}
+    70% {transform: translateY(220%)}
+    100% {transform: translateY(210%); opacity: 1;}
+}
+
+@keyframes dropPopup2 {
+    0% {opacity: 1}
+    10% {transform: translateY(215%)}
+    15% {transform: translateY(205%)}
+    20% {transform: translateY(215%)}
+    25% {transform: translateY(205%)}
+    30% {transform: translateY(215%)}
+    35% {transform: translateY(205%)}
+    40% {transform: translateY(215%)}
+    45% {transform: translateY(205%)}
+    50% {transform: translateY(215%)}
+    55% {transform: translateY(205%)}
+    60% {transform: translateY(215%)}
+    65% {transform: translateY(205%)}
+    70% {transform: translateY(215%)}
+    75% {transform: translateY(205%)}
+    80% {transform: translateY(215%)}
+    85% {transform: translateY(205%)}
+    90% {transform: translateY(215%)}
+    95% {transform: translateY(205%)}
+    100% {transform: translateY(210%)}
+}
+
+.registerPopup {
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    top: 0;
+    visibility: hidden;
+    justify-content: center;
+    align-items: center;
+}
+
+.registerPopupContent {
+    height: 45%;
+    width: 80%;
+    background: var(--paaTaustavari);
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    top: -100%;
+}
+
+.registerPopupContentAnimation {
+    animation: dropRegister 1.0s ease forwards;
+}
+
+.registerPopupContentAnimation2 {
+    animation: dropRegister2 0.5s ease forwards;
+}
+
+@keyframes dropRegister {
+    0% {opacity: 0.4}
+    70% {transform: translateY(200%)}
+    100% {transform: translateY(190%); opacity: 1;}
+}
+
+@keyframes dropRegister2 {
+    0% {opacity: 1}
+    10% {transform: translateY(195%)}
+    15% {transform: translateY(185%)}
+    20% {transform: translateY(195%)}
+    25% {transform: translateY(185%)}
+    30% {transform: translateY(195%)}
+    35% {transform: translateY(185%)}
+    40% {transform: translateY(195%)}
+    45% {transform: translateY(185%)}
+    50% {transform: translateY(195%)}
+    55% {transform: translateY(185%)}
+    60% {transform: translateY(195%)}
+    65% {transform: translateY(185%)}
+    70% {transform: translateY(195%)}
+    75% {transform: translateY(185%)}
+    80% {transform: translateY(195%)}
+    85% {transform: translateY(185%)}
+    90% {transform: translateY(195%)}
+    95% {transform: translateY(185%)}
+    100% {transform: translateY(190%)}
+}
+
+.fa-user {
+    font-size: 3em;
+    text-align: center;
+}
+
+.fa-times-circle {
+    font-size: 1.75em;
+    text-align: right;
+    vertical-align: top;
+}
+
+/*tompan jutut*/
+
+.paasivuWrapper{
+    display: grid;
+    align-items: center;
+    padding: 10px 10px 0 10px;
+    box-sizing: border-box;
+    background-color: var(--paaTaustavari);
+}
+
+.paasivuViikkoWrapper{
+    display: grid;
+    background-color: var(--paaTaustavari);
 }
 
 .detailWrapper{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 0 5% 0 5%;
+    box-sizing: border-box;
+    background-color: var(--paaTaustavari);
+}
+
+#paasivuPaivaNav{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+#paasivuViikkoNav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+#viikonpaivaLista{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.viikkoNakymaTietue{
+    display: flex;
+    align-items: center;
+    border: solid 1px;
+    color: white;
+    padding: 0 10px;
+    height: 100%;
+}
+
+.viikkoNakymaTietue:hover{
+    background-color: var(--liikennevaloHarmaa);
 }
 
 #ylaValikko{
@@ -82,12 +322,11 @@ body {
     position: absolute;
     background-color: white;
     cursor: pointer;
+    z-index: 2;
 }
 
 /* Navigation Settings */
 #ylaNav{
-    position: fixed;
-    top: 0;
     display: flex;
     align-items: center;
     width: 100vw;
@@ -110,42 +349,57 @@ body {
     justify-content: space-evenly;
     color: var(--fonttiVari);
     background-color: var(--tehosteVari);
-    margin-top: 20px;
+    margin: 10px;
 }
 
-/* Screens Settings */
-#paivaPaasivu {
-    background: var(--paaTaustavari);
+.clear{
+    padding: 10px;
 }
 
-#paivaDetailSivu {
-    background: var(--paaTaustavari);
+.fa-arrow-alt-circle-down{
+    font-size: 4em;
+    color: var(--liikennevaloPunainen);
 }
 
-#viikkoPaasivu {
-    background: var(--paaTaustavari);
+.fa-arrow-alt-circle-up{
+    font-size: 4em;
+    color: var(--liikennevaloVihrea);
 }
 
-#viikkoDetailSivu {
-    background: var(--paaTaustavari);
+.ikoni{
+    font-size: 3em;
+
 }
 
-#kuukausiPaasivu {
-    background: var(--paaTaustavari);
+.ikoniHuutomerkki{
+    font-size:20px;
+    color:black;
+    margin-top: 40px;
 }
 
-#kuukausiDetailSivu {
-    background: var(--paaTaustavari);
+.hymio{
+    font-size: 8em;
+    padding: 10px;
 }
 
-.swiper-container{
-    height: 100vh;
-    width: 100vw;
+.hymio-viikko{
+    font-size: 2em;
+    padding: 10px;
 }
 
-.swiper-pageContainer{
-    height: 100vh;
-    width: 100vw;
+i[class^="fas fa-chevron"]{
+    font-size: 2.8em;
+    color: #00b8d4e6;
+}
+
+.fa-chevron-down{
+    align-self: end;
+}
+
+.fa-chevron-up{
+    grid-column-start: 1;
+    grid-column-end: 4;
+    margin: 10px;
 }
 
 .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{
@@ -171,14 +425,8 @@ body {
     background-color: var(--tehosteVari);
 }
 
-/*@media only screen and (max-width: 520px) {
 
-    nav li {
-        padding: 24px 4px;
-    }
 
-    nav li a {
-        font-size: 14px;
-    }
+@media only screen and (max-width: 320px) {
 
-}*/
+}

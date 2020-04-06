@@ -2,18 +2,34 @@ let hampurilaisMenu = document.getElementById("hampurilaisMenu");
 let hampurilaisValikko = document.getElementById("hampurilaisValikko");
 let ylaValikko = document.querySelectorAll("ul")[0];
 let ylaNav = document.getElementById("ylaNav");
+let alaNav = document.getElementById("alaNav");
 let raportitValikkoLinkki = document.getElementById("raportitValikkoLinkki");
 let sivunNimi = document.getElementById("sivunNimi");
 let auki = false;
 
+let prevDayNuoli = document.getElementById("prevDayNuoli");
+let nextDayNuoli = document.getElementById("nextDayNuoli");
+let prevWeekNuoli = document.getElementById("prevWeekNuoli");
+let nextWeekNuoli = document.getElementById("nextWeekNuoli");
+let nuoliAlas = document.querySelectorAll(".fa-chevron-down");
+let nuoliYlos = document.querySelectorAll(".fa-chevron-up");
+
+let swiperContainer = document.querySelectorAll(".swiper-container");
+let swiperPageContainer = document.querySelector(".swiper-pageContainer");
+
+let paasivuWrapper = document.querySelectorAll(".paasivuWrapper");
+let detailWrapper = document.querySelectorAll(".detailWrapper");
+
+let paasivuViikkoWrapper = document.querySelector(".paasivuViikkoWrapper");
+
+let viikonpaivaListaItem = document.getElementById("viikonpaivaLista").getElementsByTagName("li");
+
 // Luo olion, jolla seurataan vertikaalista swippausta
 let mySwiper = new Swiper ('.swiper-container', {
+    init: false,
     direction: 'vertical',
     loop: false,
     mousewheel: true,
-    scrollbar: {
-      el: '.swiper-scrollbar',
-    }
 });
 
 // Luo olion, jolla seurataan horisontaalista swippausta
@@ -28,6 +44,58 @@ let mySwiper2 = new Swiper ('.swiper-pageContainer', {
             return '<span class="' + className + '">' + (temp[index]) + '</span>';
         }
     }
+});
+
+//**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
+swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+for(let i = 0; i < 3; i++){
+    swiperContainer[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+}
+        
+for(let i = 0; i < 2; i++){
+    paasivuWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+}
+            
+for(let i = 0; i < 2; i++){
+    detailWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+}
+
+// Käynnistää vertikaaliset swiperit korjatuilla korkeusarvoilla
+for(let i = 0; i < 3; i++){
+    mySwiper[i].init();
+}
+
+// Aseta pääsivun viimeinen grid alaNavin kokoiseksi
+for(let i = 0; i < 2; i++){
+    paasivuWrapper[i].style.gridTemplateRows = "10% auto 15% auto 10% " + alaNav.clientHeight + "px";
+    detailWrapper[i].style.gridTemplateRows = "auto auto auto auto auto " + alaNav.clientHeight + "px";
+
+    paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
+}
+
+window.addEventListener("resize", function(evt){
+    //**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
+    swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    for(let i = 0; i < 3; i++){
+        swiperContainer[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    }
+
+    for(let i = 0; i < 2; i++){
+        paasivuWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    }
+
+    paasivuViikkoWrapper.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+
+    for(let i = 0; i < 3; i++){
+        detailWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    }
+
+    // Korjaa pääsivun viimeinen grid alaNavin kokoiseksi
+    for(let i = 0; i < 2; i++){
+        paasivuWrapper[i].style.gridTemplateRows = "10% auto 15% auto 10% " + alaNav.clientHeight + "px";
+        detailWrapper[i].style.gridTemplateRows = "60px auto auto auto auto " + alaNav.clientHeight + "px";
+    }
+    paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
 });
 
 // Avaa hampurilaisvalikon klikkauksesta
@@ -46,6 +114,7 @@ hampurilaisMenu.addEventListener('click', function(evt){
     
 });
 
+// Siirry raportti sivulle
 raportitValikkoLinkki.addEventListener('click', function(evt){
     window.location.href = "raportit.html";
 });
@@ -64,16 +133,19 @@ for(let i = 0; i < 3; i++){
 // Palauta muut sivut päänäkymiin, jos painaa alaNavin painikkeista
 let nappula = document.querySelectorAll(".swiper-pagination-bullet");
 
+// Päivä painettu
 nappula[0].addEventListener('click', function(evt){
     mySwiper[1].slideTo('0','300','true');
     mySwiper[2].slideTo('0','300','true');
 });
 
+// Viikko painettu
 nappula[1].addEventListener('click', function(evt){
     mySwiper[0].slideTo('0','300','true');
     mySwiper[2].slideTo('0','300','true');
 });
 
+// Kuukausi painettu
 nappula[2].addEventListener('click', function(evt){
     mySwiper[0].slideTo('0','300','true');
     mySwiper[1].slideTo('0','300','true');
@@ -89,3 +161,41 @@ mySwiper2.on('slideChange', function(evt){
         sivunNimi.innerText = "PÄIVÄNÄKYMÄ";
     }
 });
+
+// Päivänäkymän yläbannerin nuolien toiminta
+prevDayNuoli.addEventListener('click', function(evt){
+    window.location.href="sivurunko.php?prevDay=true";
+});
+
+nextDayNuoli.addEventListener('click', function(evt){
+    window.location.href="sivurunko.php?nextDay=true";
+});
+
+// Viikkonäkymän yläbannerin nuolien toiminta
+prevWeekNuoli.addEventListener('click', function(evt){
+    window.location.href="sivurunko.php?prevWeek=true";
+});
+
+nextWeekNuoli.addEventListener('click', function(evt){
+    window.location.href="sivurunko.php?nextWeek=true";
+});
+
+// Siirry detail/pääsivuun kun painetaan nuolta alas/ylöspäin
+for(let i = 0; i < 3; i++){
+
+    nuoliAlas[i].addEventListener('click', function(evt){
+        mySwiper[i].slideTo('1');
+    });
+
+    nuoliYlos[i].addEventListener('click', function(evt){
+        mySwiper[i].slideTo('0');
+    });
+}
+
+// Siirry viikkonäkymästä klikattuun päivään
+for(let i = 0; i < 7; i++){
+
+    viikonpaivaListaItem[i].addEventListener('click', function(evt){
+        window.location.href="sivurunko.php?moveToDay=" + i;
+    });
+}
