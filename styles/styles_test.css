@@ -354,6 +354,7 @@ body {
 
 .clear{
     padding: 10px;
+    font-size: 4vw;
 }
 
 .fa-arrow-alt-circle-down{
@@ -378,13 +379,13 @@ body {
 }
 
 .hymio{
-    font-size: 8em;
+    font-size: 30vw;
     padding: 10px;
 }
 
 .hymio-viikko{
-    font-size: 2em;
-    padding: 10px;
+    font-size: 5vw;
+    padding: 0 10px;
 }
 
 i[class^="fas fa-chevron"]{
