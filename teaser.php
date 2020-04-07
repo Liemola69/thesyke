@@ -2,6 +2,10 @@
 session_start();
 include_once("config/https.php");
 include_once("config/config.php");
+//Session debuggaus, kommentoi pois tarvittaessa
+echo session_id();
+print_r($SESSION);
+print_r($_POST);
 ?>
 
 <!DOCTYPE html>
@@ -103,8 +107,10 @@ include_once("config/config.php");
         document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
         document.querySelector(".registerPopup").style.visibility = "hidden";
         document.location = 'php/resetVariables.php';
+    })
 
-})</script>
+
+</script>
 
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 

@@ -33,7 +33,7 @@ session_start();
         
             <?php
 
-                $data['userName'] = $_POST['givenName'];
+                $data['userName'] = $_POST['givenLoginName'];
 
                 // Tarkista onko tunnuksia tietokannassa käyttäjätunnuksen perusteella
                 $sql = "SELECT * FROM `ts_user` WHERE `email` = :userName;";
@@ -47,7 +47,7 @@ session_start();
                 if($vastaus != NULL && ($data['userName'] == $vastaus->email)){
                     
                     // Pura salasanan suojaus
-                    if(password_verify($_POST['givenPassword'], $vastaus->password)){
+                    if(password_verify($_POST['givenLoginPassword'], $vastaus->password)){
                         $_SESSION['loggedIn'] = true;
                         header("Location: php/sivurunko.php");
                     } else{

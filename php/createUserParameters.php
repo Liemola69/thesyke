@@ -1,60 +1,32 @@
 <?php
-session_start();
-?> 
+    session_start();
+    
+    //Session debuggaus, kommentoi pois tarvittaessa
+    echo session_id();
+    echo "<br>";
+    print_r($SESSION);
+    print_r($_POST);
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/styles_test.css">
-    <title>teh Syke</title>
-</head>
-<body>
-
-<i class="far fa-times-circle" id="createUserParametersClose"></i>
-
-<?php
-    include_once("config/https.php");
-    include_once("config/config.php");
     include("forms/formCreateUserParameters.php");
 
-    print_r($data);
-    echo session_id();
+    //Tarkista onko Tallenna -painiketta painettu ja onko nimitiedot tallennettu sessiomuuttujiin
+    if(isset($_POST['createUserDetailsSubmit']
+    //, $_SESSION['first_name'], $SESSION['last_name']
+    )){
 
-    if(isset($_POST['createUserDetailsSubmit'])){
-
-        $data['userName'] = $_POST['givenEmail'];
-        $data['userPassword'] = password_hash($_POST['givenPassword'], PASSWORD_BCRYPT);
-        $data['first_name'] = $_POST['given_first_name'];
-        $data['last_name'] = $_POST['given_last_name'];
-        $data['age'] = $_POST['given_age'];
-        $data['gender'] = $_POST['given_gender'];
-        $data['height'] = $_POST['given_height'];
-        $data['weight'] = $_POST['given_weight'];
-        $data['parameters_user_agreement'] = $_POST['given_parameters_user_agreement'];
-        $data['parameters_email_marketing'] = $_POST['given_parameters_email_marketing'];
-        $data['parameters_gdpr'] = $_POST['given_parameters_gdpr'];
-
-        $data['parameters_stimulants'] = $_POST['given_parameters_stimulants'];
-        $data['parameters_alcohol'] = $_POST['given_parameters_alcohol'];
-        $data['parameters_medicine'] = $_POST['given_parameters_medicine'];
-        $data['parameters_drug'] = $_POST['given_parameters_drug'];
-        $data['parameters_smoke'] = $_POST['given_parameters_smoke'];
-
-        print_r($data);
-        echo session_id();
-         
+        $SESSION['parameters_stimulants'] = $_POST['given_parameters_stimulants'];
+        $SESSION['parameters_alcohol'] = $_POST['given_parameters_alcohol'];
+        $SESSION['parameters_medicine'] = $_POST['given_parameters_medicine'];
+        $SESSION['parameters_drug'] = $_POST['given_parameters_drug'];
+        $SESSION['parameters_smoke'] = $_POST['given_parameters_smoke']; 
 
     ?>
     <script>
         document.querySelector(".createUserParametersPopup").style.visibility = "visible";
     </script>
     <?php
-        
     
-    //if(isset($_POST['createUserParametersSubmit'])){
+    /*if(isset($_POST['createUserParametersSubmit'])){
 
         $data['userName'] = $_POST['givenEmail'];
         $data['userPassword'] = password_hash($_POST['givenPassword'], PASSWORD_BCRYPT);
@@ -86,8 +58,9 @@ session_start();
         } catch(PDOException $e){
             file_put_contents('log/DBErrors.txt', 'Connection: ' . $e->getMessage() . "\n", FILE_APPEND);
         //}
+        */
 
-    }
+    //}
 }
 
 ?>

@@ -1,30 +1,17 @@
 <?php
-session_start();
-?>
+    session_start();
+    include("forms/formCreateAccount.php");
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/styles_test.css">
-    <title>teh Syke</title>
-</head>
-<body>
+    echo session_id();
+    echo "<br>";
+    print_r($SESSION);
+?>
 
     <i class="far fa-user"></i>
     <i class="far fa-times-circle" id="registerClose"></i>
-
+    
 <?php
-    session_start();
-    include_once("config/https.php");
-    include_once("config/config.php");
-    include("forms/formCreateAccount.php");
-
-    print_r($data);
-    echo session_id();
-
+session_start();    
     if(isset($_POST['createAccountSubmit'])){
 
         $email = $_POST['givenEmail'];
@@ -45,8 +32,11 @@ session_start();
                 // Tarkista että salasana vähintään 8 merkkiä
                 if(strlen($password) > 7){
 
-                    //$data['userName'] = $_POST['givenEmail'];
-                    //$data['userPassword'] = password_hash($_POST['givenPassword'], PASSWORD_BCRYPT);
+                    //Tallenna syötetyt tiedot sessiomuuttujiin
+                    $SESSION['email'] = $_POST['givenEmail'];
+                    $SESSION['password'] = password_hash($_POST['givenPassword'], PASSWORD_BCRYPT);
+
+
     
                 } else{
                     echo("Surkee salasana, keksi pidempi");
@@ -57,6 +47,7 @@ session_start();
                         document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);   
                     </script>
                     <?php
+                    session_start();
                  
                 }
             } else{
@@ -68,6 +59,7 @@ session_start();
                     document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);  
                 </script>
                 <?php
+                session_start();
               
             }
         } else{
@@ -79,10 +71,8 @@ session_start();
                 document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);
             </script>
             <?php
+            session_start();
           
         }
     }
 ?>
-
-</body>
-</html>
