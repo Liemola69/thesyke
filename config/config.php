@@ -1,4 +1,5 @@
 <?php
+session_start();
     $user = 'minervar';
     $pass = 'piF3shua';
     $host = 'mysql.metropolia.fi';
