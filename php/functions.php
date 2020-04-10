@@ -96,71 +96,106 @@
     }
 
     //** Ikoni funktiot */
+      // < -2 = punainen 
+        // < 2 = && > -2 = keltainen 
+        // > 2 = vihreä 
+        // Ei täytetty = NULL (default) = harmaa 
+
     // Ruoka
     function getIconColorFood($value){
-        // 5-2 vihreä
-        // 1-(-1) keltsi
-        // (-2)-(-5)
-        if($value > 1){
+        if($value > 2 && $value < 6){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value > (-2)){
+        } elseif($value > (-3) && $value < 2){
             echo("var(--liikennevaloKeltainen)");
-        } else{
+        } elseif($value < (-2) && $value > (-6)){
             echo("var(--liikennevaloPunainen)");
+        }else{
+            echo("var(--liikennevaloHarmaa)");
         }
     }
 
     // Alkoholi
     function getIconColorAlcohol($value){
-        if($value > 1){
+        if($value > 2 && $value < 6){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value > (-2)){
+        } elseif($value > (-3) && $value < 2){
             echo("var(--liikennevaloKeltainen)");
-        } else{
+        } elseif($value < (-2) && $value > (-6)){
             echo("var(--liikennevaloPunainen)");
-        }
-    }
-
-    // Aktiivisuus
-    function getIconColorActivity($value){
-        echo("var(--liikennevaloHarmaa)");
-    }
-
-    // Tupakointi
-    function getIconColorSmoke($value){
-        // 5-2 vihreä
-        // 1-(-1) keltsi
-        // (-2)-(-5)
-        if($value > 1){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value > (-2)){
-            echo("var(--liikennevaloKeltainen)");
-        } else{
-            echo("var(--liikennevaloPunainen)");
+        }else{
+            echo("var(--liikennevaloHarmaa)");
         }
     }
 
     // Vireys
     function getIconColorVitality($value){
-        echo("var(--liikennevaloHarmaa)");
+        if($value > 2 && $value < 6){
+            echo("var(--liikennevaloVihrea)");
+        } elseif($value > (-3) && $value < 2){
+            echo("var(--liikennevaloKeltainen)");
+        } elseif($value < (-2) && $value > (-6)){
+            echo("var(--liikennevaloPunainen)");
+        }else{
+            echo("var(--liikennevaloHarmaa)");
+        }
     }
 
     // Piristeet
     function getIconColorStimulant($value){
-        // 5-2 vihreä
-        // 1-(-1) keltsi
-        // (-2)-(-5)
-        if($value > 1){
+        if($value > 2 && $value < 6){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value > (-2)){
+        } elseif($value > (-3) && $value < 2){
             echo("var(--liikennevaloKeltainen)");
-        } else{
+        } elseif($value < (-2) && $value > (-6)){
             echo("var(--liikennevaloPunainen)");
+        }else{
+            echo("var(--liikennevaloHarmaa)");
         }
     }
-    
-    // Lääkkeet
-    function getIconColorMedicine($value){
+
+    // Stressi
+    function getIconColorStress($value){
+        if($value > 2 && $value < 6){
+            echo("var(--liikennevaloVihrea)");
+        } elseif($value > (-3) && $value < 2){
+            echo("var(--liikennevaloKeltainen)");
+        } elseif($value < (-2) && $value > (-6)){
+            echo("var(--liikennevaloPunainen)");
+        }else{
+            echo("var(--liikennevaloHarmaa)");
+        }
+    }
+
+    // Mieliala
+    function getIconColorMood($value){
+        if($value > 2 && $value < 6){
+            echo("var(--liikennevaloVihrea)");
+        } elseif($value > (-3) && $value < 2){
+            echo("var(--liikennevaloKeltainen)");
+        } elseif($value < (-2) && $value > (-6)){
+            echo("var(--liikennevaloPunainen)");
+        }else{
+            echo("var(--liikennevaloHarmaa)");
+        }
+    }
+
+   
+
+    // Kivut
+    function getIconColorPains($value){
+        if($value > 2 && $value < 6){
+            echo("var(--liikennevaloVihrea)");
+        } elseif($value > (-3) && $value < 2){
+            echo("var(--liikennevaloKeltainen)");
+        } elseif($value < (-2) && $value > (-6)){
+            echo("var(--liikennevaloPunainen)");
+        }else{
+            echo("var(--liikennevaloHarmaa)");
+        }
+    }
+
+     // Lääkkeet (boolean)
+     function getIconColorMedicine($value){
         if($value == 1){
             echo("var(--liikennevaloVihrea)");
         } else{
@@ -168,32 +203,26 @@
         }
     }
 
-    // Stressi
-    function getIconColorStress($value){
-        // 5-2 vihreä
-        // 1-(-1) keltsi
-        // (-2)-(-5)
-        if($value > 1){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value > (-2)){
-            echo("var(--liikennevaloKeltainen)");
-        } else{
+     // Päihteet (boolean)
+     function getIconColorDrugs($value){
+        if($value == 1){
             echo("var(--liikennevaloPunainen)");
+        } else{
+            echo("var(--liikennevaloHarmaa)");
+        }
+    }
+    // Tupakointi (boolean)
+    function getIconColorSmoke($value){
+        if($value == 1){
+            echo("var(--liikennevaloPunainen)");
+        } else{
+            echo("var(--liikennevaloHarmaa)");
         }
     }
 
-    // Mieliala
-    function getIconColorMood($value){
-        // 5-2 vihreä
-        // 1-(-1) keltsi
-        // (-2)-(-5)
-        if($value > 1){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value > (-2)){
-            echo("var(--liikennevaloKeltainen)");
-        } else{
-            echo("var(--liikennevaloPunainen)");
-        }
+     // Aktiivisuus
+     function getIconColorActivity($value){
+        echo("var(--liikennevaloHarmaa)");
     }
 
     // Nukuttu aika
@@ -201,26 +230,4 @@
         echo("var(--liikennevaloHarmaa)");
     }
 
-    // Päihteet
-    function getIconColorDrugs($value){
-        if($value == 1){
-            echo("var(--liikennevaloPunainen)");
-        } else{
-            echo("var(--liikennevaloHarmaa)");
-        }
-    }
-
-    // Kivut
-    function getIconColorPains($value){
-        // 5-2 vihreä
-        // 1-(-1) keltsi
-        // (-2)-(-5)
-        if($value > 1){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value > (-2)){
-            echo("var(--liikennevaloKeltainen)");
-        } else{
-            echo("var(--liikennevaloPunainen)");
-        }
-    }
 ?>
