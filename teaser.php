@@ -3,9 +3,10 @@ session_start();
 include_once("config/https.php");
 include_once("config/config.php");
 //Session debuggaus, kommentoi pois tarvittaessa
-echo session_id();
-print_r($SESSION);
-print_r($_POST);
+//echo session_id();
+//print_r($_POST);
+//print_r($_SESSION);
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +24,6 @@ print_r($_POST);
 
     <div class="teaserGridItem">
     <?php
-    print_r($POST);
     ?> 
         </div>
 
@@ -79,6 +79,8 @@ print_r($_POST);
         ?>
     </div>
 </div>
+
+<div id="snackbar">Tunnus luotu. Kirjaudu sisään.</div>
 
 <script>
 

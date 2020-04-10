@@ -2,9 +2,10 @@
     session_start();
     include("forms/formCreateAccount.php");
 
-    echo session_id();
-    echo "<br>";
-    print_r($SESSION);
+    //echo session_id();
+    //echo "<br>";
+    //print_r($_POST);
+    //print_r($_SESSION);
 ?>
 
     <i class="far fa-user"></i>
@@ -33,8 +34,8 @@ session_start();
                 if(strlen($password) > 7){
 
                     //Tallenna syötetyt tiedot sessiomuuttujiin
-                    $SESSION['email'] = $_POST['givenEmail'];
-                    $SESSION['password'] = password_hash($_POST['givenPassword'], PASSWORD_BCRYPT);
+                    $_SESSION['email'] = $_POST['givenEmail'];
+                    $_SESSION['password'] = password_hash($_POST['givenPassword'], PASSWORD_BCRYPT);
 
 
     
@@ -47,7 +48,7 @@ session_start();
                         document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);   
                     </script>
                     <?php
-                    session_start();
+
                  
                 }
             } else{
@@ -59,7 +60,6 @@ session_start();
                     document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);  
                 </script>
                 <?php
-                session_start();
               
             }
         } else{
@@ -71,7 +71,6 @@ session_start();
                 document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);
             </script>
             <?php
-            session_start();
           
         }
     }
