@@ -180,7 +180,7 @@
                                     
                                         <div><?php echo $_SESSION['days'][0]; ?></div>
                                         
-                                        <?php $monday = getDayData($_SESSION['days'][0], $DBH);?>
+                                        <?php $monday = getDateData($user_ID, $_SESSION['days'][0], $DBH);?>
                                         <i 
                                             <?php 
                                                 if($monday == null){
@@ -197,7 +197,7 @@
                                         
                                         <div><?php echo $_SESSION['days'][1]; ?></div>
                                         
-                                        <?php $tuesday = getDayData($_SESSION['days'][1], $DBH);?>
+                                        <?php $tuesday = getDateData($user_ID, $_SESSION['days'][1], $DBH);?>
                                         <i 
                                             <?php 
                                                 if($tuesday == null){
@@ -214,7 +214,7 @@
                                         
                                         <div><?php echo $_SESSION['days'][2]; ?></div>
                                             
-                                        <?php $wednesday = getDayData($_SESSION['days'][2], $DBH);?>
+                                        <?php $wednesday = getDateData($user_ID, $_SESSION['days'][2], $DBH);?>
                                         <i 
                                             <?php 
                                                 if($wednesday == null){
@@ -231,7 +231,7 @@
                                         
                                         <div><?php echo $_SESSION['days'][3]; ?></div>
                                             
-                                        <?php $thursday = getDayData($_SESSION['days'][3], $DBH);?>
+                                        <?php $thursday = getDateData($user_ID, $_SESSION['days'][3], $DBH);?>
                                         <i 
                                             <?php 
                                                 if($thursday == null){
@@ -248,7 +248,7 @@
                                         
                                         <div><?php echo $_SESSION['days'][4]; ?></div>
                                             
-                                        <?php $friday = getDayData($_SESSION['days'][4], $DBH);?>
+                                        <?php $friday = getDateData($user_ID, $_SESSION['days'][4], $DBH);?>
                                         <i 
                                             <?php 
                                                 if($friday == null){
@@ -265,7 +265,7 @@
                                         
                                         <div><?php echo $_SESSION['days'][5]; ?></div>
                                             
-                                        <?php $saturday = getDayData($_SESSION['days'][5], $DBH);?>
+                                        <?php $saturday = getDateData($user_ID, $_SESSION['days'][5], $DBH);?>
                                         <i 
                                             <?php 
                                                 if($saturday == null){
@@ -282,7 +282,7 @@
                                         
                                         <div><?php echo $_SESSION['days'][6]; ?></div>
                                             
-                                        <?php $sunday = getDayData($_SESSION['days'][6], $DBH);?>
+                                        <?php $sunday = getDateData($user_ID, $_SESSION['days'][6], $DBH);?>
                                         <i 
                                             <?php 
                                                 if($sunday == null){
