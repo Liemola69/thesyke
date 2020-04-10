@@ -46,6 +46,12 @@ let mySwiper2 = new Swiper ('.swiper-pageContainer', {
     }
 });
 
+// Korjaa viikkonäkymän selauksen pysymään viikkonäkymässä sivun päivittyessä
+if(window.location.search == "?prevWeek=true"
+|| window.location.search == "?nextWeek=true"){
+    mySwiper2.slideTo('1', '0');
+}
+
 //**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
 swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
 for(let i = 0; i < 3; i++){
