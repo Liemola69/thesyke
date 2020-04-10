@@ -106,7 +106,7 @@
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-walking ikoni' style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;'></i>
+                                    <i class='fas fa-walking ikoni' style='color: <?php $value = $paivaOlio->user_activity; getIconColorActivity($value); ?>;'></i>
                                     <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
                                 </div>
 
