@@ -6,10 +6,25 @@
         echo($pvm[2] . "-" . $pvm[1] . "-" . $pvm[0]);
     }
 
-    // Hae päivän data tietokannasta
-    function getDayData($currentDay, $DBH){
+    // Hae käyttäjän tiedot tietokannasta
+    function getUserData($user_ID, $DBH){
+        $sql = "SELECT * FROM `ts_user` WHERE `user_ID` = " . "'" . $user_ID . "';";
+        $kysely = $DBH->prepare($sql);
+        $kysely->execute();
+        $kysely -> setFetchMode(PDO::FETCH_OBJ);
+        $vastaus = $kysely->fetch();
 
-        $sql = "SELECT * FROM `ts_date` WHERE `date` = " . "'" . $currentDay . "';";
+        if($vastaus){
+            return $vastaus;
+        } else{
+            return null;
+        }
+    }
+
+    // Hae päivän data tietokannasta
+    function getDateData($user_ID, $currentDay, $DBH){
+
+        $sql = "SELECT * FROM `ts_date` WHERE `date_user_ID` = '" . $user_ID . "' AND `date` = " . "'" . $currentDay . "';";
         $kysely = $DBH->prepare($sql);
         $kysely->execute();
         $kysely -> setFetchMode(PDO::FETCH_OBJ);
