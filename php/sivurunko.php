@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/styles_test.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    
+    
+
 </head>
 <body>
     <?php
@@ -106,7 +113,7 @@
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-walking ikoni' style='color: <?php $value = $paivaOlio->user_activity; getIconColorActivity($value); ?>;'></i>
+                                    <i class='fas fa-walking ikoni' style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;'></i>
                                     <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
                                 </div>
 
@@ -376,24 +383,84 @@
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         <div id="kuukausiPaasivu" class="swiper-slide paasivuWrapper">
-                            <i class='fas fa-laugh hymio' style='color:var(--liikennevaloVihrea);'></i>
 
-                            <!--inforuudut-->
-                            <div class="box">
-                                <div>
-                                    <p>UNIAIKA</p><p>8 h 39 min</p>
-                                </div>
-                                <div>
-                                    <p>UNISYKLIT</p><p>6 sykliä</p>
-                                </div>       
-                            </div>
+                        <?php
+                            //aseta aikavyöhyke
+                                date_default_timezone_set('Europe/Finland');
+                                //saa edellinen ja seuraava kuukausi
+                                    if(isset($_GET['ym'])){
+                                        $ym = $_GET['ym'];
+                                    }else{
+                                        //tämä kuukausi
+                                        $ym=date('Y-m');
+                                    }
+                                    //tarkistetaan muoto
+                                $timestamp = strtotime($ym,"-01");
+                                    if($timestamp === false){
+                                        $timestamp = time();
+                                    }
+                                    //nykyinen päivä
+                                $today = date('Y-m-d', time());
+                                    //kalenterin otsikolle
+                                $html_title = date('Y / m', $timestamp);
+                                    //edellisen ja tulevan kuukauden linkit .... mktime(tunti, minuti, sekunti, kuukausi, päivä, vuosi)
+                                $prev = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)-1, 1, date('Y', $timestamp)));
+                                $next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)+1, 1, date('Y', $timestamp)));
+                                //Kuukauden päivät
+                                $day_count = date('t', $timestamp);
+                                    //0:sun, 1:Mon, 2:Tue..
+                                $str = date('w', mktime(0, 0, 0, date('m', $timestamp), 1, date('Y', $timestamp)));
 
-                            <!--nuolet-->
-                            <div class="clear">
-                                <i class='fas fa-arrow-alt-circle-down'><p>3</p></i>
-                                <i class='fas fa-arrow-alt-circle-up'><p>5</p></i>
-                            </div>
+                                    //Kalenterin luominen
+                                $weeks = array();
+                                $week = '';
+                                    //add empty cell
+                                $week .= str_repeat('<td></td>', $str);
 
+                                for( $day = 1; $day <= $day_count; $day++, $str++){
+                                    $date = $ym.'-'.$day;
+
+                                        if($today == $date){
+                                            $week .= '<td class="today">'.$day;
+                                        }else{
+                                            $week .= '<td>'.$day;
+                                        }
+                                $week .= '</td>';
+                                        //Viikon loppuminen tai kuukauden loppuminen
+                                    if($str % 7 == 6 || $day == $day_count){
+                                        if($day == $day_count){
+                                                //lisää tyhjä ruutu
+                                            $week .= str_repeat('<td></td>', 6 - ($str % 7));
+                                        }
+                                            $weeks[] = '<tr>'.$week.'</tr>';
+                                        //valmistautuminen uuteen viikkoon
+                                        $week = '';
+                                    }
+                                }
+                        ?>
+                            
+                        <h3><a href="?ym=<?php echo $prev; ?>">&lt;</a><?php echo $html_title; ?><a href="?ym=<?php echo $next; ?>">&gt;</a></h3>
+                        <br>
+                        <table class="table table-bordered">
+                        <tr>
+                            <th>SU</th>
+                            <th>MA</th>
+                            <th>TI</th>
+                            <th>KE</th>
+                            <th>TO</th>
+                            <th>PE</th>
+                            <th>LA</th>
+                            
+                        </tr>
+                        <?php
+                            foreach($weeks as $week){
+                                echo $week;
+                            }
+                        ?>
+                    </table>
+                                                
+                    
+                    
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-down'></i>
 
@@ -476,5 +543,6 @@
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src="../js/sivurunko.js"></script>
+    
 </body>
 </html>

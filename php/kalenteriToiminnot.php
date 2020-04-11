@@ -3,6 +3,10 @@
     $userOlio = getUserData($_SESSION['user_ID'], $DBH);
     $user_ID = $userOlio->user_ID;
     //print_r($userOlio);
+    
+    //$mappingOlio = getSleepGoalData($_SESSION['mapping_sleep_amount'], $DBH);
+    //$mapping_sleep_amount = $mappingOlio->mapping_sleep_amount;
+
 
     if(isset($_GET['prevDay'])){ // Vaihda edelliseen päivään
         $updatedDay = getPrevDay($_SESSION['currentDay']); // Korjaa päivä edeltäväksi ja tallenna tämän hetkiseksi päiväksi/viikoksi

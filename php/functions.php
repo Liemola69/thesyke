@@ -1,4 +1,5 @@
 <?php
+
     
     // Tulostaa nykyisen päivän. Kääntää muotoon dd-mm-yyyy
     function getDayFormatted($currentDay){
@@ -37,6 +38,8 @@
         }
     }
 
+
+
     // Palauta päivän uniaika formatoituna hh tuntia mm minuuttia
     function getUniAika($paivaOlio){
         if($paivaOlio->sleep_amount == NULL){
@@ -47,7 +50,7 @@
             return $tunnit . " tuntia " . $minuutit . " min";
         }
     }
-
+    
     // Palauta päivän unisyklit
     function getUniSykli($paivaOlio){
         if($paivaOlio->sleep_cycles == NULL){
@@ -240,9 +243,30 @@
         echo("var(--liikennevaloHarmaa)");
     }
 
-    // Nukuttu aika
-    function getIconColorSleepAmount($value){
+     //hae tavoiteuniaika tietokannasta (EI TOIMI)
+     /*function getSleepGoalData($mapping_sleep_amount, $DBH){
+
+        $sql = "SELECT mapping_sleep_amount FROM ts_parameter_mapping WHERE `user_ID` ='" . $user_ID . "' AND `mapping_sleep_amount` = " . "'" . $mapping_sleep_amount . "';";
+        $kysely = $DBH->prepare($sql);
+        $kysely->execute();
+        $kysely -> setFetchMode(PDO::FETCH_OBJ);
+        $vastaus = $kysely->fetch();
+    } */
+
+
+   // Nukuttu aika
+   function getIconColorSleepAmount($value){
+      
+    if($value >= 28800){
+        echo("var(--liikennevaloVihrea)");
+    } elseif($value >= 21600 && $value < 28800){
+        echo("var(--liikennevaloKeltainen)");
+    } elseif($value < 21600 && $value > 0){
+        echo("var(--liikennevaloPunainen)");
+    } else{
         echo("var(--liikennevaloHarmaa)");
-    }
+    }    
+}
 
 ?>
+
