@@ -24,6 +24,8 @@ let paasivuViikkoWrapper = document.querySelector(".paasivuViikkoWrapper");
 
 let viikonpaivaListaItem = document.getElementById("viikonpaivaLista").getElementsByTagName("li");
 
+let kuukaudenpaivaListaItem = document.getElementById("kuukaudenpaivaLista").getElementsByTagName("td");
+
 // Luo olion, jolla seurataan vertikaalista swippausta
 let mySwiper = new Swiper ('.swiper-container', {
     init: false,
@@ -51,6 +53,7 @@ if(window.location.search == "?prevWeek=true"
 || window.location.search == "?nextWeek=true"){
     mySwiper2.slideTo('1', '0');
 }
+
 
 //**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
 swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
@@ -205,8 +208,4 @@ for(let i = 0; i < 7; i++){
         window.location.href="sivurunko.php?moveToDay=" + i;
     });
 }
-
-
-
-
 

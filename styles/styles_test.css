@@ -25,7 +25,8 @@ body {
     text-decoration: none;
     overflow: hidden;
     height: 100%;
-}
+    color: white;
+    }
 
 /* Teaser-sivu */
 
@@ -377,6 +378,14 @@ body {
     color: white;
 }
 
+#paasivuKuukausiNav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
 #viikonpaivaLista{
     display: flex;
     flex-flow: column nowrap;
@@ -501,6 +510,7 @@ i[class^="fas fa-chevron"]{
     color: #00b8d4e6;
 }
 
+
 .fa-chevron-down{
     align-self: end;
 }
@@ -542,11 +552,32 @@ i[class^="fas fa-chevron"]{
 
 th{
     height: 30px;
+    
     text-align: center;
 }
+tr{
+    color: white;
+    padding: 4px;
+    text-align: left;
+}
+td{
+    height: 60px;
+}
 .today{
-    background-color: cadetblue;
+    background-color: rgb(3, 66, 68);
 }
 th:nth-of-type(1){
     color: crimson;
+}
+
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: white;
+    padding: 4px;
+    background-color: var(--tehosteVari);
+}
+.otsikko{
+    text-align: center;
 }
