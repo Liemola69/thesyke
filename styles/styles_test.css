@@ -548,36 +548,115 @@ i[class^="fas fa-chevron"]{
 
 @media only screen and (max-width: 320px) {
 
+.calendar{
+    max-height: 450px;
+}
 }
 
-th{
-    height: 30px;
+
+
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.calendar {
+    margin: auto;
+    width: 90%;
+    background-color: rgb(226, 222, 222);
+    box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.2);
+}
+
+.month {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     
     text-align: center;
-}
-tr{
-    color: white;
-    padding: 4px;
-    text-align: left;
-}
-td{
-    height: 60px;
-}
-.today{
-    background-color: rgb(3, 66, 68);
-}
-th:nth-of-type(1){
-    color: crimson;
-}
-
-
-tbody {
-    display: table-row-group;
-    vertical-align: middle;
-    border-color: white;
-    padding: 4px;
     background-color: var(--tehosteVari);
+    color: #fff;
+    font-size: 34px;
 }
-.otsikko{
+
+.weekdays {
+    background-color: rgb(6, 114, 109);
+    color: #fff;
+    padding: 7px 0;
+    display: flex;
+    font-size: 20px;
+}
+
+.daysOfMonth {
+    font-weight: 300;
+    padding: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 18px
+     
+    
+}
+
+.weekdays div,
+.daysOfMonth div {
     text-align: center;
+    width: 14.28%;
 }
+
+.daysOfMonth div {
+    padding: 10px 0;
+    margin-bottom: 10px;
+    transition: all 0.4s;
+}
+
+.prev_date {
+    color: #999;
+    box-sizing: border-box;
+}
+
+.today {
+    background-color: var(--alaValikkovari);
+    color: #fff;
+}
+
+.daysOfMonth div:hover {
+    cursor: pointer;
+    background-color: rgba(112, 161, 179, 0.8)
+}
+
+.prev,
+.next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 23px;
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: all 0.4s;
+}
+
+.prev:hover,
+.next:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#month {
+    font-size: 30px;
+    font-weight: 500;
+}
+

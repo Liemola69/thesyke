@@ -379,47 +379,56 @@
             </div>
 
             <!--kuukausisivu-->
+            <body  onload="renderDate()">
             <div id="kuukausiSivu" class="swiper-slide">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         <div id="kuukausiPaasivu" class="swiper-slide paasivuWrapper">
 
-
-                        <div id="paasivuKuukausiNav">
-                                               
-                            <i> <a href="?ym=<?php echo $prev; ?>" class='fas fa-chevron-left' style='font-size:2.8em;color:#00b8d4e6;float:left'></a> </i>
-                            <i id ="title"><?php echo $html_title; ?></i>
-                            <i><a href="?ym=<?php echo $next; ?>" class='fas fa-chevron-right' style='font-size:2.8em;color:#00b8d4e6;float:right'></a></i>
-                            
-                        </div>
-                            
-                        <div>
-
-                        <table class="table table-bordered">
-                            <tr id="kuukaudenpaivaLista">
                         
-                            <th>SU</th>
-                            <th>MA</th>
-                            <th>TI</th>
-                            <th>KE</th>
-                            <th>TO</th>
-                            <th>PE</th>
-                            <th>LA</th>
-                            
-                        </tr>
-                        <?php
-                            foreach($weeks as $week){
-                                echo $week;
-                            }
-                        ?>
-                        </table>
-                                                
-                        </div>
+                            <div class="calendar">
+                                <div class="month">
+                                    <div class="prev" onclick="moveDate('prev')">
+                                        <span>&#10094;</span>
+                                    </div>
+                                    <div>
+                                        <h2 id="month"></h2>
+                                        <p id="year"></p>
+                                    </div>
+                                    <div class="next" onclick="moveDate('next')">
+                                        <span>&#10095;</span>
+                                    </div>
+                                </div>
+                                <div class="weekdays">
+                                    
+                                
+                                    <div>MA</div>
+                                    <div>TI</div>
+                                    <div>KE</div>
+                                    <div>TO</div>
+                                    <div>PE</div>
+                                    <div>LA</div>
+                                    <div>SU</div>
+                                    
+                                    
+                                </div>
+                                <div class="daysOfMonth">
+                                    
+
+                                </div>
+                                <i class='fas fa-chevron-down'></i>
+                            </div>
+                        
+                           
+
+                       
                     
                             <!--sivuvaihtoNuoli-->
-                            <i class='fas fa-chevron-down'></i>
+                            
 
                         </div>
+                        </body> 
+
                         <div id="kuukausiDetailSivu" class="swiper-slide detailWrapper">
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-up'></i>

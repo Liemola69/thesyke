@@ -4,10 +4,7 @@
     $user_ID = $userOlio->user_ID;
     //print_r($userOlio);
     
-    //$mappingOlio = getSleepGoalData($_SESSION['mapping_sleep_amount'], $DBH);
-    //$mapping_sleep_amount = $mappingOlio->mapping_sleep_amount;
-
-
+  
     if(isset($_GET['prevDay'])){ // Vaihda edelliseen päivään
         $updatedDay = getPrevDay($_SESSION['currentDay']); // Korjaa päivä edeltäväksi ja tallenna tämän hetkiseksi päiväksi/viikoksi
         $_SESSION['currentDay'] = $updatedDay;
@@ -83,61 +80,9 @@
         $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
     }
 
+
+
+    
+
 ?>
 
-<?php
-                            //aseta aikavyöhyke
-    date_default_timezone_set('Europe/Finland');
-                                //saa edellinen ja seuraava kuukausi
-    if(isset($_GET['ym'])){
-        $ym = $_GET['ym'];
-    }else{
-                                        //tämä kuukausi
-        $ym=date('Y-m');
-    }
-                                    //tarkistetaan muoto
-     $timestamp = strtotime($ym,"-01");
-    if($timestamp === false){
-        $timestamp = time();
-    }
-                                    //nykyinen päivä
-    $today = date('Y-m-d', time());
-                                    //kalenterin otsikolle
-    $html_title = date('Y / m', $timestamp);
-
-
-                                    //edellisen ja tulevan kuukauden linkit .... mktime(tunti, minuti, sekunti, kuukausi, päivä, vuosi)
-    $prev = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)-1, 1, date('Y', $timestamp)));
-    $next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)+1, 1, date('Y', $timestamp)));
-                                //Kuukauden päivät
-    $day_count = date('t', $timestamp);
-                                    //0:sun, 1:Mon, 2:Tue..
-    $str = date('w', mktime(0, 0, 0, date('m', $timestamp), 1, date('Y', $timestamp)));
-
-                                    //Kalenterin luominen
-    $weeks = array();
-    $week = '';
-                                    //add empty cell
-    $week .= str_repeat('<td></td>', $str);
-
-    for( $day = 1; $day <= $day_count; $day++, $str++){
-    $date = $ym.'-'.$day;
-
-    if($today == $date){
-        $week .= '<td class="today">'.$day;
-    }else{
-        $week .= '<td>'.$day;
-    }
-    $week .= '</td>';
-                                        //Viikon loppuminen tai kuukauden loppuminen
-    if($str % 7 == 6 || $day == $day_count){
-    if($day == $day_count){
-                                                //lisää tyhjä ruutu
-        $week .= str_repeat('<td></td>', 6 - ($str % 7));
-    }
-    $weeks[] = '<tr>'.$week.'</tr>';
-                                        //valmistautuminen uuteen viikkoon
-    $week = '';
-        }
-    }
-?>
