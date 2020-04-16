@@ -1,0 +1,131 @@
+:root{
+    --paaTaustavari: rgb(105, 105, 105);
+    --liikennevaloPunainen: #d83a0a;
+    --liikennevaloKeltainen: #ecd71b;
+    --liikennevaloVihrea: #669e27;
+    --liikennevaloHarmaa: lightgray;
+    --ylaValikkovari: rgb(66, 66, 66);
+    --alaValikkovari: rgba(96, 124, 138, 0.8);
+    --tehosteVari: rgba(0, 184, 212, 0.7);
+    --fonttiVari: white;
+}
+
+
+body{
+    background-color: var(--paaTaustavari);
+    color: white;
+    font-family: 'Baloo Da 2', cursive, sans-serif;
+    font-size: 14px;
+    margin: 0;
+    
+}
+
+.slideSivu{
+    background-color: var(--paaTaustavari);
+    height: auto;
+    margin: auto;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+
+.slidecontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+}
+  .slidecontainer > div{
+    width: 350px;
+    margin: 10px;
+    text-align: center;
+    font-size: 20px; 
+    
+  }
+
+  
+  .slider {
+
+    -webkit-appearance: none;
+    width: 60%;
+    height: 20px;
+    border-radius: 5px;
+    background: #a8a7a7;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin-bottom: 20px;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgb(0, 184, 212);
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+  }
+
+  #ylaValikko{
+    display: none;
+    background-color: var(--ylaValikkovari);
+    color: var(--fonttiVari);
+}
+
+#sivunNimi{
+    width: 100%;
+    color: var(--tehosteVari);
+    font-size: 1.4em;
+}
+
+#ylaValikko li{
+    padding: 10px 0;
+}
+
+#hampurilaisMenu{
+    color: var(--tehosteVari);
+    font-size: 24px;
+    width: fit-content;
+    padding: 10px 15px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
+
+#hampurilaisValikko{
+    height: 0px;
+    width: 100%;
+    position: absolute;
+    background-color: white;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* Navigation Settings */
+#ylaNav{
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    height: 50px;
+    background: var(--ylaValikkovari);
+    z-index: 2;
+    text-align: center;
+}
+
+  
