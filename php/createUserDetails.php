@@ -9,7 +9,7 @@
     //print_r($_POST);
     
     //Tarkista onko luo tunnus -painiketta painettu ja tunnus ja salasana tallennettu sessiomuuttujiin
-    if(isset($_POST['createAccountSubmit'], $_SESSION['email'], $_SESSION['password']
+    if(isset($_POST['createPolarSubmit']
     )){
 
     ?>
@@ -20,7 +20,7 @@
     }
 
     //Tallenna syötetyt tiedot sessiomuuttujiin, kun Tallenna-painiketta painettu
-    //TODO, validointi
+    //TÄMÄ PITÄNEE MIETTIÄ VÄHÄN UUSIKS KUN POLAR-INTEGRAATIO TULEE. HELPOIN EHKÄ TUODA POLARIN TIEDOT SUORAAN VAIN LOMAKKEEN ERI KENTTIIN...
     if(isset($_POST['createUserDetailsSubmit'])){
 
         $_SESSION['first_name'] = $_POST['given_first_name'];

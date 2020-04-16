@@ -11,7 +11,7 @@
     
 
     //Tarkista onko Tallenna -painiketta painettu ja onko nimitiedot tallennettu sessiomuuttujiin
-    if(isset($_POST['createUserDetailsSubmit']
+    if(isset($_POST['createUserDetailsSubmit'], $_SESSION['first_name'], $_SESSION['last_name']
     )){
 
     ?>

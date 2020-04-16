@@ -12,5 +12,4 @@ session_start();
     
     <input class="buttonGeneric" type="submit" name="createAccountSubmit" value="Luo tunnus">
     <input class="buttonGeneric" type="reset" value="Tyhjennä">
-    </fieldset>
 </form>

@@ -40,35 +40,35 @@ session_start();
 
     
                 } else{
-                    echo("Surkee salasana, keksi pidempi");
+                    echo("Syöttämäsi salasana on liian lyhyt. Salasanassa tulee olla vähintään 8 merkkiä.");
                    ?>
                     <script>
                         document.querySelector(".registerPopup").style.visibility = "visible"; 
-                        document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
-                        document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);   
+                        //document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
+                        //document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);   
                     </script>
                     <?php
 
                  
                 }
             } else{
-                echo("Sähköposti jo käytössä, keksi uusi");
+                echo("Syöttämäsi sähköpostiosoite on jo käytössä. Tarkista sähköpostiosoite tai valitse Salasana unohtunut.");
                 ?>
                 <script>
                     document.querySelector(".registerPopup").style.visibility = "visible";
-                    document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
-                    document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);  
+                    //document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
+                    //document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);  
                 </script>
                 <?php
               
             }
         } else{
-            echo("Paska sposti, yritä edes");
+            echo("Syöttämäsi sähköpostiosoite ei ole kelvollinen. Tarkista sähköpostin kirjoitusasu.");
             ?>
             <script>
                 document.querySelector(".registerPopup").style.visibility = "visible";
-                document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
-                document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);
+                //document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
+                //document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation2", true);
             </script>
             <?php
           
