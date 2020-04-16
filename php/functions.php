@@ -79,15 +79,17 @@
     function getHymioFromDate($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
 
-        if($unenLaatu == 3){
+        if($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio-viikko" style="color: var(--liikennevaloVihrea);"');
-        } elseif($unenLaatu == 2){
+        } elseif($unenLaatu > 0 && $unenLaatu <= 2){
             //fa-meh
             echo('class="fas fa-meh hymio-viikko" style="color: var(--liikennevaloKeltainen);"');
-        } elseif($unenLaatu == 1){
+        } elseif($unenLaatu < 0){
             //fa-frown
             echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloPunainen);"');
+        }else{
+            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
         }
     }
 
@@ -231,10 +233,14 @@
     }
 
      // Päihteet (boolean)
-     function getIconColorDrugs($value){
-        if($value == 1){
+     function getIconColorScreenTime($value){
+        if($value > 2 && $value < 6){
+            echo("var(--liikennevaloVihrea)");
+        } elseif($value > (-3) && $value < 2){
+            echo("var(--liikennevaloKeltainen)");
+        } elseif($value < (-2) && $value > (-6)){
             echo("var(--liikennevaloPunainen)");
-        } else{
+        }else{
             echo("var(--liikennevaloHarmaa)");
         }
     }
@@ -276,6 +282,8 @@
         echo("var(--liikennevaloHarmaa)");
     }    
 }
+
+
 
 ?>
 

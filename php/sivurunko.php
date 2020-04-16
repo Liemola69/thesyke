@@ -12,10 +12,9 @@
     integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     
     
-    
 
 </head>
-<body>
+<body onload="renderDate()">
     <?php
         include_once("../config/https.php");
         include_once("../config/config.php");
@@ -153,7 +152,7 @@
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-syringe ikoni' style='color:<?php $value = $paivaOlio->user_drug; getIconColorDrugs($value); ?>;'></i>
+                                    <i class='fas fa-mobile-alt ikoni' style='color:<?php $value = $paivaOlio->user_drug; getIconColorScreenTime($value); ?>;'></i>
                                     <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
                                 </div>
 
@@ -379,7 +378,7 @@
             </div>
 
             <!--kuukausisivu-->
-            <body  onload="renderDate()">
+            
             <div id="kuukausiSivu" class="swiper-slide">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
@@ -418,16 +417,12 @@
                                 </div>
                                 <i class='fas fa-chevron-down'></i>
                             </div>
-                        
-                           
 
-                       
-                    
                             <!--sivuvaihtoNuoli-->
                             
 
                         </div>
-                        </body> 
+                        
 
                         <div id="kuukausiDetailSivu" class="swiper-slide detailWrapper">
                             <!--sivuvaihtoNuoli-->
