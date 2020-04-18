@@ -13,21 +13,11 @@ session_start();
 <nav id="ylaNav">
         <div id="sivunNimi">PÄIVÄKYSELY</div>
         <div id="hampurilaisMenu" class="fa fa-close"></div>
-        <div id="hampurilaisValikko">
-            <ul id="ylaValikko">
-                <li id="raportitValikkoLinkki">Raportit</li>
-                <li>Omat tiedot</li>
-                <li>Polar-linkitys</li>
-                <li>Apua</li>
-                <li>Käyttöehdot</li>
-                <li></li>
-                <li onclick='window.location.href="sivurunko.php?logOut=true"'>Kirjaudu ulos </li>
-            </ul>
-        </div>
+        
     </nav>
 
 
-
+    <div class=slideSivu>
 
 <form method="post">
 
@@ -117,7 +107,7 @@ session_start();
   </p>
 
 </form>
-
+</div>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </body>
 </html>

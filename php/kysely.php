@@ -70,7 +70,7 @@
     
 
         } catch(PDOException $e){
-        file_put_contents('../log/DBErrors.txt', 'Connection: ' . $e->getMessage() . "\n", FILE_APPEND);
+        file_put_contents('DBErrors.txt', 'Connection: ' . $e->getMessage() . "\n", FILE_APPEND);
 
         }
         /*if(isset($_POST['destroyPaivaKysely'])){
