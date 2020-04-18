@@ -5,14 +5,14 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name='viewport' content='width=device-width, initial-scale=1'>
 <link rel="stylesheet" href="../styles/kysely.css">
 
-<body class="kyselyBody">
+<body>
 
 <nav id="ylaNav">
         <div id="sivunNimi">PÄIVÄKYSELY</div>
-        <div id="hampurilaisMenu" class="fa fa-bars"></div>
+        <div id="hampurilaisMenu" class="fa fa-close"></div>
         <div id="hampurilaisValikko">
             <ul id="ylaValikko">
                 <li id="raportitValikkoLinkki">Raportit</li>
@@ -26,49 +26,44 @@ session_start();
         </div>
     </nav>
 
-<div class=slideSivu>
+
 
 
 <form method="post">
 
 
 <div class="slidecontainer">
-<div>Miten nukuit viime yönä:<br>
- (-5 - +5)</div>
-<div><input type="range" min="-2" max="4" value="0" class="slider" id="myQuality" name="given_Quality"> : <span id="demo"></span></div>
+<div><label for="myQuality">Miten nukuit viime yönä:</label><br></div>
+<div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
+<input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myQuality" name="given_Quality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
 
 
-  <div>Minkälainen vireytesi on tänään: <br>
-  (-5 - +5)
-  </div> 
-  <div><input type="range" min="-5" max="5" value="0" class="slider" id="myVitality" name="given_Vitality">  Arvo: <span id="demo1"></span></div>
+<div><label for="myVitality">Minkälainen vireytesi on tänään:</label><br></div>
+<div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
+<input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myVitality" name="given_Vitality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
 
 
-  <div>Miten söit eilen: <br>
-  (-5 - +5)
-  </div>
-  <div><input type="range" min="-5" max="5" value="0" class="slider" id="myFood" name="given_Food">  Arvo: <span id="demo2"></span></div>
+<div><label for="myFood">Miten söit eilen:</label><br></div>
+  <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
+  <input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myFood" name="given_Food"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
     
 
-  <div>Minkälainen oli mielialasi eilen: <br>
-  (-5 - +5)
-  </div>
-  <div><input type="range" min="-5" max="5" value="0" class="slider" id="myMood" name="given_Mood">  Arvo: <span id="demo3"></span></div>
+  <div><label for="myMood">Minkälainen oli mielialasi eilen:</label><br></div>
+  <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
+  <input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myMood" name="given_Mood">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
     
 
-  <div>Stressitasosi eilen: <br>
-  (-5 - +5)
-  </div>
-  <div><input type="range" min="-5" max="5" value="0" class="slider" id="myStress" name="given_Stress">  Arvo: <span id="demo4"></span></div>
+  <div><label for="myStress">Stressitasosi eilen:</label><br></div>
+  <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
+  <input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myStress" name="given_Stress"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
     
 
-  <div>Kuvaile kiputilojasi eilen: <br>
-  (-5 - +5)
-  </div>
-  <div><input type="range" min="-5" max="5" value="0" class="slider" id="myPain" name="given_Pain">  Arvo: <span id="demo5"></span></div>
+  <div><label for="myPain">Kuvaile kiputilojasi eilen:</label><br></div>
+  <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
+  <input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myPain" name="given_Pain"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
   
-
-  <div>Eilen nautitut kofeiini:</div>
+  <div style ="text-align:start;margin-left:20px">Eilen...</div>
+    <div>..nautitut kofeiiniannokset:</div>
   <div><input type="radio" id="male" name="given_Kofeiini" value="5">
   <label for="male">0-2 annosta</label>
   <input type="radio" id="female" name="given_Kofeiini" value="2">
@@ -78,8 +73,8 @@ session_start();
   <input type="radio" id="other" name="given_Kofeiini" value="-5">
   <label for="other">Yli viisi</label></div>
   
-
-  <div>Eilen nautitut alkoholiannokset:</div>
+  <br>
+  <div>..nautitut alkoholiannokset:</div>
   <div><input type="radio" id="male1" name="given_Alkoholi" value="5">
   <label for="male1">En yhtään</label>
   <input type="radio" id="female1" name="given_Alkoholi" value="3">
@@ -90,8 +85,9 @@ session_start();
   <label for="other11">4-6</label>
   <input type="radio" id="other111" name="given_Alkoholi" value="-5">
   <label for="other111">yli 6</label></div>
+  <br>
 
-  <div>Ruutuaika ennen nukkumaanmenoa:</div>
+  <div>..ruutuaika ennen nukkumaanmenoa:</div>
   <div><input type="radio" id="male2" name="given_Ruutu" value="5">
   <label for="male2">Alle tunnin</label>
   <input type="radio" id="female2" name="given_Ruutu" value="3">
@@ -104,17 +100,17 @@ session_start();
   <label for="other222">Yli 4 tuntia</label></div>
 <br>
 
-  <div><label for="smoke"> Tupakka eilen?</label>
+  <div><label for="smoke"> ..tupakointi:</label>
   <input type="radio" id="smoke" name="given_Smoke" value="1"> Kyllä
   <input type="radio" id="smoke" name="given_Smoke" value="0"> En</div>
   
-  <div><label for="medicine">Unilääkkeitä eilen?</label>
-  <input type="radio" id="medicine" name="given_Medicine" value="1"> Kyllä
+  <div><label for="medicine">..unilääkkeet:</label>
+  <input type="radio" id="medicine" name="given_Medicine" value="1" style="background-color:red;"> Kyllä
   <input type="radio" id="medicine" name="given_Medicine" value="0"> En</div>
   
 
-  <div><input type="submit" name="submitPaivaKysely" value="Tallenna"></input>
-  <input type="submit" name="destroyPaivaKysely" value="Tuhoa"></input></div>
+  <div> <input  type="submit" name="submitPaivaKysely" value="Tallenna" id="submit"></input>
+  </div>
 
 
   </div>
@@ -122,59 +118,6 @@ session_start();
 
 </form>
 
-</div>
-
-
-<script>
-var slider = document.getElementById("myQuality");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value;
-
-slider.oninput = function() {
-  output.innerHTML = this.value;
-}
-
-var slider1 = document.getElementById("myVitality");
-var output1 = document.getElementById("demo1");
-output1.innerHTML = slider1.value;
-
-slider1.oninput = function() {
-  output1.innerHTML = this.value;
-}
-
-var slider2 = document.getElementById("myFood");
-var output2 = document.getElementById("demo2");
-output2.innerHTML = slider2.value;
-
-slider2.oninput = function() {
-  output2.innerHTML = this.value;
-}
-
-var slider3 = document.getElementById("myMood");
-var output3 = document.getElementById("demo3");
-output3.innerHTML = slider3.value;
-
-slider3.oninput = function() {
-  output3.innerHTML = this.value;
-}
-
-var slider4 = document.getElementById("myStress");
-var output4 = document.getElementById("demo4");
-output4.innerHTML = slider4.value;
-
-slider4.oninput = function() {
-  output4.innerHTML = this.value;
-}
-
-var slider5 = document.getElementById("myPain");
-var output5 = document.getElementById("demo5");
-output5.innerHTML = slider5.value;
-
-slider5.oninput = function() {
-  output5.innerHTML = this.value;
-}
-
-
-</script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </body>
 </html>

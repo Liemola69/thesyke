@@ -15,18 +15,12 @@ body{
     background-color: var(--paaTaustavari);
     color: white;
     font-family: 'Baloo Da 2', cursive, sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     margin: 0;
     
 }
 
-.slideSivu{
-    background-color: var(--paaTaustavari);
-    height: auto;
-    margin: auto;
-    width: 100%;
-    overflow: hidden;
-}
+
 
 
 
@@ -34,11 +28,12 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
+    width: 50%;
+    
 
 }
   .slidecontainer > div{
-    width: 350px;
+    width: 70%;
     margin: 10px;
     text-align: center;
     font-size: 20px; 
@@ -49,7 +44,7 @@ body{
   .slider {
 
     -webkit-appearance: none;
-    width: 60%;
+    width: 70%;
     height: 20px;
     border-radius: 5px;
     background: #a8a7a7;
@@ -78,15 +73,11 @@ body{
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #4CAF50;
+    background: rgb(0, 184, 212);
     cursor: pointer;
   }
 
-  #ylaValikko{
-    display: none;
-    background-color: var(--ylaValikkovari);
-    color: var(--fonttiVari);
-}
+
 
 #sivunNimi{
     width: 100%;
@@ -98,24 +89,7 @@ body{
     padding: 10px 0;
 }
 
-#hampurilaisMenu{
-    color: var(--tehosteVari);
-    font-size: 24px;
-    width: fit-content;
-    padding: 10px 15px;
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-}
 
-#hampurilaisValikko{
-    height: 0px;
-    width: 100%;
-    position: absolute;
-    background-color: white;
-    cursor: pointer;
-    z-index: 2;
-}
 
 /* Navigation Settings */
 #ylaNav{
@@ -127,5 +101,24 @@ body{
     z-index: 2;
     text-align: center;
 }
+
+#submit {
+  background: var(--tehosteVari);
+    color: var(--fonttiVari);
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    width: 70%;
+    height: 80%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
+    font-size: x-large;
+}
+
+#submit:hover {
+  background: var(--fonttiVari);
+  color: var(--tehosteVari);
+}
+
 
   

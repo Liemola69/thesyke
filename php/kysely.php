@@ -1,5 +1,6 @@
 <?php
     session_start();
+
     include("../forms/formPaivaKysely.php");
     include_once("../config/https.php");
     include_once("../config/config.php");
@@ -72,12 +73,12 @@
         file_put_contents('../log/DBErrors.txt', 'Connection: ' . $e->getMessage() . "\n", FILE_APPEND);
 
         }
-        if(isset($_POST['destroyPaivaKysely'])){
+        /*if(isset($_POST['destroyPaivaKysely'])){
             session_unset();
             session_destroy();
             //Palataan takaisin tälle samalle sivulle jolloin sessio käynnistyy uudelleen
             header("Location: ". $_SERVER['PHP_SELF']);
-        }
+        }*/
         
     }    
     
