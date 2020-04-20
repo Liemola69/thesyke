@@ -1,21 +1,23 @@
 :root{
-    --paaTaustavari: rgb(105, 105, 105);
-    --liikennevaloPunainen: #d83a0a;
-    --liikennevaloKeltainen: #ecd71b;
-    --liikennevaloVihrea: #669e27;
-    --liikennevaloHarmaa: lightgray;
-    --ylaValikkovari: rgb(66, 66, 66);
-    --alaValikkovari: rgba(96, 124, 138, 0.8);
-    --tehosteVari: rgba(0, 184, 212, 0.7);
-    --fonttiVari: white;
+  --paaTaustavari:rgb(52, 59, 60);
+  --liikennevaloPunainen:rgb(233, 60, 7);
+  --liikennevaloKeltainen:rgb(236, 215, 27);
+  --liikennevaloVihrea:rgb(112, 187, 25);
+  --liikennevaloHarmaa:rgb(211, 211, 211);
+  --ylaValikkovari:rgb(36, 35, 35);
+  --alaValikkovari:rgb(36, 35, 35);
+  --tehosteVari:#16b4c5;
+  --tehosteVari2:#7bb3b9;
+  --fonttiVari:rgb(255, 255, 255);
+  --fonttiVari2:rgb(28, 28, 28);
 }
 
 
 body{
     background-color: var(--paaTaustavari);
-    color: white;
+    color: var(--fonttiVari);
     font-family: 'Baloo Da 2', cursive, sans-serif;
-    font-size: 18px;
+    font-size: 5vw;
     margin: 0;
     
 }
@@ -39,7 +41,7 @@ body{
 
 }
   .slidecontainer > div{
-    width: 70%;
+    width: 80%;
     margin: 10px;
     text-align: center;
     font-size: 20px; 
@@ -108,7 +110,7 @@ body{
     text-align: center;
 }
 
-#submit {
+.buttonit {
   background: var(--tehosteVari);
     color: var(--fonttiVari);
     display: inline-block;
@@ -121,10 +123,22 @@ body{
     font-size: x-large;
 }
 
-#submit:hover {
+.buttonit:active {
   background: var(--fonttiVari);
   color: var(--tehosteVari);
 }
+
+#closeMenu{
+  color: var(--tehosteVari);
+  font-size: 30px;
+  width: fit-content;
+  padding: 10px 15px;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+
 
 
   

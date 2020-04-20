@@ -33,7 +33,7 @@
     ?>
 
     <nav id="ylaNav">
-        <div id="sivunNimi">PÄIVÄNÄKYMÄ</div>
+        <div id="sivunNimi"><b>PÄIVÄNÄKYMÄ</b></div>
         <div id="hampurilaisMenu" class="fa fa-bars"></div>
         <div id="hampurilaisValikko">
             <ul id="ylaValikko">
@@ -63,16 +63,23 @@
                                 <i id="prevDayNuoli" class='fas fa-chevron-left'></i>
                                 <?php getDayFormatted($_SESSION['currentDay']); ?>
                                 <i id="nextDayNuoli" class='fas fa-chevron-right'></i>
+                                
                             </div>
+                            
 
                             <!-- Unenlaatu hymiö -->
+                            <div>
                             <i <?php 
                                 if($paivaOlio == null){
                                     echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
+                                                                        
                                 } else{
                                     getHymio($paivaOlio);
                                 }
                             ?>></i>
+                            <!-- Menee päiväkyselysivulle -->
+                            <a id="kyna" href="kysely.php" class="fas fa-pen-square" ></a>
+                            </div>
 
                             <!--inforuudut-->
                             <div class="box">
@@ -84,11 +91,14 @@
                                 </div>       
                             </div>
 
+
                             <!--nuolet-->
                             <div class="clear">
                                 <i class='fas fa-arrow-alt-circle-up'><p>5</p></i>
                                 <i class='fas fa-arrow-alt-circle-down'><p>3</p></i>
+                                
                             </div>
+                           
 
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-down'></i>
@@ -364,7 +374,7 @@
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-syringe ikoni' style='color:var(--liikennevaloHarmaa);'></i>
+                                    <i class= 'fas fa-mobile-alt ikoni' style='color:var(--liikennevaloHarmaa);'></i>
                                     <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
                                 </div>
 
@@ -481,7 +491,7 @@
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-syringe ikoni' style='color:var(--liikennevaloHarmaa);'></i>
+                                <i class='fas fa-mobile-alt ikoni' style='color:var(--liikennevaloHarmaa);'></i>
                                 <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
                             </div>
 

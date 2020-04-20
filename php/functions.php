@@ -20,6 +20,7 @@
             return null;
         }
     }
+ 
 
     // Hae päivän data tietokannasta
     function getDateData($user_ID, $currentDay, $DBH){
@@ -63,15 +64,17 @@
     function getHymio($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
 
-        if($unenLaatu > 4){
+        if($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio" style="color: var(--liikennevaloVihrea);"');
-        } elseif($unenLaatu <= 4 && $unenLaatu >= -3){
+        } elseif($unenLaatu <= 2 && $unenLaatu >= -2){
             //fa-meh
             echo('class="fas fa-meh hymio" style="color: var(--liikennevaloKeltainen);"');
-        } elseif($unenLaatu < -3){
+        } elseif($unenLaatu < -2){
             //fa-frown
             echo('class="fas fa-frown hymio" style="color: var(--liikennevaloPunainen);"');
+        }elseif($unenLaatu == 0){
+            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
         }
     }
 
@@ -79,16 +82,16 @@
     function getHymioFromDate($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
 
-        if($unenLaatu > 4){
+        if($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio" style="color: var(--liikennevaloVihrea);"');
-        } elseif($unenLaatu <= 4 && $unenLaatu >= -3){
+        } elseif($unenLaatu <= 2 && $unenLaatu >= -2){
             //fa-meh
             echo('class="fas fa-meh hymio" style="color: var(--liikennevaloKeltainen);"');
-        } elseif($unenLaatu < -3){
+        } elseif($unenLaatu < -2){
             //fa-frown
             echo('class="fas fa-frown hymio" style="color: var(--liikennevaloPunainen);"');
-        }else{
+        }elseif($unenLaatu == 0){
             echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
         }
     }
@@ -132,11 +135,11 @@
 
     // Ruoka
     function getIconColorFood($value){
-        if($value > 4){
+        if($value > 2){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-3) && $value <= 4){
+        } elseif($value >= (-2) && $value <= 2){
             echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-3)){
+        } elseif($value < (-2)){
             echo("var(--liikennevaloPunainen)");
         }elseif($value==0){
             echo("var(--liikennevaloHarmaa)");
@@ -145,11 +148,11 @@
 
     // Alkoholi
     function getIconColorAlcohol($value){
-        if($value > 4){
+        if($value > 2){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-3) && $value <= 4){
+        } elseif($value >= (-2) && $value <= 2){
             echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-3)){
+        } elseif($value < (-2)){
             echo("var(--liikennevaloPunainen)");
         }elseif($value==0){
             echo("var(--liikennevaloHarmaa)");
@@ -158,11 +161,11 @@
 
     // Vireys
     function getIconColorVitality($value){
-        if($value > 4){
+        if($value > 2){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-3) && $value <= 4){
+        } elseif($value >= (-2) && $value <= 2){
             echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-3)){
+        } elseif($value < (-2)){
             echo("var(--liikennevaloPunainen)");
         }elseif($value==0){
             echo("var(--liikennevaloHarmaa)");
@@ -171,11 +174,11 @@
 
     // Piristeet
     function getIconColorStimulant($value){
-        if($value > 4){
+        if($value > 2){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-3) && $value <= 4){
+        } elseif($value >= (-2) && $value <= 2){
             echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-3)){
+        } elseif($value < (-2)){
             echo("var(--liikennevaloPunainen)");
         }elseif($value==0){
             echo("var(--liikennevaloHarmaa)");
@@ -184,11 +187,11 @@
 
     // Stressi
     function getIconColorStress($value){
-        if($value > 4){
+        if($value > 2){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-3) && $value <= 4){
+        } elseif($value >= (-2) && $value <= 2){
             echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-3)){
+        } elseif($value < (-2)){
             echo("var(--liikennevaloPunainen)");
         }elseif($value==0){
             echo("var(--liikennevaloHarmaa)");
@@ -197,11 +200,11 @@
 
     // Mieliala
     function getIconColorMood($value){
-        if($value > 4){
+        if($value > 2){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-3) && $value <= 4){
+        } elseif($value >= (-2) && $value <= 2){
             echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-3)){
+        } elseif($value < (-2)){
             echo("var(--liikennevaloPunainen)");
         }elseif($value==0){
             echo("var(--liikennevaloHarmaa)");
@@ -212,11 +215,11 @@
 
     // Kivut
     function getIconColorPains($value){
-        if($value > 4){
+        if($value > 2){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-3) && $value <= 4){
+        } elseif($value >= (-2) && $value <= 2){
             echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-3)){
+        } elseif($value < (-2)){
             echo("var(--liikennevaloPunainen)");
         }elseif($value==0){
             echo("var(--liikennevaloHarmaa)");
@@ -232,13 +235,13 @@
         }
     }
 
-     // Päihteet (boolean)
+     // ruutuaika
      function getIconColorScreenTime($value){
-        if($value > 4){
+        if($value > 2){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-3) && $value <= 4){
+        } elseif($value >= (-2) && $value <= 2){
             echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-3)){
+        } elseif($value < (-2)){
             echo("var(--liikennevaloPunainen)");
         }elseif($value==0){
             echo("var(--liikennevaloHarmaa)");

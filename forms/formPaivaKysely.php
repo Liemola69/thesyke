@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,8 +12,8 @@ session_start();
 <body>
 
 <nav id="ylaNav">
-        <div id="sivunNimi">PÄIVÄKYSELY</div>
-        <div id="hampurilaisMenu" class="fa fa-close"></div>
+        <div id="sivunNimi">PÄIVÄKYSELY </div>
+        <a href="sivurunko.php" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>
         
     </nav>
 
@@ -25,32 +26,32 @@ session_start();
 <div class="slidecontainer">
 <div><label for="myQuality">Miten nukuit viime yönä:</label><br></div>
 <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-<input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myQuality" name="given_Quality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+<input type="range" min="-5" max="5" value="0" step="1" class="slider" id="myQuality" name="given_Quality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
 
 
 <div><label for="myVitality">Minkälainen vireytesi on tänään:</label><br></div>
 <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-<input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myVitality" name="given_Vitality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+<input type="range" min="-5" max="5" value="0" step="1" class="slider" id="myVitality" name="given_Vitality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
 
 
 <div><label for="myFood">Miten söit eilen:</label><br></div>
   <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-  <input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myFood" name="given_Food"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+  <input type="range" min="-5" max="5" value="0" step="1" class="slider" id="myFood" name="given_Food"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
     
 
   <div><label for="myMood">Minkälainen oli mielialasi eilen:</label><br></div>
   <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-  <input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myMood" name="given_Mood">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+  <input type="range" min="-5" max="5" value="0" step="1" class="slider" id="myMood" name="given_Mood">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
     
 
   <div><label for="myStress">Stressitasosi eilen:</label><br></div>
   <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-  <input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myStress" name="given_Stress"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+  <input type="range" min="-5" max="5" value="0" step="1" class="slider" id="myStress" name="given_Stress"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
     
 
   <div><label for="myPain">Kuvaile kiputilojasi eilen:</label><br></div>
   <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-  <input type="range" min="-10" max="10" value="0" step="1" class="slider" id="myPain" name="given_Pain"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+  <input type="range" min="-5" max="5" value="0" step="1" class="slider" id="myPain" name="given_Pain"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
   
   <div style ="text-align:start;margin-left:20px">Eilen...</div>
     <div>..nautitut kofeiiniannokset:</div>
@@ -99,7 +100,9 @@ session_start();
   <input type="radio" id="medicine" name="given_Medicine" value="0"> En</div>
   
 
-  <div> <input  type="submit" name="submitPaivaKysely" value="Tallenna" id="submit"></input>
+  <div> 
+  <a><input href="sivurunko.php?value=Tallenna" type="submit" name="submitPaivaKysely" value="Tallenna" class="buttonit"></input></a>
+  <input type="reset" name="resetPaivaKysely" value="Tyhjennä" id="reset" class="buttonit" ></input>
   </div>
 
 

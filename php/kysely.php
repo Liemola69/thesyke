@@ -6,6 +6,7 @@
     include_once("../config/config.php");
     include("../php/functions.php");
     
+    
 
     //Session debuggaus, kommentoi pois tarvittaessa
     //echo session_id();
@@ -18,11 +19,14 @@
 
    
    $thisDay =  getDayFormatted($_SESSION['currentDay']);
-    
+   //$thisID = getUserID($_SESSION['user_ID']);
+   
 
     if(isset($_POST['submitPaivaKysely'])){
 
         $_SESSION['currentDay'] = $_POST['currentDay'];
+        //$_SESSION['user_ID'] = $_POST['user_ID'];
+
         $_SESSION['user_sleep_quality'] = (int)$_POST['given_Quality'];
         $_SESSION['user_vitality'] = (int)$_POST['given_Vitality'];
         $_SESSION['user_food'] = (int)$_POST['given_Food'];
@@ -35,8 +39,9 @@
         $_SESSION['user_smoke'] = (int)$_POST['given_Smoke'];
         $_SESSION['user_medicine'] = (int)$_POST['given_Medicine'];
 
-        $data['date']=(int) $_SESSION['currentDay'];
-        //$data['date_user_ID']= (int)$_SESSION['user_ID'];
+        $data['date']= $_SESSION['currentDay'];
+        //$data['date_user_ID']= $_SESSION['user_ID'];
+
         $data['user_sleep_quality'] = (int)$_SESSION['user_sleep_quality'];
         $data['user_vitality'] = (int)$_SESSION['user_vitality'];
         $data['user_food'] = (int)$_SESSION['user_food'];
@@ -54,7 +59,7 @@
             $sql= "INSERT INTO `ts_date` (`date_user_ID`, `date_ID`, `date`, `user_sleep_quality`,  
             `user_vitality`, `user_pain`, `user_stress`, `user_mood`, `user_stimulant`, `user_alcohol`, 
             `user_food`, `user_medicine`, `user_screen_time`, `user_smoke`)            
-            VALUES (12, NULL, :date, :user_sleep_quality, :user_vitality, :user_pain, :user_stress, :user_mood, :user_stimulant,
+            VALUES (5, NULL, :date, :user_sleep_quality, :user_vitality, :user_pain, :user_stress, :user_mood, :user_stimulant,
             :user_alcohol, :user_food, :user_medicine, :user_screen_time, :user_smoke)";
     
         $kysely = $DBH->prepare($sql);

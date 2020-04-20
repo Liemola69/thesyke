@@ -1,13 +1,16 @@
 :root{
-    --paaTaustavari: rgb(105, 105, 105);
-    --liikennevaloPunainen: #d83a0a;
-    --liikennevaloKeltainen: #ecd71b;
-    --liikennevaloVihrea: #669e27;
-    --liikennevaloHarmaa: lightgray;
-    --ylaValikkovari: rgb(66, 66, 66);
-    --alaValikkovari: rgba(96, 124, 138, 0.8);
-    --tehosteVari: rgba(0, 184, 212, 0.7);
-    --fonttiVari: white;
+    --paaTaustavari:rgb(52, 59, 60);
+    --liikennevaloPunainen:rgb(233, 60, 7);
+    --liikennevaloKeltainen:rgb(236, 215, 27);
+    --liikennevaloVihrea:rgb(112, 187, 25);
+    --liikennevaloHarmaa:rgb(211, 211, 211);
+    --ylaValikkovari:rgb(36, 35, 35);
+    --alaValikkovari:rgb(36, 35, 35);
+    --tehosteVari:#16b4c5;
+    --tehosteVari2:#7bb3b9;
+    --fonttiVari:rgb(255, 255, 255);
+    --fonttiVari2:rgb(28, 28, 28);
+    
 }
 
 * {
@@ -21,8 +24,8 @@ html {
 }
 
 body {
-    font-family: 'Baloo Da 2', cursive, sans-serif;
-    font-size: 18px;
+    font-family: 'Baloo Da 2', sans-serif;
+    font-size: 3vw;
     text-align: center;
     text-decoration: none;
     overflow: hidden;
@@ -70,7 +73,7 @@ body {
 
 .buttonDiv {
     background: var(--tehosteVari);
-    color: var(--fonttiVari);
+    color: var(--fonttiVari2);
     display: inline-block;
     text-align: center;
     text-decoration: none;
@@ -88,7 +91,7 @@ body {
 
 .buttonGeneric {
     background: var(--tehosteVari);
-    color: var(--fonttiVari);
+    color: var(--fonttiVari2);
     font-family: 'Baloo Da 2', cursive, sans-serif;
     font-size: larger;
     text-transform: uppercase;
@@ -370,6 +373,7 @@ body {
     align-items: center;
     justify-content: space-between;
     color: white;
+    
 }
 
 #paasivuViikkoNav{
@@ -378,6 +382,7 @@ body {
     align-items: center;
     justify-content: space-between;
     color: white;
+   
 }
 
 #paasivuKuukausiNav{
@@ -386,6 +391,7 @@ body {
     align-items: center;
     justify-content: space-between;
     color: white;
+    
 }
 
 #viikonpaivaLista{
@@ -418,6 +424,7 @@ body {
     width: 100%;
     color: var(--tehosteVari);
     font-size: 1.4em;
+    
 }
 
 #ylaValikko li{
@@ -441,6 +448,7 @@ body {
     background-color: white;
     cursor: pointer;
     z-index: 2;
+    font-size: 1.5em;
 }
 
 /* Navigation Settings */
@@ -459,15 +467,18 @@ body {
     bottom: 0;
     width: 100vw;
     z-index: 2;
+    
 }
 
 .box{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    color: var(--fonttiVari);
-    background-color: var(--tehosteVari);
+    color: #1C1C1C;
+    background-color: var(--tehosteVari2);
     margin: 10px;
+    font-weight: bold;
+    font-size: 1.4em;
 }
 
 .clear{
@@ -492,7 +503,7 @@ body {
 
 .ikoniHuutomerkki{
     font-size:20px;
-    color:black;
+    color:var(--tehosteVari);
     margin-top: 40px;
 }
 
@@ -508,8 +519,8 @@ body {
 }
 
 i[class^="fas fa-chevron"]{
-    font-size: 2.8em;
-    color: #00b8d4e6;
+    font-size: 4em;
+    color: var(--tehosteVari);
 }
 
 
@@ -530,7 +541,8 @@ i[class^="fas fa-chevron"]{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    font-size: 1.3em;
+    
 }
 
 .swiper-pagination-bullet{
@@ -540,10 +552,14 @@ i[class^="fas fa-chevron"]{
     border-radius: 0px;
     width: 100px;
     height: 70px;
+    color: white;
+    font-weight: bold;
 }
 
 .swiper-pagination-bullet-active{
     background-color: var(--tehosteVari);
+    color: #1C1C1C;
+    font-weight: bold;
 }
 
 
@@ -572,8 +588,8 @@ i[class^="fas fa-chevron"]{
     align-items: center;
     width: 100%;
     text-align: center;
-    background-color: var(--tehosteVari);
-    color: #fff;
+    background-color: var(--tehosteVari2);
+    color: var(--fonttiVari2);
     font-size: 34px;
 }
 
@@ -613,7 +629,7 @@ i[class^="fas fa-chevron"]{
 }
 
 .today {
-    background-color: var(--alaValikkovari);
+    background-color:var(--tehosteVari);
     color: #fff;
 }
 
@@ -631,7 +647,7 @@ i[class^="fas fa-chevron"]{
     height: 50px;
     border-radius: 50%;
     font-size: 23px;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--tehosteVari);
     transition: all 0.4s;
 }
 
@@ -644,6 +660,10 @@ i[class^="fas fa-chevron"]{
 #month {
     font-size: 30px;
     font-weight: 500;
+    color: var(--fonttiVari2);
+}
+#year{
+    color: var(--fonttiVari2); 
 }
 
 
@@ -711,6 +731,12 @@ i[class^="fas fa-chevron"]{
     border-radius: 50%;
     background: #4CAF50;
     cursor: pointer;
+  }
+
+  #kyna{
+    color: var(--tehosteVari);
+    font-size: 3em;
+    box-shadow: 2px  5px 25px -7px whitesmoke;
   }
 
   
