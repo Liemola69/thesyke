@@ -411,6 +411,18 @@ body {
     font-size: 1.4em;
 }
 
+.hidden{
+    display: none;
+}
+
+.polarLisaValikko{
+    background-color: var(--tehosteVari);
+}
+
+#polarPoistaLinkitys{
+    background-color: var(--liikennevaloPunainen);
+}
+
 #ylaValikko li{
     padding: 10px 0;
 }

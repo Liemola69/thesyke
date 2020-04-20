@@ -205,3 +205,23 @@ for(let i = 0; i < 7; i++){
         window.location.href="sivurunko.php?moveToDay=" + i;
     });
 }
+
+let paivita = document.querySelectorAll(".hidden")[0];
+let poista = document.querySelectorAll(".hidden")[1];
+let polarLinkitys = document.getElementById("polarLinkitys");
+
+polarLinkitys.addEventListener('click', function(evt){
+    paivita.classList.toggle('hidden');
+    poista.classList.toggle('hidden');
+});
+
+paivita.addEventListener('click', function(evt){
+    window.location.href = "polar.php";
+})
+
+poista.addEventListener('click', function(evt){
+    let varmistus = confirm("Haluatko varmasti poistaa linkityksen?");
+    if(varmistus){
+        window.location.href="sivurunko.php?deletePolar=true";
+    }
+})
