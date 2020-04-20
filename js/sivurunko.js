@@ -111,7 +111,7 @@ hampurilaisMenu.addEventListener('click', function(evt){
     if(auki == false){
         ylaValikko.style['display'] = "block";
         hampurilaisValikko.style['top'] = ylaNav.clientHeight + "px";
-        hampurilaisValikko.style['height'] = "fit-content";
+        //hampurilaisValikko.style['height'] = "fit-content";
         auki = true;
     } else{
         ylaValikko.style['display'] = "none";
