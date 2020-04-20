@@ -6,9 +6,11 @@
     <title>Teh SyKe</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/styles_test.css">
 </head>
-<body>
+<body onload="requestCurrentDay();">
     <?php
         include_once("../config/https.php");
         include_once("../config/config.php");
@@ -90,7 +92,7 @@
             <div id="paivaSivu" class="swiper-slide">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div id="paivaPaasivu" class="swiper-slide paasivuWrapper">
+                        <div id="paivaPaasivu" class="swiper-slide paasivuPaivaWrapper">
                             
                             <!--Ylälaidan päiväbanneri-->
                             <div id="paasivuPaivaNav">
@@ -415,23 +417,38 @@
             <div id="kuukausiSivu" class="swiper-slide">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div id="kuukausiPaasivu" class="swiper-slide paasivuWrapper">
-                            <i class='fas fa-laugh hymio' style='color:var(--liikennevaloVihrea);'></i>
+                        <div id="kuukausiPaasivu" class="swiper-slide paasivuKuukausiWrapper">
 
-                            <!--inforuudut-->
-                            <div class="box">
-                                <div>
-                                    <p>UNIAIKA</p><p>8 h 39 min</p>
+                            <div class="calendar">
+                                <div class="month">
+
+                                    <div class="prev" onclick="moveDate('prev')">
+                                        <span>&#10094;</span>
+                                    </div>
+
+                                    <div>
+                                        <h2 id="month"></h2>
+                                        <p id="year"></p>
+                                    </div>
+
+                                    <div class="next" onclick="moveDate('next')">
+                                            <span>&#10095;</span>
+                                    </div>
+
                                 </div>
-                                <div>
-                                    <p>UNISYKLIT</p><p>6 sykliä</p>
-                                </div>       
-                            </div>
 
-                            <!--nuolet-->
-                            <div class="clear">
-                                <i class='fas fa-arrow-alt-circle-down'><p>3</p></i>
-                                <i class='fas fa-arrow-alt-circle-up'><p>5</p></i>
+                                <div class="weekdays">
+                                    <div>MA</div>
+                                    <div>TI</div>
+                                    <div>KE</div>
+                                    <div>TO</div>
+                                    <div>PE</div>
+                                    <div>LA</div>
+                                    <div>SU</div> 
+                                </div>
+
+                                <div class="daysOfMonth">
+                                </div>
                             </div>
 
                             <!--sivuvaihtoNuoli-->

@@ -342,7 +342,7 @@ body {
 
 /*tompan jutut*/
 
-.paasivuWrapper{
+.paasivuPaivaWrapper{
     display: grid;
     align-items: center;
     padding: 10px 10px 0 10px;
@@ -351,6 +351,11 @@ body {
 }
 
 .paasivuViikkoWrapper{
+    display: grid;
+    background-color: var(--paaTaustavari);
+}
+
+.paasivuKuukausiWrapper{
     display: grid;
     background-color: var(--paaTaustavari);
 }
@@ -551,4 +556,155 @@ i[class^="fas fa-chevron"]{
 
 @media only screen and (max-width: 320px) {
 
+}
+
+/* Kalenteri näkymän muotoilut */
+.calendar {
+    margin: auto;
+    margin-top: 5px;
+    width: 90%;
+    height: 100%;
+    background-color: rgb(226, 222, 222);
+    box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.2);
+}
+
+.month {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    background-color: var(--tehosteVari);
+    color: #fff;
+    font-size: 34px;
+}
+
+.weekdays {
+    background-color: rgb(6, 114, 109);
+    color: #fff;
+    padding: 7px 0;
+    display: flex;
+    font-size: 20px;
+}
+
+.daysOfMonth {
+    font-weight: 300;
+    padding: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 18px
+}
+
+.weekdays div,
+.daysOfMonth div {
+    text-align: center;
+    width: 14.28%;
+}
+
+.daysOfMonth div {
+    padding: 10px 0;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    transition: all 0.4s;
+}
+
+.prev_date {
+    color: #999;
+    box-sizing: border-box;
+}
+
+.today {
+    background-color: var(--alaValikkovari);
+    color: #fff;
+}
+
+.daysOfMonth div:hover {
+    cursor: pointer;
+    background-color: rgba(112, 161, 179, 0.8)
+}
+
+.prev,
+.next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 23px;
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: all 0.4s;
+}
+
+.prev:hover,
+.next:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#month {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.slideSivu{
+    background-color: var(--paaTaustavari);
+    height: auto;
+    margin: auto;
+    width: 100%;
+    overflow: auto;
+}
+
+.slidecontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+}
+
+.slidecontainer > div{
+    width: 400px;
+    margin: 10px;
+    text-align: center;
+    line-height: 11px;
+    font-size: 20px; 
+}
+ 
+.slider {
+    -webkit-appearance: none;
+    width: 60%;
+    height: 20px;
+    border-radius: 5px;
+    background: #a8a7a7;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin-bottom: 20px;
+}
+  
+.slider:hover {
+    opacity: 1;
+}
+  
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgb(0, 184, 212);
+    cursor: pointer;
+}
+  
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.highlight{
+    box-shadow: 0px 0px 5px 4px white;
 }
