@@ -464,6 +464,8 @@
                             </div>
 
                             <!--sivuvaihtoNuoli-->
+
+                            <i class='fas fa-chevron-down'></i>
                             
 
                         </div>

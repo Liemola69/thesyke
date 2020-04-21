@@ -1,6 +1,4 @@
 <?php
-    session_start();
-
     include("../forms/formPaivaKysely.php");
     include_once("../config/https.php");
     include_once("../config/config.php");
@@ -12,19 +10,19 @@
     //echo session_id();
     //echo "<br>";
     //print_r($_SESSION);
+    //print_r($data);
     //print_r($_POST);
     
     //Tallennetaan kyselyn vastaukset SESSION-muuttujiin
 
 
    
-   $thisDay =  getDayFormatted($_SESSION['currentDay']);
+   //$thisDay =  getDayFormatted($_SESSION['currentDay']);
    //$thisID = getUserID($_SESSION['user_ID']);
    
 
     if(isset($_POST['submitPaivaKysely'])){
 
-        $_SESSION['currentDay'] = $_POST['currentDay'];
         //$_SESSION['user_ID'] = $_POST['user_ID'];
 
         $_SESSION['user_sleep_quality'] = (int)$_POST['given_Quality'];
@@ -40,7 +38,7 @@
         $_SESSION['user_medicine'] = (int)$_POST['given_Medicine'];
 
         $data['date']= $_SESSION['currentDay'];
-        //$data['date_user_ID']= $_SESSION['user_ID'];
+        $data['date_user_ID']= $_SESSION['user_ID'];
 
         $data['user_sleep_quality'] = (int)$_SESSION['user_sleep_quality'];
         $data['user_vitality'] = (int)$_SESSION['user_vitality'];
@@ -56,10 +54,10 @@
             
         try{
             // SQL-lause $data-taulukon tiedoille :key -> value
-            $sql= "INSERT INTO `ts_date` (`date_user_ID`, `date_ID`, `date`, `user_sleep_quality`,  
+            $sql= "INSERT INTO `ts_date` (`date_user_ID`, `date`, `user_sleep_quality`,  
             `user_vitality`, `user_pain`, `user_stress`, `user_mood`, `user_stimulant`, `user_alcohol`, 
             `user_food`, `user_medicine`, `user_screen_time`, `user_smoke`)            
-            VALUES (5, NULL, :date, :user_sleep_quality, :user_vitality, :user_pain, :user_stress, :user_mood, :user_stimulant,
+            VALUES (:date_user_ID, :date, :user_sleep_quality, :user_vitality, :user_pain, :user_stress, :user_mood, :user_stimulant,
             :user_alcohol, :user_food, :user_medicine, :user_screen_time, :user_smoke)";
     
         $kysely = $DBH->prepare($sql);
@@ -69,8 +67,8 @@
         //session_unset();
         //session_destroy();
         
-    //Palataan takaisin tälle sivulle
-        //header("Location: ". $_SERVER['PHP_SELF']);
+        //Palataan takaisin päivänäkymään
+        //header("Location: php/sivurunko.php");
 
     
 

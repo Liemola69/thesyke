@@ -607,8 +607,8 @@
         } elseif($unenLaatu < -2){
             //fa-frown
             echo('class="fas fa-frown hymio" style="color: var(--liikennevaloPunainen);"');
-        }elseif($unenLaatu == 0){
-            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
+        }elseif($unenLaatu == null){
+            echo('class="fas fa-frown hymio" style="color: var(--liikennevaloHarmaa);"');
         }
     }
 
@@ -618,14 +618,14 @@
 
         if($unenLaatu > 2){
             //fa-laugh
-            echo('class="fas fa-laugh hymio" style="color: var(--liikennevaloVihrea);"');
+            echo('class="fas fa-laugh hymio-viikko" style="color: var(--liikennevaloVihrea);"');
         } elseif($unenLaatu <= 2 && $unenLaatu >= -2){
             //fa-meh
-            echo('class="fas fa-meh hymio" style="color: var(--liikennevaloKeltainen);"');
+            echo('class="fas fa-meh hymio-viikko" style="color: var(--liikennevaloKeltainen);"');
         } elseif($unenLaatu < -2){
             //fa-frown
-            echo('class="fas fa-frown hymio" style="color: var(--liikennevaloPunainen);"');
-        }elseif($unenLaatu == 0){
+            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloPunainen);"');
+        }elseif($unenLaatu == null){
             echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
         }
     }
