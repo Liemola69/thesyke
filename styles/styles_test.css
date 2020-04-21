@@ -346,7 +346,7 @@ body {
 
 /*tompan jutut*/
 
-.paasivuWrapper{
+.paasivuPaivaWrapper{
     display: grid;
     align-items: center;
     padding: 10px 10px 0 10px;
@@ -355,6 +355,11 @@ body {
 }
 
 .paasivuViikkoWrapper{
+    display: grid;
+    background-color: var(--paaTaustavari);
+}
+
+.paasivuKuukausiWrapper{
     display: grid;
     background-color: var(--paaTaustavari);
 }
@@ -425,6 +430,18 @@ body {
     color: var(--tehosteVari);
     font-size: 1.4em;
     
+}
+
+.hidden{
+    display: none;
+}
+
+.polarLisaValikko{
+    background-color: var(--tehosteVari);
+}
+
+#polarPoistaLinkitys{
+    background-color: var(--liikennevaloPunainen);
 }
 
 #ylaValikko li{
@@ -566,18 +583,14 @@ i[class^="fas fa-chevron"]{
 
 @media only screen and (max-width: 320px) {
 
-
 }
 
-
-
-
-
+/* Kalenteri näkymän muotoilut */
 .calendar {
     margin: auto;
     margin-top: 5px;
     width: 90%;
-    height: 37em;
+    height: 100%;
     background-color: rgb(226, 222, 222);
     box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.2);
 }
@@ -607,8 +620,6 @@ i[class^="fas fa-chevron"]{
     display: flex;
     flex-wrap: wrap;
     font-size: 18px
-     
-    
 }
 
 .weekdays div,
@@ -619,7 +630,9 @@ i[class^="fas fa-chevron"]{
 
 .daysOfMonth div {
     padding: 10px 0;
-    margin-bottom: 10px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
     transition: all 0.4s;
 }
 
@@ -677,28 +690,21 @@ i[class^="fas fa-chevron"]{
     overflow: auto;
 }
 
-
-
 .slidecontainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    
-    
-    
-  }
-  .slidecontainer > div{
+    align-items: center;   
+}
+
+.slidecontainer > div{
     width: 400px;
     margin: 10px;
     text-align: center;
     line-height: 11px;
     font-size: 20px; 
-    
-  }
+}
  
-  
-  .slider {
-
+.slider {
     -webkit-appearance: none;
     width: 60%;
     height: 20px;
@@ -709,13 +715,13 @@ i[class^="fas fa-chevron"]{
     -webkit-transition: .2s;
     transition: opacity .2s;
     margin-bottom: 20px;
-  }
+}
   
-  .slider:hover {
+.slider:hover {
     opacity: 1;
-  }
+}
   
-  .slider::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 35px;
@@ -723,13 +729,13 @@ i[class^="fas fa-chevron"]{
     border-radius: 50%;
     background: rgb(0, 184, 212);
     cursor: pointer;
-  }
+}
   
-  .slider::-moz-range-thumb {
+.slider::-moz-range-thumb {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #4CAF50;
+    background: var(--tehosteVari);
     cursor: pointer;
   }
 
@@ -739,4 +745,6 @@ i[class^="fas fa-chevron"]{
     box-shadow: 2px  5px 25px -7px whitesmoke;
   }
 
-  
+.highlight{
+    box-shadow: 0px 0px 5px 4px white;
+}

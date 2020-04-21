@@ -17,14 +17,26 @@ let nuoliYlos = document.querySelectorAll(".fa-chevron-up");
 let swiperContainer = document.querySelectorAll(".swiper-container");
 let swiperPageContainer = document.querySelector(".swiper-pageContainer");
 
-let paasivuWrapper = document.querySelectorAll(".paasivuWrapper");
+// Detailsivun muuttujat
 let detailWrapper = document.querySelectorAll(".detailWrapper");
 
-let paasivuViikkoWrapper = document.querySelector(".paasivuViikkoWrapper");
+// Päivänäkymän muuttujat
+let paasivuPaivaWrapper = document.querySelector(".paasivuPaivaWrapper");
 
+// Viikkonäkymän muuttujat
+let paasivuViikkoWrapper = document.querySelector(".paasivuViikkoWrapper");
 let viikonpaivaListaItem = document.getElementById("viikonpaivaLista").getElementsByTagName("li");
 
-//let kuukaudenpaivaListaItem = document.getElementById("kuukaudenpaivaLista").getElementsByTagName("td");
+// Kuukausinäkymän muuttujat
+let paasivuKuukausiWrapper = document.querySelector(".paasivuKuukausiWrapper");
+
+// Polar valikon muuttujat
+let paivita = document.querySelectorAll(".hidden")[0];
+let poista = document.querySelectorAll(".hidden")[1];
+let polarLinkitys = document.getElementById("polarLinkitys");
+
+let kalenteriKkPaivat = document.querySelector(".daysOfMonth");
+let kalenteriPaivat = kalenteriKkPaivat.childNodes;
 
 // Luo olion, jolla seurataan vertikaalista swippausta
 let mySwiper = new Swiper ('.swiper-container', {
@@ -54,18 +66,19 @@ if(window.location.search == "?prevWeek=true"
     mySwiper2.slideTo('1', '0');
 }
 
-
-//**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
+// Korjaa vertikaalisen swiperin ja wrappereiden korkeuden
 swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
 for(let i = 0; i < 3; i++){
     swiperContainer[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
 }
-        
-for(let i = 0; i < 2; i++){
-    paasivuWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
-}
-            
-for(let i = 0; i < 2; i++){
+
+// Korjaa sivun sisällön korkeus ylä- ja alanavin mukaisesti
+paasivuPaivaWrapper.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+paasivuViikkoWrapper.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+paasivuKuukausiWrapper.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+
+// Korjaa sivun detailnäkymien sisällön korkeus ylä- ja alanavin mukaisesti
+for(let i = 0; i < 3; i++){
     detailWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
 }
 
@@ -74,37 +87,22 @@ for(let i = 0; i < 3; i++){
     mySwiper[i].init();
 }
 
-// Aseta pääsivun viimeinen grid alaNavin kokoiseksi
-for(let i = 0; i < 2; i++){
-    paasivuWrapper[i].style.gridTemplateRows = "10% auto 15% auto 10% " + alaNav.clientHeight + "px";
-    detailWrapper[i].style.gridTemplateRows = "auto auto auto auto auto " + alaNav.clientHeight + "px";
+// Aseta päänäkymän viimeinen grid alaNavin kokoiseksi
+paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 15% auto 10% " + alaNav.clientHeight + "px";
+paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
+paasivuKuukausiWrapper.style.gridTemplateRows = "auto 10%" + alaNav.clientHeight + "px";
 
-    paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
+// Aseta detailsivun viimeinen grid alaNavin kokoiseksi
+for(let i = 0; i < 3; i++){
+    detailWrapper[i].style.gridTemplateRows = "auto auto auto auto auto " + alaNav.clientHeight + "px";
 }
 
 window.addEventListener("resize", function(evt){
-    //**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
-    swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
-    for(let i = 0; i < 3; i++){
-        swiperContainer[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
-    }
+    korjaaSisallonKorkeus();
+});
 
-    for(let i = 0; i < 2; i++){
-        paasivuWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
-    }
-
-    paasivuViikkoWrapper.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
-
-    for(let i = 0; i < 3; i++){
-        detailWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
-    }
-
-    // Korjaa pääsivun viimeinen grid alaNavin kokoiseksi
-    for(let i = 0; i < 2; i++){
-        paasivuWrapper[i].style.gridTemplateRows = "10% auto 15% auto 10% " + alaNav.clientHeight + "px";
-        detailWrapper[i].style.gridTemplateRows = "60px auto auto auto auto " + alaNav.clientHeight + "px";
-    }
-    paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
+document.addEventListener("resize", function(evt){
+    korjaaSisallonKorkeus();
 });
 
 // Avaa hampurilaisvalikon klikkauksesta
@@ -113,7 +111,7 @@ hampurilaisMenu.addEventListener('click', function(evt){
     if(auki == false){
         ylaValikko.style['display'] = "block";
         hampurilaisValikko.style['top'] = ylaNav.clientHeight + "px";
-        hampurilaisValikko.style['height'] = "fit-content";
+        //hampurilaisValikko.style['height'] = "fit-content";
         auki = true;
     } else{
         ylaValikko.style['display'] = "none";
@@ -209,69 +207,290 @@ for(let i = 0; i < 7; i++){
     });
 }
 
-var dt = new Date();
-        function renderDate() {
-            dt.setDate(1);
+// Avaa lisävalikko kun paina hampurilaisvalikosta Polar
+polarLinkitys.addEventListener('click', function(evt){
+    paivita.classList.toggle('hidden');
+    poista.classList.toggle('hidden');
+});
 
-            var day = dt.getDay();
-            var today = new Date();
-            var endDate = new Date(
-                dt.getFullYear(),
-                dt.getMonth() + 1,
-                0
-            ).getDate();
+paivita.addEventListener('click', function(evt){
+    window.location.href = "polar.php";
+})
 
-            var prevDate = new Date(
-                dt.getFullYear(),
-                dt.getMonth(),
-                0
-            ).getDate();
-            var months = [
-                "TAMMIKUU",
-                "HELMIKUU",
-                "MAALISKUU",
-                "HUHTIKUU",
-                "TOUKOKUU",
-                "KKESÄKUU",
-                "HEINÄKUU",
-                "ELOKUU",
-                "SSYYSKUU",
-                "LOKAKUU",
-                "MARRASKUU",
-                "JOULUKUU"
-            ]
+poista.addEventListener('click', function(evt){
+    let varmistus = confirm("Haluatko varmasti poistaa linkityksen?");
+    if(varmistus){
+        window.location.href="sivurunko.php?deletePolar=true";
+    }
+})
 
-document.getElementById("month").innerHTML = months[dt.getMonth()];
-document.getElementById("year").innerHTML = dt.getFullYear();
-var cells = "";
-for (x = day-1; x > 0; x--) {
+function korjaaSisallonKorkeus(){
+    //**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
+    swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    for(let i = 0; i < 3; i++){
+        swiperContainer[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    }
 
-    cells += "<div class='prev_date'>" + (prevDate - x + 1) + "</div>";
-}
-console.log(day);
-for (i = 1; i <= endDate; i++) {
-    if (i == today.getDate() && dt.getMonth() == today.getMonth()) cells += "<div class='today'>" + i + "</div>";
-    else
-        cells += "<div class = other-day>" + i + "</div>";
-}
-document.getElementsByClassName("daysOfMonth")[0].innerHTML = cells;
+    // Korjaa sivun päänäkymien sisällön korkeus ylä- ja alanavin mukaisesti
+    paasivuPaivaWrapper.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    paasivuViikkoWrapper.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    paasivuKuukausiWrapper.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
 
+    // Korjaa sivun detailnäkymien sisällön korkeus ylä- ja alanavin mukaisesti
+    for(let i = 0; i < 3; i++){
+        detailWrapper[i].setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
+    }
 
+    // Aseta päänäkymän viimeinen grid alaNavin kokoiseksi
+    paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 15% auto 10% " + alaNav.clientHeight + "px";
+    paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
+    paasivuKuukausiWrapper.style.gridTemplateRows = "auto 10%" + alaNav.clientHeight + "px";
 
-/*document.addEventListener("click", function(){
-    document.getElementsByClassName("today").innerHTML = today;
-  });
-document.addEventListener("click", function(){
-    document.getElementsByClassName("other-day").innerHTML = cells++;
-  });*/
-
+    // Korjaa detailsivun viimeinen grid alaNavin kokoiseksi
+    for(let i = 0; i < 3; i++){
+        detailWrapper[i].style.gridTemplateRows = "auto auto auto auto auto " + alaNav.clientHeight + "px";
+    }
 }
 
-        function moveDate(para) {
-            if(para == "prev") {
-                dt.setMonth(dt.getMonth() - 1);
-            } else if(para == 'next') {
-                dt.setMonth(dt.getMonth() + 1);
-            }
-            renderDate();
+// Kuukausinäkymän js
+let dt = new Date(); // vaihda hakemaan sovelluksesta päivä
+        
+function renderDate(currentDay) {
+    dt.setDate(1);
+
+    let day = dt.getDay();
+    let today = new Date();
+    let endDate = new Date(
+        dt.getFullYear(),
+        dt.getMonth() + 1,
+        0
+    ).getDate();
+
+    let prevDate = new Date(
+        dt.getFullYear(),
+        dt.getMonth(),
+        0
+    ).getDate();
+    
+    let months = [
+        "TAMMIKUU",
+        "HELMIKUU",
+        "MAALISKUU",
+        "HUHTIKUU",
+        "TOUKOKUU",
+        "KESÄKUU",
+        "HEINÄKUU",
+        "ELOKUU",
+        "SYYSKUU",
+        "LOKAKUU",
+        "MARRASKUU",
+        "JOULUKUU"
+    ];
+
+    // Asetetaan kuukauden nimi ja vuosi näkyviin yläreunaan
+    document.getElementById("month").innerHTML = months[dt.getMonth()];
+    document.getElementById("year").innerHTML = dt.getFullYear();
+    let cells = "";
+
+    // Asetetaan edeltävän kuukauden päivien numerot soluihin
+    for (x = day-1; x > 0; x--) {
+        cells += "<div class='prev_date'>" + (prevDate - x + 1) + "</div>";
+    }
+    
+    // Asetetaan kuluvan kuukauden päivien numerot soluihin
+    for (i = 1; i <= endDate; i++) {
+        if (i == today.getDate() && dt.getMonth() == today.getMonth()){
+            cells += "<div class='today'>" + i + "</div>";
+        } else{
+            cells += "<div class = other-day>" + i + "</div>";
+        } 
+    }
+    document.getElementsByClassName("daysOfMonth")[0].innerHTML = cells;
+
+    /*document.addEventListener("click", function(){
+        document.getElementsByClassName("today").innerHTML = today;
+    });
+    document.addEventListener("click", function(){
+        document.getElementsByClassName("other-day").innerHTML = cells++;
+    });*/
+
+
+    //let kalenteriKkPaivat = document.querySelector(".daysOfMonth");
+    //let kalenteriPaivat = kalenteriKkPaivat.childNodes;
+
+    // Varmista, ettei highlight jää vanhalle päivälle päälle
+    for(let i = 0; i < kalenteriPaivat.length; i++){
+        if(kalenteriPaivat[i].classList.contains('highlight')){
+            kalenteriPaivat[i].classList.toggle('highlight');
         }
+    }
+    
+    for(let i = 0; i < kalenteriPaivat.length; i++){
+
+        // Lisää kalenteriin highlight sovelluksen currentDayn kohdalle
+        if((dt.getFullYear() + "-" + formatMonth(dt.getMonth(), kalenteriPaivat[i].classList) + "-" + formatDay(kalenteriPaivat[i].innerText, kalenteriPaivat[i].classList)) == currentDay){
+            kalenteriPaivat[i].classList.toggle('highlight');
+        }
+
+        // Vaihda sovelluksen currentDay kalenteripäivän painalluksen mukaiseksi
+        kalenteriPaivat[i].addEventListener('click', function(evt){
+            if(dt.getMonth() == 0 && kalenteriPaivat[i].classList.contains('prev_date')){
+                window.location.href="sivurunko.php?moveToDay=" + (dt.getFullYear()-1) + "-" + formatMonth(11, kalenteriPaivat[i].classList) + "-" + formatDay(kalenteriPaivat[i].innerText, kalenteriPaivat[i].classList);
+            } else{
+                window.location.href="sivurunko.php?moveToDay=" + dt.getFullYear() + "-" + formatMonth(dt.getMonth(), kalenteriPaivat[i].classList) + "-" + formatDay(kalenteriPaivat[i].innerText, kalenteriPaivat[i].classList);
+            }
+        })
+    }
+}
+
+// Palauta kuukausi muodossa mm
+function formatMonth(currentMonth, classList){
+    currentMonth += 1;
+    if(classList.contains('prev_date')){
+        if(currentMonth < 10){
+            currentMonth -= 1;
+            return "0"+currentMonth;
+        }else{
+            return currentMonth;
+        }
+    } else{
+        if(currentMonth < 10){
+            return "0"+currentMonth;
+        } else{
+            return currentMonth;
+        }
+    }
+}
+
+// Palauta päivä muodossa dd
+function formatDay(numberOfDay, classList){
+    if(classList.contains('prev_date')){
+        if(numberOfDay < 10){
+            numberOfDay -= 1;
+            return "0"+numberOfDay;
+        } else{
+            return numberOfDay;
+        }
+    } else{
+        if(numberOfDay < 10){
+            return "0"+numberOfDay;
+        } else{
+            return numberOfDay;
+        }
+    }
+}
+
+function moveDate(para) {
+    let month;
+
+    if(para == "prev") {
+        dt.setMonth(dt.getMonth()-1);
+        /*if(dt.getMonth() < 10){
+            month = "0" + (dt.getMonth()+1);
+        } else{
+            month = (dt.getMonth()+1);
+        }
+        console.log(dt.getFullYear() + "-" + month + "-" + "01");
+        getCurrentDay(dt.getFullYear() + "-" + month + "-" + "01");*/
+    } else if(para == 'next') {
+        dt.setMonth(dt.getMonth() + 1);
+        /*if(dt.getMonth() < 10){
+            month = "0" + (dt.getMonth()+1);
+        } else{
+            month = (dt.getMonth()+1);
+        }
+        console.log(dt.getFullYear() + "-" + month + "-" + "01");
+        getCurrentDay(dt.getFullYear() + "-" + month + "-" + "01");*/
+    }
+
+    requestCurrentDay();
+}
+
+// Käy kysymässä palvelimelta, mikä on sessiomuuttujissa nykyinen päivä
+function requestCurrentDay(){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let currentDay = this.responseText;
+            getCurrentDay(currentDay);
+        }
+    };
+    xhttp.open("GET", "currentDayAJAX.php", true);
+    xhttp.send();
+}
+
+// Kun palvelimelta saatu nykyinen päivä, renderöi kuukausinäkymän uudelleen ja lataa hymiöt
+function getCurrentDay(ajaxResponse){
+    renderDate(ajaxResponse);
+    requestHymio();
+}
+
+function requestHymio(){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let hymio = this.responseText;
+            console.log("One hymiö coming up");
+            printMonthHymio(hymio);
+        }
+    };
+    xhttp.open("GET", "currentMonthAJAX.php", true);
+    xhttp.send();
+}
+
+// Ottaa vastaan kuukauden hymiöt stringinä ja asettaa ne kalenterinäkymään
+function printMonthHymio(hymio){
+    //console.log(hymio);
+    let hymiot = hymio.split(";");
+    //console.log(hymiot);
+    
+    let kalenteriKkPaivat = document.querySelector(".daysOfMonth");
+    let kalenteriPaivat = kalenteriKkPaivat.childNodes;
+
+    for(let i = 0; i < kalenteriPaivat.length; i++){
+        let hymioDiv = document.createElement("div");
+        let naamari = luoHymio(hymiot[i]);
+        let offset;
+
+        if(dt.getDay() == 0){
+            offset = i;
+        } else{
+            offset = dt.getDay() - 1 + i;
+        }
+        
+        hymioDiv.appendChild(naamari);
+        kalenteriPaivat[offset].appendChild(hymioDiv);
+    }
+}
+
+function luoHymio(i){
+    let hymio = document.createElement("i");
+    if(i == "null"){
+        hymio.classList.add('fas');
+        hymio.classList.add('fa-meh-blank');
+        hymio.classList.add('hymio-viikko');
+        hymio.style.color = "var(--liikennevaloHarmaa)";
+    } else{
+        switch(i){
+            case "1":
+                hymio.classList.add('fas');
+                hymio.classList.add('fa-frown');
+                hymio.classList.add('hymio-viikko');
+                hymio.style.color = "var(--liikennevaloPunainen)";
+                break;
+            case "2":
+                hymio.classList.add('fas');
+                hymio.classList.add('fa-meh');
+                hymio.classList.add('hymio-viikko');
+                hymio.style.color = "var(--liikennevaloKeltainen)";
+                break;
+            case "3":
+                hymio.classList.add('fas');
+                hymio.classList.add('fa-laugh');
+                hymio.classList.add('hymio-viikko');
+                hymio.style.color = "var(--liikennevaloVihrea)";
+                break;
+        }
+    }
+    return hymio;
+}
