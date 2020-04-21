@@ -1,15 +1,16 @@
-/* Testiversio tyylittelyistä */
-
 :root{
-    --paaTaustavari: rgb(105, 105, 105);
-    --liikennevaloPunainen: #d83a0a;
-    --liikennevaloKeltainen: #ecd71b;
-    --liikennevaloVihrea: #669e27;
-    --liikennevaloHarmaa: lightgray;
-    --ylaValikkovari: rgb(66, 66, 66);
-    --alaValikkovari: rgba(96, 124, 138, 0.8);
-    --tehosteVari: rgba(0, 184, 212, 0.7);
-    --fonttiVari: white;
+    --paaTaustavari:rgb(52, 59, 60);
+    --liikennevaloPunainen:rgb(233, 60, 7);
+    --liikennevaloKeltainen:rgb(236, 215, 27);
+    --liikennevaloVihrea:rgb(112, 187, 25);
+    --liikennevaloHarmaa:rgb(211, 211, 211);
+    --ylaValikkovari:rgb(36, 35, 35);
+    --alaValikkovari:rgb(36, 35, 35);
+    --tehosteVari:#16b4c5;
+    --tehosteVari2:#7bb3b9;
+    --fonttiVari:rgb(255, 255, 255);
+    --fonttiVari2:rgb(28, 28, 28);
+    
 }
 
 * {
@@ -18,16 +19,19 @@
 
 html {
     height: 100%;
+
+  
 }
 
 body {
-    font-family: 'Baloo Da 2', cursive, sans-serif;
-    font-size: 18px;
+    font-family: 'Baloo Da 2', sans-serif;
+    font-size: 3vw;
     text-align: center;
     text-decoration: none;
     overflow: hidden;
     height: 100%;
-}
+    color: white;
+    }
 
 /* POP-UPIT */
 /* POP-UPIT - LOMAKKEET */
@@ -206,7 +210,7 @@ body {
 
 .buttonDiv {
     background: var(--tehosteVari);
-    color: var(--fonttiVari);
+    color: var(--fonttiVari2);
     display: inline-block;
     text-align: center;
     text-decoration: none;
@@ -222,6 +226,34 @@ body {
     color: var(--tehosteVari);
 }
 
+<<<<<<< HEAD
+=======
+.buttonGeneric {
+    background: var(--tehosteVari);
+    color: var(--fonttiVari2);
+    font-family: 'Baloo Da 2', cursive, sans-serif;
+    font-size: larger;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px -2px rgba(0,0,0,0.75);
+}
+
+.buttonGeneric:hover {
+    background: var(--fonttiVari);
+    color: var(--tehosteVari);
+}
+
+.textboxGeneric {
+    width: 80%;
+    border-radius: 5px;
+    font-family: 'Baloo Da 2', cursive, sans-serif;
+    font-size: larger;
+}
+>>>>>>> f28c34f9d0101603a1bf05c57db6eebd6df298e6
 
 
 
@@ -353,6 +385,7 @@ body {
     align-items: center;
     justify-content: space-between;
     color: white;
+    
 }
 
 #paasivuViikkoNav{
@@ -361,6 +394,16 @@ body {
     align-items: center;
     justify-content: space-between;
     color: white;
+   
+}
+
+#paasivuKuukausiNav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    
 }
 
 #viikonpaivaLista{
@@ -393,6 +436,7 @@ body {
     width: 100%;
     color: var(--tehosteVari);
     font-size: 1.4em;
+    
 }
 
 #ylaValikko li{
@@ -416,6 +460,7 @@ body {
     background-color: white;
     cursor: pointer;
     z-index: 2;
+    font-size: 1.5em;
 }
 
 /* Navigation Settings */
@@ -434,15 +479,18 @@ body {
     bottom: 0;
     width: 100vw;
     z-index: 2;
+    
 }
 
 .box{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    color: var(--fonttiVari);
-    background-color: var(--tehosteVari);
+    color: #1C1C1C;
+    background-color: var(--tehosteVari2);
     margin: 10px;
+    font-weight: bold;
+    font-size: 1.4em;
 }
 
 .clear{
@@ -467,13 +515,14 @@ body {
 
 .ikoniHuutomerkki{
     font-size:20px;
-    color:black;
+    color:var(--tehosteVari);
     margin-top: 40px;
 }
 
 .hymio{
     font-size: 30vw;
     padding: 10px;
+    
 }
 
 .hymio-viikko{
@@ -482,9 +531,10 @@ body {
 }
 
 i[class^="fas fa-chevron"]{
-    font-size: 2.8em;
-    color: #00b8d4e6;
+    font-size: 4em;
+    color: var(--tehosteVari);
 }
+
 
 .fa-chevron-down{
     align-self: end;
@@ -503,7 +553,8 @@ i[class^="fas fa-chevron"]{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    font-size: 1.3em;
+    
 }
 
 .swiper-pagination-bullet{
@@ -513,14 +564,191 @@ i[class^="fas fa-chevron"]{
     border-radius: 0px;
     width: 100px;
     height: 70px;
+    color: white;
+    font-weight: bold;
 }
 
 .swiper-pagination-bullet-active{
     background-color: var(--tehosteVari);
+    color: #1C1C1C;
+    font-weight: bold;
 }
 
 
 
 @media only screen and (max-width: 320px) {
 
+
 }
+
+
+
+
+
+.calendar {
+    margin: auto;
+    margin-top: 5px;
+    width: 90%;
+    height: 37em;
+    background-color: rgb(226, 222, 222);
+    box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.2);
+}
+
+.month {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    background-color: var(--tehosteVari2);
+    color: var(--fonttiVari2);
+    font-size: 34px;
+}
+
+.weekdays {
+    background-color: rgb(6, 114, 109);
+    color: #fff;
+    padding: 7px 0;
+    display: flex;
+    font-size: 20px;
+}
+
+.daysOfMonth {
+    font-weight: 300;
+    padding: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 18px
+     
+    
+}
+
+.weekdays div,
+.daysOfMonth div {
+    text-align: center;
+    width: 14.28%;
+}
+
+.daysOfMonth div {
+    padding: 10px 0;
+    margin-bottom: 10px;
+    transition: all 0.4s;
+}
+
+.prev_date {
+    color: #999;
+    box-sizing: border-box;
+}
+
+.today {
+    background-color:var(--tehosteVari);
+    color: #fff;
+}
+
+.daysOfMonth div:hover {
+    cursor: pointer;
+    background-color: rgba(112, 161, 179, 0.8)
+}
+
+.prev,
+.next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 23px;
+    background-color: var(--tehosteVari);
+    transition: all 0.4s;
+}
+
+.prev:hover,
+.next:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#month {
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--fonttiVari2);
+}
+#year{
+    color: var(--fonttiVari2); 
+}
+
+
+
+
+.slideSivu{
+    background-color: var(--paaTaustavari);
+    height: auto;
+    margin: auto;
+    width: 100%;
+    overflow: auto;
+}
+
+
+
+.slidecontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    
+    
+  }
+  .slidecontainer > div{
+    width: 400px;
+    margin: 10px;
+    text-align: center;
+    line-height: 11px;
+    font-size: 20px; 
+    
+  }
+ 
+  
+  .slider {
+
+    -webkit-appearance: none;
+    width: 60%;
+    height: 20px;
+    border-radius: 5px;
+    background: #a8a7a7;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin-bottom: 20px;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgb(0, 184, 212);
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+  }
+
+  #kyna{
+    color: var(--tehosteVari);
+    font-size: 3em;
+    box-shadow: 2px  5px 25px -7px whitesmoke;
+  }
+
+  

@@ -7,8 +7,14 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/styles_test.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    
+
 </head>
-<body>
+<body onload="renderDate()">
     <?php
         include_once("../config/https.php");
         include_once("../config/config.php");
@@ -27,7 +33,7 @@
     ?>
 
     <nav id="ylaNav">
-        <div id="sivunNimi">PÄIVÄNÄKYMÄ</div>
+        <div id="sivunNimi"><b>PÄIVÄNÄKYMÄ</b></div>
         <div id="hampurilaisMenu" class="fa fa-bars"></div>
         <div id="hampurilaisValikko">
             <ul id="ylaValikko">
@@ -57,16 +63,23 @@
                                 <i id="prevDayNuoli" class='fas fa-chevron-left'></i>
                                 <?php getDayFormatted($_SESSION['currentDay']); ?>
                                 <i id="nextDayNuoli" class='fas fa-chevron-right'></i>
+                                
                             </div>
+                            
 
                             <!-- Unenlaatu hymiö -->
+                            <div>
                             <i <?php 
                                 if($paivaOlio == null){
                                     echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
+                                                                        
                                 } else{
                                     getHymio($paivaOlio);
                                 }
                             ?>></i>
+                            <!-- Menee päiväkyselysivulle -->
+                            <a id="kyna" href="kysely.php" class="fas fa-pen-square" ></a>
+                            </div>
 
                             <!--inforuudut-->
                             <div class="box">
@@ -78,11 +91,14 @@
                                 </div>       
                             </div>
 
+
                             <!--nuolet-->
                             <div class="clear">
                                 <i class='fas fa-arrow-alt-circle-up'><p>5</p></i>
                                 <i class='fas fa-arrow-alt-circle-down'><p>3</p></i>
+                                
                             </div>
+                           
 
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-down'></i>
@@ -146,7 +162,7 @@
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-syringe ikoni' style='color:<?php $value = $paivaOlio->user_drug; getIconColorDrugs($value); ?>;'></i>
+                                    <i class='fas fa-mobile-alt ikoni' style='color:<?php $value = $paivaOlio->user_drug; getIconColorScreenTime($value); ?>;'></i>
                                     <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
                                 </div>
 
@@ -358,7 +374,7 @@
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-syringe ikoni' style='color:var(--liikennevaloHarmaa);'></i>
+                                    <i class= 'fas fa-mobile-alt ikoni' style='color:var(--liikennevaloHarmaa);'></i>
                                     <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
                                 </div>
 
@@ -372,32 +388,52 @@
             </div>
 
             <!--kuukausisivu-->
+            
             <div id="kuukausiSivu" class="swiper-slide">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         <div id="kuukausiPaasivu" class="swiper-slide paasivuWrapper">
-                            <i class='fas fa-laugh hymio' style='color:var(--liikennevaloVihrea);'></i>
 
-                            <!--inforuudut-->
-                            <div class="box">
-                                <div>
-                                    <p>UNIAIKA</p><p>8 h 39 min</p>
+                        
+                            <div class="calendar">
+                                <div class="month">
+                                    <div class="prev" onclick="moveDate('prev')">
+                                        <span>&#10094;</span>
+                                    </div>
+                                    <div>
+                                        <h2 id="month"></h2>
+                                        <p id="year"></p>
+                                    </div>
+                                    <div class="next" onclick="moveDate('next')">
+                                        <span>&#10095;</span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p>UNISYKLIT</p><p>6 sykliä</p>
-                                </div>       
-                            </div>
+                                <div class="weekdays">
+                                    
+                                
+                                    <div>MA</div>
+                                    <div>TI</div>
+                                    <div>KE</div>
+                                    <div>TO</div>
+                                    <div>PE</div>
+                                    <div>LA</div>
+                                    <div>SU</div>
+                                    
+                                    
+                                </div>
+                                <div class="daysOfMonth">
+                                    
 
-                            <!--nuolet-->
-                            <div class="clear">
-                                <i class='fas fa-arrow-alt-circle-down'><p>3</p></i>
-                                <i class='fas fa-arrow-alt-circle-up'><p>5</p></i>
+                                </div>
+                                <i class='fas fa-chevron-down'></i>
                             </div>
 
                             <!--sivuvaihtoNuoli-->
-                            <i class='fas fa-chevron-down'></i>
+                            
 
                         </div>
+                        
+
                         <div id="kuukausiDetailSivu" class="swiper-slide detailWrapper">
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-up'></i>
@@ -455,7 +491,7 @@
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-syringe ikoni' style='color:var(--liikennevaloHarmaa);'></i>
+                                <i class='fas fa-mobile-alt ikoni' style='color:var(--liikennevaloHarmaa);'></i>
                                 <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
                             </div>
 
@@ -476,5 +512,6 @@
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src="../js/sivurunko.js"></script>
+    
 </body>
 </html>

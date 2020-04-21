@@ -24,6 +24,8 @@ let paasivuViikkoWrapper = document.querySelector(".paasivuViikkoWrapper");
 
 let viikonpaivaListaItem = document.getElementById("viikonpaivaLista").getElementsByTagName("li");
 
+//let kuukaudenpaivaListaItem = document.getElementById("kuukaudenpaivaLista").getElementsByTagName("td");
+
 // Luo olion, jolla seurataan vertikaalista swippausta
 let mySwiper = new Swiper ('.swiper-container', {
     init: false,
@@ -51,6 +53,7 @@ if(window.location.search == "?prevWeek=true"
 || window.location.search == "?nextWeek=true"){
     mySwiper2.slideTo('1', '0');
 }
+
 
 //**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
 swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
@@ -205,3 +208,70 @@ for(let i = 0; i < 7; i++){
         window.location.href="sivurunko.php?moveToDay=" + i;
     });
 }
+
+var dt = new Date();
+        function renderDate() {
+            dt.setDate(1);
+
+            var day = dt.getDay();
+            var today = new Date();
+            var endDate = new Date(
+                dt.getFullYear(),
+                dt.getMonth() + 1,
+                0
+            ).getDate();
+
+            var prevDate = new Date(
+                dt.getFullYear(),
+                dt.getMonth(),
+                0
+            ).getDate();
+            var months = [
+                "TAMMIKUU",
+                "HELMIKUU",
+                "MAALISKUU",
+                "HUHTIKUU",
+                "TOUKOKUU",
+                "KKESÄKUU",
+                "HEINÄKUU",
+                "ELOKUU",
+                "SSYYSKUU",
+                "LOKAKUU",
+                "MARRASKUU",
+                "JOULUKUU"
+            ]
+
+document.getElementById("month").innerHTML = months[dt.getMonth()];
+document.getElementById("year").innerHTML = dt.getFullYear();
+var cells = "";
+for (x = day-1; x > 0; x--) {
+
+    cells += "<div class='prev_date'>" + (prevDate - x + 1) + "</div>";
+}
+console.log(day);
+for (i = 1; i <= endDate; i++) {
+    if (i == today.getDate() && dt.getMonth() == today.getMonth()) cells += "<div class='today'>" + i + "</div>";
+    else
+        cells += "<div class = other-day>" + i + "</div>";
+}
+document.getElementsByClassName("daysOfMonth")[0].innerHTML = cells;
+
+
+
+/*document.addEventListener("click", function(){
+    document.getElementsByClassName("today").innerHTML = today;
+  });
+document.addEventListener("click", function(){
+    document.getElementsByClassName("other-day").innerHTML = cells++;
+  });*/
+
+}
+
+        function moveDate(para) {
+            if(para == "prev") {
+                dt.setMonth(dt.getMonth() - 1);
+            } else if(para == 'next') {
+                dt.setMonth(dt.getMonth() + 1);
+            }
+            renderDate();
+        }

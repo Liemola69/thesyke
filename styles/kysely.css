@@ -1,0 +1,144 @@
+:root{
+  --paaTaustavari:rgb(52, 59, 60);
+  --liikennevaloPunainen:rgb(233, 60, 7);
+  --liikennevaloKeltainen:rgb(236, 215, 27);
+  --liikennevaloVihrea:rgb(112, 187, 25);
+  --liikennevaloHarmaa:rgb(211, 211, 211);
+  --ylaValikkovari:rgb(36, 35, 35);
+  --alaValikkovari:rgb(36, 35, 35);
+  --tehosteVari:#16b4c5;
+  --tehosteVari2:#7bb3b9;
+  --fonttiVari:rgb(255, 255, 255);
+  --fonttiVari2:rgb(28, 28, 28);
+}
+
+
+body{
+    background-color: var(--paaTaustavari);
+    color: var(--fonttiVari);
+    font-family: 'Baloo Da 2', cursive, sans-serif;
+    font-size: 5vw;
+    margin: 0;
+    
+}
+
+
+.slideSivu{
+  background-color: var(--paaTaustavari);
+  height: auto;
+  margin: auto;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+.slidecontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    
+
+}
+  .slidecontainer > div{
+    width: 80%;
+    margin: 10px;
+    text-align: center;
+    font-size: 20px; 
+    
+  }
+
+  
+  .slider {
+
+    -webkit-appearance: none;
+    width: 70%;
+    height: 20px;
+    border-radius: 5px;
+    background: #a8a7a7;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin-bottom: 20px;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgb(0, 184, 212);
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: rgb(0, 184, 212);
+    cursor: pointer;
+  }
+
+
+
+#sivunNimi{
+    width: 100%;
+    color: var(--tehosteVari);
+    font-size: 1.4em;
+}
+
+#ylaValikko li{
+    padding: 10px 0;
+}
+
+
+
+/* Navigation Settings */
+#ylaNav{
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    height: 50px;
+    background: var(--ylaValikkovari);
+    z-index: 2;
+    text-align: center;
+}
+
+.buttonit {
+  background: var(--tehosteVari);
+    color: var(--fonttiVari);
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    width: 70%;
+    height: 80%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
+    font-size: x-large;
+}
+
+.buttonit:active {
+  background: var(--fonttiVari);
+  color: var(--tehosteVari);
+}
+
+#closeMenu{
+  color: var(--tehosteVari);
+  font-size: 30px;
+  width: fit-content;
+  padding: 10px 15px;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+
+
+
+  

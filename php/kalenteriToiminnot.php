@@ -3,7 +3,8 @@
     $userOlio = getUserData($_SESSION['user_ID'], $DBH);
     $user_ID = $userOlio->user_ID;
     //print_r($userOlio);
-
+    
+  
     if(isset($_GET['prevDay'])){ // Vaihda edelliseen päivään
         $updatedDay = getPrevDay($_SESSION['currentDay']); // Korjaa päivä edeltäväksi ja tallenna tämän hetkiseksi päiväksi/viikoksi
         $_SESSION['currentDay'] = $updatedDay;
@@ -78,4 +79,10 @@
         $_SESSION['days'] = getWeekDays($currentDay);
         $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
     }
+
+
+
+    
+
 ?>
+
