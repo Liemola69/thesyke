@@ -226,34 +226,12 @@ body {
     color: var(--tehosteVari);
 }
 
-<<<<<<< HEAD
-=======
-.buttonGeneric {
-    background: var(--tehosteVari);
-    color: var(--fonttiVari2);
-    font-family: 'Baloo Da 2', cursive, sans-serif;
-    font-size: larger;
-    text-transform: uppercase;
-    display: inline-block;
-    text-align: center;
-    text-decoration: none;
-    width: 80%;
-    border-radius: 5px;
-    box-shadow: 2px 2px 10px -2px rgba(0,0,0,0.75);
-}
-
-.buttonGeneric:hover {
-    background: var(--fonttiVari);
-    color: var(--tehosteVari);
-}
-
 .textboxGeneric {
     width: 80%;
     border-radius: 5px;
     font-family: 'Baloo Da 2', cursive, sans-serif;
     font-size: larger;
 }
->>>>>>> f28c34f9d0101603a1bf05c57db6eebd6df298e6
 
 
 
@@ -595,28 +573,14 @@ i[class^="fas fa-chevron"]{
 
 @media only screen and (max-width: 320px) {
 
-<<<<<<< HEAD
-
-}
-
-
-
-
-
-=======
 }
 
 /* Kalenteri näkymän muotoilut */
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
 .calendar {
     margin: auto;
     margin-top: 5px;
     width: 90%;
-<<<<<<< HEAD
-    height: 37em;
-=======
     height: 100%;
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
     background-color: rgb(226, 222, 222);
     box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.2);
 }
@@ -627,13 +591,8 @@ i[class^="fas fa-chevron"]{
     align-items: center;
     width: 100%;
     text-align: center;
-<<<<<<< HEAD
     background-color: var(--tehosteVari2);
     color: var(--fonttiVari2);
-=======
-    background-color: var(--tehosteVari);
-    color: #fff;
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
     font-size: 34px;
 }
 
@@ -651,11 +610,6 @@ i[class^="fas fa-chevron"]{
     display: flex;
     flex-wrap: wrap;
     font-size: 18px
-<<<<<<< HEAD
-     
-    
-=======
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
 }
 
 .weekdays div,
@@ -666,13 +620,9 @@ i[class^="fas fa-chevron"]{
 
 .daysOfMonth div {
     padding: 10px 0;
-<<<<<<< HEAD
-    margin-bottom: 10px;
-=======
     display: flex;
     flex-flow: column;
     align-items: center;
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
     transition: all 0.4s;
 }
 
@@ -682,11 +632,7 @@ i[class^="fas fa-chevron"]{
 }
 
 .today {
-<<<<<<< HEAD
     background-color:var(--tehosteVari);
-=======
-    background-color: var(--alaValikkovari);
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
     color: #fff;
 }
 
@@ -704,11 +650,7 @@ i[class^="fas fa-chevron"]{
     height: 50px;
     border-radius: 50%;
     font-size: 23px;
-<<<<<<< HEAD
     background-color: var(--tehosteVari);
-=======
-    background-color: rgba(0, 0, 0, 0.1);
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
     transition: all 0.4s;
 }
 
@@ -721,7 +663,6 @@ i[class^="fas fa-chevron"]{
 #month {
     font-size: 30px;
     font-weight: 500;
-<<<<<<< HEAD
     color: var(--fonttiVari2);
 }
 #year{
@@ -731,10 +672,6 @@ i[class^="fas fa-chevron"]{
 
 
 
-=======
-}
-
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
 .slideSivu{
     background-color: var(--paaTaustavari);
     height: auto;
@@ -743,19 +680,6 @@ i[class^="fas fa-chevron"]{
     overflow: auto;
 }
 
-<<<<<<< HEAD
-
-
-.slidecontainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    
-    
-  }
-  .slidecontainer > div{
-=======
 .slidecontainer {
     display: flex;
     flex-direction: column;
@@ -763,24 +687,14 @@ i[class^="fas fa-chevron"]{
 }
 
 .slidecontainer > div{
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
     width: 400px;
     margin: 10px;
     text-align: center;
     line-height: 11px;
     font-size: 20px; 
-<<<<<<< HEAD
-    
-  }
- 
-  
-  .slider {
-
-=======
 }
  
 .slider {
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
     -webkit-appearance: none;
     width: 60%;
     height: 20px;
@@ -791,15 +705,6 @@ i[class^="fas fa-chevron"]{
     -webkit-transition: .2s;
     transition: opacity .2s;
     margin-bottom: 20px;
-<<<<<<< HEAD
-  }
-  
-  .slider:hover {
-    opacity: 1;
-  }
-  
-  .slider::-webkit-slider-thumb {
-=======
 }
   
 .slider:hover {
@@ -807,7 +712,6 @@ i[class^="fas fa-chevron"]{
 }
   
 .slider::-webkit-slider-thumb {
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
     -webkit-appearance: none;
     appearance: none;
     width: 35px;
@@ -815,21 +719,14 @@ i[class^="fas fa-chevron"]{
     border-radius: 50%;
     background: rgb(0, 184, 212);
     cursor: pointer;
-<<<<<<< HEAD
-  }
-  
-  .slider::-moz-range-thumb {
-=======
 }
   
 .slider::-moz-range-thumb {
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
     width: 25px;
     height: 25px;
     border-radius: 50%;
     background: #4CAF50;
     cursor: pointer;
-<<<<<<< HEAD
   }
 
   #kyna{
@@ -838,11 +735,7 @@ i[class^="fas fa-chevron"]{
     box-shadow: 2px  5px 25px -7px whitesmoke;
   }
 
-  
-=======
-}
 
 .highlight{
     box-shadow: 0px 0px 5px 4px white;
 }
->>>>>>> a6755a9787410d8b4d307f224575d2879be5e743
