@@ -6,6 +6,8 @@
     <title>Teh SyKe</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/styles_test.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
@@ -15,6 +17,7 @@
 
 </head>
 <body onload="renderDate()">
+<body onload="requestCurrentDay();">
     <?php
         include_once("../config/https.php");
         include_once("../config/config.php");
@@ -30,6 +33,44 @@
         if(isset($_GET['logOut'])){
             include("logOut.php");
         }
+
+        // Jos käyttäjällä on jo Polar-ID tietokannassa
+        if(isset($_SESSION['polarAccountTrue']) && (!isset($_SESSION['polarSync']))){
+            $polar_ID = getPolarID($DBH, $_SESSION['user_ID']);
+            $polar_token = getPolarToken($DBH, $_SESSION['user_ID']);
+
+            $transactionID = getPolarActivityTransaction($polar_ID, $polar_token);
+            //$transactionID = "230945953";
+            echo('<script>console.log("Transaction ID: ' . $transactionID . '")</script>');
+            $activityIDArray = getPolarActivityList($polar_ID, $polar_token, $transactionID);
+            getPolarZoneData($polar_ID, $polar_token, $transactionID, $activityIDArray, $_SESSION['user_ID'], $DBH);
+            commitPolarTransaction($polar_ID, $polar_token, $transactionID);
+            $_SESSION['polarSync'] = true;
+            echo('<script>console.log("Polar synkronoitu")</script>');
+        }
+
+        // Jos Polar rekisteröinti on onnistunut (server response 200 OK)
+        if(isset($_SESSION['polarRegisterationTrue'])){
+            if($_SESSION['polarRegisterationTrue']){
+                echo('<script>console.log("Rekisteröinti onnistui")</script>');
+            } else{
+                echo('<script>console.log("Rekisteröinti epäonnistui")</script>');
+            }
+            unset($_SESSION['polarRegisterationTrue']);
+        }
+
+        //Poistaa Polar linkityksen
+        if(isset($_GET['deletePolar'])){
+            $polar_ID = getPolarID($DBH, $_SESSION['user_ID']);
+            $polar_token = getPolarToken($DBH, $_SESSION['user_ID']);
+
+            $serverResponse = deletePolar($polar_ID, $polar_token, $DBH);
+            if($serverResponse == "204"){
+                echo('<script>console.log("Poistettu")</script>');
+            } else{
+                echo('<script>console.log("Poisto epäonnistui: ' . $serverResponse . '")</script>');
+            }
+        }
     ?>
 
     <nav id="ylaNav">
@@ -39,7 +80,9 @@
             <ul id="ylaValikko">
                 <li id="raportitValikkoLinkki">Raportit</li>
                 <li>Omat tiedot</li>
-                <li>Polar-linkitys</li>
+                <li id="polarLinkitys">Synkronoi Polar</li>
+                <li class="hidden polarLisaValikko">Synkronoi tiedot</li>
+                <li id="polarPoistaLinkitys" class="hidden polarLisaValikko">Poista Polar synkronointi</li>
                 <li>Apua</li>
                 <li>Käyttöehdot</li>
                 <li></li>
@@ -56,7 +99,7 @@
             <div id="paivaSivu" class="swiper-slide">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div id="paivaPaasivu" class="swiper-slide paasivuWrapper">
+                        <div id="paivaPaasivu" class="swiper-slide paasivuPaivaWrapper">
                             
                             <!--Ylälaidan päiväbanneri-->
                             <div id="paasivuPaivaNav">

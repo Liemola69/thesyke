@@ -5,6 +5,7 @@
     //print_r($userOlio);
     
   
+
     if(isset($_GET['prevDay'])){ // Vaihda edelliseen päivään
         $updatedDay = getPrevDay($_SESSION['currentDay']); // Korjaa päivä edeltäväksi ja tallenna tämän hetkiseksi päiväksi/viikoksi
         $_SESSION['currentDay'] = $updatedDay;
@@ -33,45 +34,54 @@
         $_SESSION['days'] = getWeekDays($currentDay);
         $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
 
-    } elseif(isset($_GET['moveToDay'])){ // Jos painettu päivää viikkonäkymässä
+    } elseif(isset($_GET['moveToDay'])){ 
         
-        switch($_GET['moveToDay']){
-            case 0:
-                $currentDay = $_SESSION['days'][0];
-                $_SESSION['currentDay'] = $currentDay;
-                $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
-                break;
-            case 1:
-                $currentDay = $_SESSION['days'][1];
-                $_SESSION['currentDay'] = $currentDay;
-                $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
-                break;
-            case 2:
-                $currentDay = $_SESSION['days'][2];
-                $_SESSION['currentDay'] = $currentDay;
-                $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
-                break;
-            case 3:
-                $currentDay = $_SESSION['days'][3];
-                $_SESSION['currentDay'] = $currentDay;
-                $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
-                break;
-            case 4:
-                $currentDay = $_SESSION['days'][4];
-                $_SESSION['currentDay'] = $currentDay;
-                $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
-                break;
-            case 5:
-                $currentDay = $_SESSION['days'][5];
-                $_SESSION['currentDay'] = $currentDay;
-                $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
-                break;
-            case 6:
-                $currentDay = $_SESSION['days'][6];
-                $_SESSION['currentDay'] = $currentDay;
-                $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
-                break;
+        if(strlen($_GET['moveToDay']) == 1){ // Jos painettu päivää viikkonäkymässä
+            switch($_GET['moveToDay']){
+                case 0:
+                    $currentDay = $_SESSION['days'][0];
+                    $_SESSION['currentDay'] = $currentDay;
+                    $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
+                    break;
+                case 1:
+                    $currentDay = $_SESSION['days'][1];
+                    $_SESSION['currentDay'] = $currentDay;
+                    $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
+                    break;
+                case 2:
+                    $currentDay = $_SESSION['days'][2];
+                    $_SESSION['currentDay'] = $currentDay;
+                    $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
+                    break;
+                case 3:
+                    $currentDay = $_SESSION['days'][3];
+                    $_SESSION['currentDay'] = $currentDay;
+                    $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
+                    break;
+                case 4:
+                    $currentDay = $_SESSION['days'][4];
+                    $_SESSION['currentDay'] = $currentDay;
+                    $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
+                    break;
+                case 5:
+                    $currentDay = $_SESSION['days'][5];
+                    $_SESSION['currentDay'] = $currentDay;
+                    $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
+                    break;
+                case 6:
+                    $currentDay = $_SESSION['days'][6];
+                    $_SESSION['currentDay'] = $currentDay;
+                    $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
+                    break;
+            }
+        } else{ // Jos painettu päivää kuukausinäkymässä
+            $currentDay = $_GET['moveToDay'];
+            $_SESSION['currentDay'] = $currentDay;
+            $_SESSION['currentWeek'] = date('W', strtotime($currentDay));
+            $_SESSION['days'] = getWeekDays($currentDay);
+            $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
         }
+        
     } else{ // Jos ei painettu mitään/ensimmäistä kertaa sivulle -> kuluva päivä
         $currentDay = date("Y-m-d");
         $_SESSION['currentDay'] = $currentDay;
