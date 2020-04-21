@@ -48,39 +48,45 @@ include_once("config/config.php");
 
 </div>
 
-<div class="loginPopup">
-    <div class="loginPopupContent loginPopupContentAnimation">
+<div class="loginPopup popupBackground">
+    <div class="loginPopupContent popupContent">
         <?php
             include("php/logIn.php");
         ?>
     </div>
 </div>
 
-<div class="registerPopup">
-    <div class="registerPopupContent">
+<div class="registerPopup popupBackground">
+    <div class="registerPopupContent popupContent">
         <?php
             include("php/createAccount.php");
         ?>
     </div>
 </div>
 
-<div class="createUserDetailsPopup">
-    <div class="createUserDetailsPopupContent createUserDetailsPopupContentAnimation">
+<div class="createPolarPopup popupBackground">
+    <div class="createPolarPopupContent popupContent">
+        <?php
+            include("php/createPolar.php");
+        ?>
+    </div>
+</div>
+
+<div class="createUserDetailsPopup popupBackground">
+    <div class="createUserDetailsPopupContent popupContent">
         <?php
             include("php/createUserDetails.php");
         ?>
     </div>
 </div>
 
-<div class="createUserParametersPopup">
-    <div class="createUserParametersPopupContent createUserParametersPopupContentAnimation">
+<div class="createUserParametersPopup popupBackground">
+    <div class="createUserParametersPopupContent popupContent">
         <?php
             include("php/createUserParameters.php");
         ?>
     </div>
 </div>
-
-<div id="snackbar">Tunnus luotu. Kirjaudu sisään.</div>
 
 <script>
 
@@ -89,12 +95,12 @@ include_once("config/config.php");
 
     document.getElementById("loginButton").addEventListener("click", function(){
         document.querySelector(".loginPopup").style.visibility = "visible";
-        document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", true);
+        //document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", true);
         
     })
 
     document.getElementById("loginClose").addEventListener("click", function(){
-        document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", false);
+        //document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", false);
         document.querySelector(".loginPopup").style.visibility = "hidden";
         document.location = 'php/resetVariables.php';
 
@@ -102,11 +108,11 @@ include_once("config/config.php");
 
     document.getElementById("registerButton").addEventListener("click", function(){
         document.querySelector(".registerPopup").style.visibility = "visible";
-        document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", true);
+        //document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", true);
     })
 
     document.getElementById("registerClose").addEventListener("click", function(){
-        document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
+        //document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
         document.querySelector(".registerPopup").style.visibility = "hidden";
         document.location = 'php/resetVariables.php';
     })

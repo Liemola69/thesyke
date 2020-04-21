@@ -52,8 +52,8 @@ session_start();
     ?>
     
     <script>
-        document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", false);
-        document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation2", true);              
+        //document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", false);
+        //document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation2", true);              
     </script>
     
     <?php
@@ -64,8 +64,8 @@ session_start();
                 echo("Varmista kirjoitusasu.");
     ?>
         <script>
-            document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", false);
-            document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation2", true); 
+            //document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation", false);
+            //document.querySelector(".loginPopupContent").classList.toggle("loginPopupContentAnimation2", true); 
         </script>
     <?php
             }
