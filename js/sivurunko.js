@@ -88,7 +88,7 @@ for(let i = 0; i < 3; i++){
 }
 
 // Aseta päänäkymän viimeinen grid alaNavin kokoiseksi
-paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 15% auto 10% " + alaNav.clientHeight + "px";
+paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 10% 10% auto 10% " + alaNav.clientHeight + "px";
 paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
 paasivuKuukausiWrapper.style.gridTemplateRows = "auto 10%" + alaNav.clientHeight + "px";
 
@@ -121,9 +121,24 @@ hampurilaisMenu.addEventListener('click', function(evt){
     
 });
 
-// Siirry raportti sivulle
+// Siirry raportti-sivulle
 raportitValikkoLinkki.addEventListener('click', function(evt){
-    window.location.href = "raportit.html";
+    window.location = "raportit.php";
+});
+
+// Siirry omat tiedot -sivulle
+omattiedotValikkoLinkki.addEventListener('click', function(evt){
+    window.location = "omattiedot.php";
+});
+
+// Siirry apua-sivulle
+apuaValikkoLinkki.addEventListener('click', function(evt){
+    window.location = "apua.php";
+});
+
+// Siirry käyttöehdot-sivulle
+kayttoehdotValikkoLinkki.addEventListener('click', function(evt){
+    window.location = "kayttoehdot.php";
 });
 
 // Estä sivuswipe, jos detail-sivulla

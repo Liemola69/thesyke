@@ -67,23 +67,55 @@
         }
     ?>
 
+
+
+
     <nav id="ylaNav">
         <div id="sivunNimi"><b>PÄIVÄNÄKYMÄ</b></div>
         <div id="hampurilaisMenu" class="fa fa-bars"></div>
         <div id="hampurilaisValikko">
             <ul id="ylaValikko">
                 <li id="raportitValikkoLinkki">Raportit</li>
-                <li>Omat tiedot</li>
+                <li id="omattiedotValikkoLinkki">Omat tiedot</li>
                 <li id="polarLinkitys">Synkronoi Polar</li>
                 <li class="hidden polarLisaValikko">Synkronoi tiedot</li>
                 <li id="polarPoistaLinkitys" class="hidden polarLisaValikko">Poista Polar synkronointi</li>
-                <li>Apua</li>
-                <li>Käyttöehdot</li>
+                <li id="apuaValikkoLinkki">Apua</li>
+                <li id="kayttoehdotValikkoLinkki">Käyttöehdot</li>
                 <li></li>
                 <li onclick='window.location.href="sivurunko.php?logOut=true"'>Kirjaudu ulos </li>
             </ul>
         </div>
     </nav>
+
+    <!--<div class="raportitPage valikkoBackground">
+                    <div class="raportitContent valikkoContent">
+                    <?php
+                    include("php/raportit.php");
+                    ?>
+                </div>
+
+                <div class="omattiedotPage valikkoBackground">
+                    <div class="omattiedotContent valikkoContent">
+                    <?php
+                    include("php/omattiedot.php");
+                    ?>
+                </div>
+
+                <div class="apuaPage valikkoBackground">
+                    <div class="apuaContent valikkoContent">
+                    <?php
+                    include("php/apua.php");
+                    ?>
+                </div>
+
+                <div class="kayttoehdotPage valikkoBackground">
+                    <div class="kayttoehdotContent valikkoContent">
+                    <?php
+                    include("php/kayttoehdot.php");
+                    ?>
+                </div>
+    -->
 
     <!--sisäkkäin, päällimmäinen hoitaa sivut, alempi taso pää/detail-->
     <div class="swiper-pageContainer">
@@ -105,7 +137,9 @@
                             
 
                             <!-- Unenlaatu hymiö -->
-                            <div>
+                            <div class="dailySmiley">
+                            <!-- Menee päiväkyselysivulle -->
+                            <a class="dailyButton fas fa-plus-circle" href="kysely.php"></a>  
                             <i <?php 
                                 if($paivaOlio == null){
                                     echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
@@ -114,8 +148,8 @@
                                     getHymio($paivaOlio);
                                 }
                             ?>></i>
-                            <!-- Menee päiväkyselysivulle -->
-                            <a id="kyna" href="kysely.php" class="fas fa-pen-square" ></a>
+                            <a class="dailyButton fas fa-info-circle"></a>
+                            
                             </div>
 
                             <!--inforuudut-->
@@ -125,15 +159,22 @@
                                 </div>
                                 <div>
                                     <p>UNISYKLIT</p><p> <?php echo(getUniSykli($paivaOlio)); ?> </p>
+                                </div>
+                                 <!--LISÄÄ AO. TIEDOT PÄIVÄOLIOON-->
+                            </div>
+                            <div class="box">
+                                <div>
+                                    <p>TÄNÄÄN NUKKUMAAN</p><p>22.45</p>
+                                </div>
+                                <div>
+                                    <p>HERÄTYS HUOMENNA</p><p>06.30</p>
                                 </div>       
                             </div>
 
 
-                            <!--nuolet-->
+                            <!--progress/meter bar-->
                             <div class="clear">
-                                <i class='fas fa-arrow-alt-circle-up'><p>5</p></i>
-                                <i class='fas fa-arrow-alt-circle-down'><p>3</p></i>
-                                
+                                <progress class="attributes_balance" value="65" min="0" max="100"></progress>
                             </div>
                            
 
@@ -210,6 +251,11 @@
                         </div>
                     </div>
                 </div>
+
+                
+
+
+
             </div>
 
             <!--viikkosivu-->

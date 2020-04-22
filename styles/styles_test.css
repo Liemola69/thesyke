@@ -169,6 +169,35 @@ body {
     to {bottom: 0; opacity: 0;}
   }
 
+/* VALIKON SIVUT - TAUSTA*/
+
+.valikkoBackground {
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.raportitPage {
+    visibility: hidden;
+}
+
+.omattiedotPage {
+    visibility: hidden;
+}
+
+.apuaPage {
+    visibility: hidden;
+}
+
+.kayttoehdotPage {
+    visibility: hidden;
+}
+
 
 /* Teaser-sivu */
 
@@ -493,6 +522,25 @@ body {
     font-size: 4vw;
 }
 
+/* meter bar - janin kokeilu */
+
+::-webkit-progress-bar {
+    background-color: var(--liikennevaloPunainen);
+  }
+
+progress[value]  {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+  
+    border: none;
+  
+    width: 100%;
+    height: 3em;
+  
+    color: var(--liikennevaloVihrea); 
+  }
+
 .fa-arrow-alt-circle-down{
     font-size: 4em;
     color: var(--liikennevaloPunainen);
@@ -727,6 +775,11 @@ i[class^="fas fa-chevron"]{
     border-radius: 50%;
     background: var(--tehosteVari);
     cursor: pointer;
+  }
+
+  .dailyButton {
+    color: var(--tehosteVari);
+    font-size: 3em;
   }
 
   #kyna{
