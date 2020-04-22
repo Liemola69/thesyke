@@ -597,8 +597,10 @@
     // Muuttaa pääsivun ison hymiön värin unenlaadun mukaan
     function getHymio($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
-
-        if($unenLaatu > 2){
+        if($unenLaatu == 0){
+            echo('class="fas fa-frown hymio" style="color: var(--liikennevaloHarmaa);"');
+        }
+        elseif($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio" style="color: var(--liikennevaloVihrea);"');
         } elseif($unenLaatu <= 2 && $unenLaatu >= -2){
@@ -607,26 +609,44 @@
         } elseif($unenLaatu < -2){
             //fa-frown
             echo('class="fas fa-frown hymio" style="color: var(--liikennevaloPunainen);"');
-        }elseif($unenLaatu == null){
-            echo('class="fas fa-frown hymio" style="color: var(--liikennevaloHarmaa);"');
+        }
+    }
+
+    // idikaattorit detail-sivulle
+    function getIndikator($value){
+        if($value > 3){
+            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloVihrea);"');
+        }
+        elseif($value > 1 && $value < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-viikko" style="color: var(--liikennevaloVihrea);"');
+        } elseif($value == 0){
+            //fa-meh
+            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
+        }elseif($value <= 1 && $value >= -1){
+            //fa-meh
+            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloPunainen);"');
+        } elseif($value < -1){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-viikko" style="color: var(--liikennevaloPunainen);"');
         }
     }
 
     // Muuta pääsivun hymiön väri unenlaadun mukaisesti
     function getHymioFromDate($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
-
-        if($unenLaatu > 2){
+        if($unenLaatu == 0){
+            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
+        }
+        elseif($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio-viikko" style="color: var(--liikennevaloVihrea);"');
-        } elseif($unenLaatu <= 2 && $unenLaatu >= -2){
+        }elseif($unenLaatu <= 2 && $unenLaatu >= -2){
             //fa-meh
             echo('class="fas fa-meh hymio-viikko" style="color: var(--liikennevaloKeltainen);"');
         } elseif($unenLaatu < -2){
             //fa-frown
             echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloPunainen);"');
-        }elseif($unenLaatu == null){
-            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
         }
     }
 
@@ -669,79 +689,67 @@
 
     // Ruoka
     function getIconColorFood($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
     // Alkoholi
     function getIconColorAlcohol($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
     // Vireys
     function getIconColorVitality($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
     // Piristeet
     function getIconColorStimulant($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
     // Stressi
     function getIconColorStress($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
     // Mieliala
     function getIconColorMood($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
@@ -749,14 +757,12 @@
 
     // Kivut
     function getIconColorPains($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
@@ -771,14 +777,12 @@
 
      // ruutuaika
      function getIconColorScreenTime($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
     // Tupakointi (boolean)
