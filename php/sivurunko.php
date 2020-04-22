@@ -191,7 +191,7 @@
                             <!--DetailsivuIconit-->
                                 <div class="ikoniWrapper">
                                     <i class='fas fa-utensils ikoni' style='color: <?php $value = $paivaOlio->user_food; getIconColorFood($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                    <i <?php $value = $paivaOlio->indikator; getIndikator($value);?>></i>
                                 </div>
                                 
                                 <div class="ikoniWrapper">
@@ -240,7 +240,7 @@
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-mobile-alt ikoni' style='color:<?php $value = $paivaOlio->user_drug; getIconColorScreenTime($value); ?>;'></i>
+                                    <i class='fas fa-mobile-alt ikoni' style='color:<?php $value = $paivaOlio->user_screen_time; getIconColorScreenTime($value); ?>;'></i>
                                     <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
                                 </div>
 
