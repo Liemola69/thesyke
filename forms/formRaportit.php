@@ -1,0 +1,1 @@
+<input class="buttonGeneric" type="submit" name="raportitSubmit" value="Sulje">
