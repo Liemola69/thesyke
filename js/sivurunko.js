@@ -35,8 +35,9 @@ let paivita = document.querySelectorAll(".hidden")[0];
 let poista = document.querySelectorAll(".hidden")[1];
 let polarLinkitys = document.getElementById("polarLinkitys");
 
-let kalenteriKkPaivat = document.querySelector(".daysOfMonth");
-let kalenteriPaivat = kalenteriKkPaivat.childNodes;
+let kalenteriKkPaivat;
+let kalenteriPaivat;
+let currentDay;
 
 // Luo olion, jolla seurataan vertikaalista swippausta
 let mySwiper = new Swiper ('.swiper-container', {
@@ -268,9 +269,13 @@ function korjaaSisallonKorkeus(){
 }
 
 // Kuukausinäkymän js
-let dt = new Date(); // vaihda hakemaan sovelluksesta päivä
-        
+let dt;
+let highlightDate;
+checkCurrentDay();
+
+// Vertaa sovelluksen päivää -> vaihda kuukausi edeltävään, jos painanut prev-dayta
 function renderDate(currentDay) {
+    dt = new Date(currentDay.split("-")[0], (currentDay.split("-")[1] - 1));
     dt.setDate(1);
 
     let day = dt.getDay();
@@ -322,16 +327,8 @@ function renderDate(currentDay) {
     }
     document.getElementsByClassName("daysOfMonth")[0].innerHTML = cells;
 
-    /*document.addEventListener("click", function(){
-        document.getElementsByClassName("today").innerHTML = today;
-    });
-    document.addEventListener("click", function(){
-        document.getElementsByClassName("other-day").innerHTML = cells++;
-    });*/
-
-
-    //let kalenteriKkPaivat = document.querySelector(".daysOfMonth");
-    //let kalenteriPaivat = kalenteriKkPaivat.childNodes;
+    kalenteriKkPaivat = document.querySelector(".daysOfMonth");
+    kalenteriPaivat = kalenteriKkPaivat.childNodes;
 
     // Varmista, ettei highlight jää vanhalle päivälle päälle
     for(let i = 0; i < kalenteriPaivat.length; i++){
@@ -343,7 +340,7 @@ function renderDate(currentDay) {
     for(let i = 0; i < kalenteriPaivat.length; i++){
 
         // Lisää kalenteriin highlight sovelluksen currentDayn kohdalle
-        if((dt.getFullYear() + "-" + formatMonth(dt.getMonth(), kalenteriPaivat[i].classList) + "-" + formatDay(kalenteriPaivat[i].innerText, kalenteriPaivat[i].classList)) == currentDay){
+        if((dt.getFullYear() + "-" + formatMonth(dt.getMonth(), kalenteriPaivat[i].classList) + "-" + formatDay(kalenteriPaivat[i].innerText, kalenteriPaivat[i].classList)) == highlightDate){
             kalenteriPaivat[i].classList.toggle('highlight');
         }
 
@@ -377,6 +374,14 @@ function formatMonth(currentMonth, classList){
     }
 }
 
+function formatMonth2(currentMonth){
+    if(currentMonth < 10){
+        return "0"+currentMonth;
+    } else{
+        return currentMonth;
+    }
+}
+
 // Palauta päivä muodossa dd
 function formatDay(numberOfDay, classList){
     if(classList.contains('prev_date')){
@@ -395,30 +400,46 @@ function formatDay(numberOfDay, classList){
     }
 }
 
+// Kuukausinäkymän kuukauden vaihto nuolet
 function moveDate(para) {
     let month;
+    let tempMonth;
 
     if(para == "prev") {
-        dt.setMonth(dt.getMonth()-1);
-        /*if(dt.getMonth() < 10){
+        dt.setMonth(dt.getMonth() - 1);
+
+        if(dt.getMonth() < 10){
             month = "0" + (dt.getMonth()+1);
         } else{
             month = (dt.getMonth()+1);
         }
-        console.log(dt.getFullYear() + "-" + month + "-" + "01");
-        getCurrentDay(dt.getFullYear() + "-" + month + "-" + "01");*/
+ 
+        tempMonth = dt.getFullYear() + "-" + month + "-" + "01";
+        requestTempMonth(tempMonth);
+
     } else if(para == 'next') {
         dt.setMonth(dt.getMonth() + 1);
-        /*if(dt.getMonth() < 10){
+        if(dt.getMonth() < 10){
             month = "0" + (dt.getMonth()+1);
         } else{
             month = (dt.getMonth()+1);
         }
-        console.log(dt.getFullYear() + "-" + month + "-" + "01");
-        getCurrentDay(dt.getFullYear() + "-" + month + "-" + "01");*/
-    }
 
-    requestCurrentDay();
+        tempMonth = dt.getFullYear() + "-" + month + "-" + "01";
+        requestTempMonth(tempMonth);
+    }
+}
+
+function requestTempMonth(tempMonth){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let month = this.responseText;
+            getTempMonth(tempMonth, month);
+        }
+    };
+    xhttp.open("GET", "tempMonthAJAX.php?tempMonth=" + tempMonth, true);
+    xhttp.send();
 }
 
 // Käy kysymässä palvelimelta, mikä on sessiomuuttujissa nykyinen päivä
@@ -426,7 +447,8 @@ function requestCurrentDay(){
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let currentDay = this.responseText;
+
+            currentDay = this.responseText;
             getCurrentDay(currentDay);
         }
     };
@@ -434,8 +456,30 @@ function requestCurrentDay(){
     xhttp.send();
 }
 
+// Tarkistaa, mikä on sovelluksen päivä
+function checkCurrentDay(){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            returnCurrentDay(this.responseText);
+        }
+    };
+    xhttp.open("GET", "currentDayAJAX.php", true);
+    xhttp.send();
+}
+
+function returnCurrentDay(paiva){
+    currentDay = paiva;
+}
+
+function getTempMonth(tempDate, ajaxResponse){
+    renderDate(tempDate);
+    printMonthHymio(ajaxResponse);
+}
+
 // Kun palvelimelta saatu nykyinen päivä, renderöi kuukausinäkymän uudelleen ja lataa hymiöt
 function getCurrentDay(ajaxResponse){
+    highlightDate = ajaxResponse;
     renderDate(ajaxResponse);
     requestHymio();
 }
@@ -445,7 +489,6 @@ function requestHymio(){
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             let hymio = this.responseText;
-            console.log("One hymiö coming up");
             printMonthHymio(hymio);
         }
     };
@@ -455,29 +498,38 @@ function requestHymio(){
 
 // Ottaa vastaan kuukauden hymiöt stringinä ja asettaa ne kalenterinäkymään
 function printMonthHymio(hymio){
-    //console.log(hymio);
-    let hymiot = hymio.split(";");
-    //console.log(hymiot);
-    
-    let kalenteriKkPaivat = document.querySelector(".daysOfMonth");
-    let kalenteriPaivat = kalenteriKkPaivat.childNodes;
 
-    for(let i = 0; i < kalenteriPaivat.length; i++){
+    let hymiot = hymio.split(";");
+    let offset;
+    let loops = 0;
+    
+    // Tarkista kuukausinäkymän offsetin mukaan, kuinka monta kertaa hymiöiden tulostus loopataan
+    if(dt.getDay() == 0){
+        loops = kalenteriPaivat.length - dt.getDay();
+    } else{
+        loops = kalenteriPaivat.length - dt.getDay() + 1;
+    }
+   
+    // Loopataan hymiöiden tulostus kalenteriin
+    for(let i = 0; i < loops; i++){
+
         let hymioDiv = document.createElement("div");
         let naamari = luoHymio(hymiot[i]);
-        let offset;
 
         if(dt.getDay() == 0){
             offset = i;
         } else{
             offset = dt.getDay() - 1 + i;
         }
-        
+
         hymioDiv.appendChild(naamari);
         kalenteriPaivat[offset].appendChild(hymioDiv);
     }
+
 }
 
+// Palauttaa oikeanlaisen ja värisen hymiön tietokannan datan mukaisesti
+// Parametrina tietokannasta haettu numeroarvo
 function luoHymio(i){
     let hymio = document.createElement("i");
     if(i == "null"){
@@ -486,25 +538,22 @@ function luoHymio(i){
         hymio.classList.add('hymio-viikko');
         hymio.style.color = "var(--liikennevaloHarmaa)";
     } else{
-        switch(i){
-            case "1":
-                hymio.classList.add('fas');
-                hymio.classList.add('fa-frown');
-                hymio.classList.add('hymio-viikko');
-                hymio.style.color = "var(--liikennevaloPunainen)";
-                break;
-            case "2":
-                hymio.classList.add('fas');
-                hymio.classList.add('fa-meh');
-                hymio.classList.add('hymio-viikko');
-                hymio.style.color = "var(--liikennevaloKeltainen)";
-                break;
-            case "3":
-                hymio.classList.add('fas');
-                hymio.classList.add('fa-laugh');
-                hymio.classList.add('hymio-viikko');
-                hymio.style.color = "var(--liikennevaloVihrea)";
-                break;
+
+        if(i > 2){
+            hymio.classList.add('fas');
+            hymio.classList.add('fa-laugh');
+            hymio.classList.add('hymio-viikko');
+            hymio.style.color = "var(--liikennevaloVihrea)";
+        } else if(i <= 2 && i >= -2){
+            hymio.classList.add('fas');
+            hymio.classList.add('fa-meh');
+            hymio.classList.add('hymio-viikko');
+            hymio.style.color = "var(--liikennevaloKeltainen)";
+        } else if(i < -2){
+            hymio.classList.add('fas');
+            hymio.classList.add('fa-frown');
+            hymio.classList.add('hymio-viikko');
+            hymio.style.color = "var(--liikennevaloPunainen)";
         }
     }
     return hymio;

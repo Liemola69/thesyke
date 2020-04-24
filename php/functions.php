@@ -555,7 +555,6 @@
         }
     }
  
-
     // Hae päivän data tietokannasta
     function getDateData($user_ID, $currentDay, $DBH){
 
@@ -571,8 +570,6 @@
             return null;
         }
     }
-
-
 
     // Palauta päivän uniaika formatoituna hh tuntia mm minuuttia
     function getUniAika($paivaOlio){
@@ -745,8 +742,6 @@
         }
     }
 
-   
-
     // Kivut
     function getIconColorPains($value){
         if($value > 2){
@@ -820,7 +815,4 @@
     }    
 }
 
-
-
 ?>
-

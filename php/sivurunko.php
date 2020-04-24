@@ -67,9 +67,6 @@
         }
     ?>
 
-
-
-
     <nav id="ylaNav">
         <div id="sivunNimi"><b>PÄIVÄNÄKYMÄ</b></div>
         <div id="hampurilaisMenu" class="fa fa-bars"></div>
@@ -479,19 +476,14 @@
 
                             <div class="calendar">
                                 <div class="month">
-
-                                    <div class="prev" onclick="moveDate('prev')">
-                                        <span>&#10094;</span>
-                                    </div>
+                                    <i id="prevMonthNuoli" class='fas fa-chevron-left' onclick="moveDate('prev')"></i>
 
                                     <div>
                                         <h2 id="month"></h2>
                                         <p id="year"></p>
                                     </div>
 
-                                    <div class="next" onclick="moveDate('next')">
-                                            <span>&#10095;</span>
-                                    </div>
+                                    <i id="nextMonthNuoli" class='fas fa-chevron-right' onclick="moveDate('next')"></i>
 
                                 </div>
 
