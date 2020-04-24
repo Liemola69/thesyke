@@ -386,7 +386,7 @@ body {
 .detailWrapper{
     display: grid;
     grid-template-columns: auto auto auto;
-    padding: 0 5% 0 5%;
+    padding: 0 5% 10% 5%;
     box-sizing: border-box;
     background-color: var(--paaTaustavari);
 }
@@ -553,6 +553,7 @@ progress[value]  {
 
 .ikoni{
     font-size: 3em;
+    margin: 5px;
 
 }
 
@@ -571,6 +572,18 @@ progress[value]  {
 .hymio-viikko{
     font-size: 5vw;
     padding: 0 10px;
+}
+.hymio-indikaattori{
+    font-size: 6vw;
+}
+.ikoniWrapper{
+    box-shadow: 0px 0px 5px;
+    margin: 5px 5px;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    border-radius: 20px;
+
 }
 
 i[class^="fas fa-chevron"]{
