@@ -10,7 +10,6 @@
     --tehosteVari2:#7bb3b9;
     --fonttiVari:rgb(255, 255, 255);
     --fonttiVari2:rgb(28, 28, 28);
-    
 }
 
 * {
@@ -19,8 +18,6 @@
 
 html {
     height: 100%;
-
-  
 }
 
 body {
@@ -617,20 +614,20 @@ i[class^="fas fa-chevron"]{
     font-weight: bold;
 }
 
-
-
-@media only screen and (max-width: 320px) {
-
-}
-
 /* Kalenteri näkymän muotoilut */
 .calendar {
     margin: auto;
-    margin-top: 5px;
-    width: 90%;
+    width: 95%;
     height: 100%;
-    background-color: rgb(226, 222, 222);
     box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.2);
+}
+
+#month{
+    font-size: 2em;
+}
+
+#year{
+    font-size: 2em;
 }
 
 .month {
@@ -639,14 +636,13 @@ i[class^="fas fa-chevron"]{
     align-items: center;
     width: 100%;
     text-align: center;
-    background-color: var(--tehosteVari2);
-    color: var(--fonttiVari2);
-    font-size: 34px;
+    background-color: var(--paaTaustavari);
+    color: var(--fonttiVari);
 }
 
 .weekdays {
-    background-color: rgb(6, 114, 109);
-    color: #fff;
+    background-color: var(--tehosteVari);
+    color: var(--fonttiVari2);
     padding: 7px 0;
     display: flex;
     font-size: 20px;
@@ -654,7 +650,6 @@ i[class^="fas fa-chevron"]{
 
 .daysOfMonth {
     font-weight: 300;
-    padding: 10px 0;
     display: flex;
     flex-wrap: wrap;
     font-size: 18px
@@ -664,6 +659,7 @@ i[class^="fas fa-chevron"]{
 .daysOfMonth div {
     text-align: center;
     width: 14.28%;
+    user-select: none;
 }
 
 .daysOfMonth div {
@@ -688,37 +684,6 @@ i[class^="fas fa-chevron"]{
     cursor: pointer;
     background-color: rgba(112, 161, 179, 0.8)
 }
-
-.prev,
-.next {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 23px;
-    background-color: var(--tehosteVari);
-    transition: all 0.4s;
-}
-
-.prev:hover,
-.next:hover {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-#month {
-    font-size: 30px;
-    font-weight: 500;
-    color: var(--fonttiVari2);
-}
-#year{
-    color: var(--fonttiVari2); 
-}
-
-
-
 
 .slideSivu{
     background-color: var(--paaTaustavari);
@@ -775,19 +740,65 @@ i[class^="fas fa-chevron"]{
     border-radius: 50%;
     background: var(--tehosteVari);
     cursor: pointer;
-  }
+}
 
-  .dailyButton {
+.dailyButton {
     color: var(--tehosteVari);
     font-size: 3em;
-  }
+}
 
-  #kyna{
+#kyna{
     color: var(--tehosteVari);
     font-size: 3em;
     box-shadow: 2px  5px 25px -7px whitesmoke;
-  }
+}
 
 .highlight{
     box-shadow: 0px 0px 5px 4px white;
+}
+
+@media only screen and (max-height: 750px) {
+    #month{
+        margin: 10px 0 0 0;
+    }
+
+    .weekdays{
+        font-size: 15px;
+    }
+
+    .daysOfMonth{
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-height: 650px){
+    .daysOfMonth div{
+        padding: 8px 0;
+    }
+}
+
+@media only screen and (max-height: 610px){
+    .daysOfMonth div{
+        padding: 6px 0;
+    }
+}
+
+@media only screen and (max-height: 560px){
+    .daysOfMonth div{
+        padding: 4px 0;
+    }
+
+    #month{
+        font-size: 1.5em;
+    }
+
+    #year{
+        font-size: 1.5em;
+    }
+}
+
+@media only screen and (max-height: 500px){
+    .daysOfMonth div{
+        padding: 3px 0;
+    }
 }
