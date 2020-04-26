@@ -273,7 +273,7 @@ let dt;
 let highlightDate;
 checkCurrentDay();
 
-// Vertaa sovelluksen päivää -> vaihda kuukausi edeltävään, jos painanut prev-dayta
+// Rakentaa kalenterin
 function renderDate(currentDay) {
     dt = new Date(currentDay.split("-")[0], (currentDay.split("-")[1] - 1));
     dt.setDate(1);
@@ -374,6 +374,7 @@ function formatMonth(currentMonth, classList){
     }
 }
 
+// Palauta kuukausi muodossa mm
 function formatMonth2(currentMonth){
     if(currentMonth < 10){
         return "0"+currentMonth;
@@ -442,64 +443,48 @@ function requestTempMonth(tempMonth){
     xhttp.send();
 }
 
+function getTempMonth(tempDate, ajaxResponse){
+    renderDate(tempDate);
+    printMonthHymio(ajaxResponse);
+    requestIconMonth(tempDate);
+}
+
 // Käy kysymässä palvelimelta, mikä on sessiomuuttujissa nykyinen päivä
 function requestCurrentDay(){
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-
-            currentDay = this.responseText;
-            getCurrentDay(currentDay);
+            getCurrentDay(this.responseText);
         }
     };
     xhttp.open("GET", "currentDayAJAX.php", true);
     xhttp.send();
 }
 
-// Tarkistaa, mikä on sovelluksen päivä
-function checkCurrentDay(){
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            returnCurrentDay(this.responseText);
-        }
-    };
-    xhttp.open("GET", "currentDayAJAX.php", true);
-    xhttp.send();
-}
-
-function returnCurrentDay(paiva){
-    currentDay = paiva;
-}
-
-function getTempMonth(tempDate, ajaxResponse){
-    renderDate(tempDate);
-    printMonthHymio(ajaxResponse);
-}
-
-// Kun palvelimelta saatu nykyinen päivä, renderöi kuukausinäkymän uudelleen ja lataa hymiöt
+// Kun palvelimelta saatu nykyinen päivä, renderöi kuukausinäkymä ja lataa hymiöt
 function getCurrentDay(ajaxResponse){
     highlightDate = ajaxResponse;
     renderDate(ajaxResponse);
     requestHymio();
+    requestIconMonth(ajaxResponse.slice(0, -2) + "01"); // funktio ottaa vastaan kk ensimmäisen päivän pvm
 }
 
+// Kysyy palvelimelta hymiöiden arvot tietokannasta
 function requestHymio(){
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let hymio = this.responseText;
-            printMonthHymio(hymio);
+            printMonthHymio(this.responseText); // Hymiöiden lukuarvo tietokannasta
         }
     };
     xhttp.open("GET", "currentMonthAJAX.php", true);
     xhttp.send();
 }
 
-// Ottaa vastaan kuukauden hymiöt stringinä ja asettaa ne kalenterinäkymään
+// Ottaa vastaan kuukauden hymiöt JSONina ja asettaa ne kalenterinäkymään
 function printMonthHymio(hymio){
 
-    let hymiot = hymio.split(";");
+    let hymiot = JSON.parse(hymio);
     let offset;
     let loops = 0;
     
@@ -532,7 +517,7 @@ function printMonthHymio(hymio){
 // Parametrina tietokannasta haettu numeroarvo
 function luoHymio(i){
     let hymio = document.createElement("i");
-    if(i == "null"){
+    if(i == null){
         hymio.classList.add('fas');
         hymio.classList.add('fa-meh-blank');
         hymio.classList.add('hymio-viikko');
@@ -557,4 +542,134 @@ function luoHymio(i){
         }
     }
     return hymio;
+}
+
+// Tarkistaa, mikä on sovelluksen päivä
+function checkCurrentDay(){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            returnCurrentDay(this.responseText);
+        }
+    };
+    xhttp.open("GET", "currentDayAJAX.php", true);
+    xhttp.send();
+}
+
+// Tallentaa currentDay-muuttujaan sovelluksen päivän
+function returnCurrentDay(paiva){
+    currentDay = paiva;
+}
+
+// Kun kuukausi vaihtuu -> suorita php joka hakee kuukauden päivät olioina
+// Summaa ikonien tiedot
+function requestIconMonth(month){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            updateIconColor(this.responseText);
+        }
+    };
+    xhttp.open("GET", "requestIconMonthAJAX.php?iconMonth=" + month, true);
+    xhttp.send();
+}
+
+// Haetaan kaikki ikonit kuukausinäkymästä, [0] on nuoli ylöspäin
+let iconsMonth = document.getElementById('kuukausiDetailSivu').children;
+
+/**
+ * Vaihtaa ikoneiden värit kuukausinäkymässä
+ * @param {JSON} values ikoneiden lukuarvo tietokannasta JSONina
+ */
+function updateIconColor(values){
+    let iconColor = JSON.parse(values);
+    let indikaattori;
+    deleteIndicators();
+
+    for(let i = 0; i < 12; i++){
+        if(i == 2){ // Aktiivisuus
+            iconsMonth[i+1].style.color = "var(--liikennevaloHarmaa)";
+            indikaattori = getIndicator(iconColor[i]);
+
+        } else if(i == 3){ // Tupakka
+
+            if(iconColor[i] == 0){
+                iconsMonth[i+1].style.color = "var(--liikennevaloHarmaa)";
+                indikaattori = getIndicator(iconColor[i]);
+            }else if(iconColor[i] == 1){
+                iconsMonth[i+1].style.color = "var(--liikennevaloPunainen)";
+                indikaattori = getIndicator(iconColor[i]);
+            }else if(iconColor[i] == 2){
+                iconsMonth[i+1].style.color = "var(--liikennevaloVihrea)";
+                indikaattori = getIndicator(iconColor[i]);
+            }
+
+        } else if(i == 6){ // Lääkkeet
+
+            if(iconColor[i] == 1){
+                iconsMonth[i+1].style.color = "var(--liikennevaloVihrea)";
+                indikaattori = getIndicator(iconColor[i]);
+            } else if(iconColor[i] == 0){
+                iconsMonth[i+1].style.color = "var(--liikennevaloHarmaa)";
+                indikaattori = getIndicator(iconColor[i]);
+            }
+
+        } else{ // Muille
+
+            if(iconColor[i] == 0){
+                iconsMonth[i+1].style.color = "var(--liikennevaloHarmaa)";
+                indikaattori = getIndicator(iconColor[i]);
+            }else if(iconColor[i] > 0){
+                iconsMonth[i+1].style.color = "var(--liikennevaloVihrea)";
+                indikaattori = getIndicator(iconColor[i]);
+            }else if(iconColor[i] < 0){
+                iconsMonth[i+1].style.color = "var(--liikennevaloPunainen)";
+                indikaattori = getIndicator(iconColor[i]);
+            }
+        }
+
+        iconsMonth[i+1].appendChild(indikaattori);
+    }
+}
+
+/**
+ * Luo ja palauttaa indikaattori-elementin iconColor lukuarvon mukaisesti
+ * @param {int} iconColor 
+ */
+function getIndicator(iconColor){
+    let indikaattori = document.createElement("i");
+    indikaattori.classList.add('fas');
+
+    if(iconColor > 3){
+        indikaattori.classList.add('fa-laugh');
+        indikaattori.classList.add('hymio-indikaattori');
+    } else if(iconColor > 0){
+        indikaattori.classList.add('fa-smile');
+        indikaattori.classList.add('hymio-indikaattori');
+    } else if(iconColor == 0){
+        indikaattori.classList.add('fa-meh-blank');
+        indikaattori.classList.add('hymio-indikaattori');
+    } else if(iconColor < 0 && iconColor > -4){
+        indikaattori.classList.add('fa-frown');
+        indikaattori.classList.add('hymio-indikaattori');
+    } else if(iconColor < -3){
+        indikaattori.classList.add('fa-sad-tear');
+        indikaattori.classList.add('hymio-indikaattori');
+    }
+
+    return indikaattori;
+}
+
+/**
+ * Poistaa indikaattorit
+ */
+function deleteIndicators(){
+
+    for(let i = 1; i < 13; i++){
+        let indicator = iconsMonth[i].children[1];
+
+        if(indicator != null){
+            iconsMonth[i].removeChild(indicator);
+        }
+    }
 }
