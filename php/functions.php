@@ -1,5 +1,159 @@
 <?php
 
+    // Hae day taulun date_ID käyttöön date_user_ID:llä ja datella
+    // Hae day-taulusta oikea tietua käyttöön
+    // Tulosta kaikki 0-zonen arvot
+    // Hae myös edeltävän päivän klo 18 -> 0-zonet
+    function calculateSleepData($paivaOlio, $previousDay, $DBH){
+        $timeLines = [
+            "00_to_01",
+            "01_to_02",
+            "02_to_03",
+            "03_to_04",
+            "04_to_05",
+            "05_to_06",
+            "06_to_07",
+            "07_to_08",
+            "08_to_09",
+            "09_to_10",
+            "10_to_11",
+            "11_to_12",
+            "12_to_13",
+            "13_to_14",
+            "14_to_15",
+            "15_to_16",
+            "16_to_17",
+            "17_to_18",
+            "18_to_19",
+            "19_to_20",
+            "20_to_21",
+            "21_to_22",
+            "22_to_23",
+            "23_to_24"
+        ];
+        $sleepTime = 0; // minuuteissa
+
+        // Eilinen päivä 18->
+        $date_ID = $previousDay->date_ID;
+
+        // Järjestä uusiksi niin, että tarkistus tietokannasta ensin -> vasta sitten laskenta jos tarvii
+        if($date_ID != null){
+            try{
+                $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
+                $kysely = $DBH->prepare($sql);
+                $kysely->execute();
+                $kysely -> setFetchMode(PDO::FETCH_OBJ);
+                $yesterday = $kysely->fetch();
+            } catch(PDOException $e){
+                file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to get day data: ' . $e->getMessage() . "\n", FILE_APPEND);
+            }
+
+            //echo("Eilen\n");
+            for($i = 18; $i < 24; $i++){ // Haetaan klo 18 -> eilisen päivän tiedot
+                $sek = 0;
+                $min = 0;
+                $tunnit = 0;
+                
+                $temp = json_decode($yesterday->{$timeLines[$i]});
+                
+                $aika = str_replace("PT", "", $temp[0]->inzone);
+                if(!strpbrk($aika, "H")){
+                    if(!strpbrk($aika, "M")){
+                        $sek = strtok($aika, "S");
+                    } else{
+                        $min = strtok($aika, "M");
+                                            
+                        if(!strpbrk($aika, "S")){
+                            $sek = 0;
+                        } else{
+                            $sek = strtok("S");
+                        }
+                    }
+                } else{
+                    $tunnit = 1;
+                }
+                
+                $aika = (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
+                $prevDayTimeLines[$i] = $aika;
+                
+                if($aika > 30){
+                    $sleepTime += $aika;
+                }
+            }
+            //print_r($prevDayTimeLines);
+
+            // Kuluva päivä
+            $date_ID = $paivaOlio->date_ID;
+            if($date_ID != null){
+                try{
+                    $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
+                    $kysely = $DBH->prepare($sql);
+                    $kysely->execute();
+                    $kysely -> setFetchMode(PDO::FETCH_OBJ);
+                    $today = $kysely->fetch();
+                } catch(PDOException $e){
+                    file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to get day data: ' . $e->getMessage() . "\n", FILE_APPEND);
+                }
+            } else{
+                echo('<script>console.log("No data from today")</script>');
+            }
+
+            //echo("Tänään\n");
+            for($i = 0; $i < 14; $i++){ // Haetaan kuluvan päivän tiedot -> klo 14
+                $sek = 0;
+                $min = 0;
+                $tunnit = 0;
+
+                $temp = json_decode($today->{$timeLines[$i]});
+
+                $aika = str_replace("PT", "", $temp[0]->inzone);
+                if(!strpbrk($aika, "H")){ // jos ei H
+                    if(!strpbrk($aika, "M")){ //jos ei M
+                        $sek = strtok($aika, "S");
+                    } else{ // jos on M
+                        $min = strtok($aika, "M");
+                                            
+                        if(!strpbrk($aika, "S")){
+                            $sek = 0;
+                        } else{
+                            $sek = strtok("S");
+                        }
+                    }
+                } else{ // jos H
+                    $tunnit = 1;
+                }
+                
+                $aika = (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
+                $currentDayTimeLines[$i] = $aika;
+                
+                if($aika > 30){
+                    $sleepTime += $aika;
+                }
+            }
+            //print_r($currentDayTimeLines);
+
+            $sleepCycle = floor($sleepTime * 60 / 5400);
+
+            //tallenna tietokantaan
+            if($paivaOlio->sleep_amount == null || $paivaOlio->sleep_cycles == null){
+                try{
+                    $sql = 'UPDATE `ts_date` 
+                    SET sleep_amount = ' . ($sleepTime*60) .  ', sleep_cycles = ' . $sleepCycle .  ' 
+                    WHERE date_user_ID = ' . $paivaOlio->date_user_ID . ' AND date_ID = ' . $date_ID . ';';
+                    $kysely = $DBH->prepare($sql);
+                    $kysely->execute();
+                    echo('<script>console.log("Tiedot päivitetty")</script>');
+                } catch(PDOException $e){
+                    file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to save sleeptime: ' . $e->getMessage() . "\n", FILE_APPEND);
+                }
+            } else{
+                echo('<script>console.log("Tiedot löytyy jo")</script>');
+            }
+        } else{
+            echo('<script>console.log("No data from yesterday, can`t calculate uniaika/sykli")</script>');
+        }
+    }
+
     /**
      * Tarkistaa Polarin serveriltä, onko uutta dataa tuotu laitteelta
      * Palauttaa transaction id:n, jolla voidaan hakea dataa sovellukseen

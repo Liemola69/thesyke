@@ -4,7 +4,7 @@
 
     for($i = 0; $i < 7; $i++){
         $day = getDateData($user_ID, $_SESSION['days'][$i], $DBH);
-        if($_SESSION['days'][$i] == $currentDay){
+        if($_SESSION['days'][$i] == $_SESSION['currentDay']){
             echo('<li class="viikkoNakymaTietue highlight">');
         } else{
             echo('<li class="viikkoNakymaTietue">');
