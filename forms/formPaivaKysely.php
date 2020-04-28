@@ -1,29 +1,8 @@
-<?php
-session_start();
-
-
-?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<link rel="stylesheet" href="../styles/kysely.css">
-
-<body>
-
-<nav id="ylaNav">
-        <div id="sivunNimi">PÄIVÄKYSELY </div>
-        <a href="sivurunko.php" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>
-        
-    </nav>
-
-
-    <div class=slideSivu>
-
 <form method="post">
 
 
 <div class="slidecontainer">
+
 <div><label for="myQuality">Miten nukuit viime yönä:</label><br></div>
 <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
 <input type="range" min="-5" max="5" value="0" step="1" class="slider" id="myQuality" name="given_Quality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
@@ -55,62 +34,61 @@ session_start();
   
   <div style ="text-align:start;margin-left:20px">Eilen...</div>
     <div>..nautitut kofeiiniannokset:</div>
-  <div><input type="radio" id="male" name="given_Kofeiini" value="5">
-  <label for="male">0-2 annosta</label>
-  <input type="radio" id="female" name="given_Kofeiini" value="2">
-  <label for="female">3-4 annosta</label><br>
-  <input type="radio" id="other" name="given_Kofeiini" value="-2">
-  <label for="other">4-5 annosta</label>
-  <input type="radio" id="other" name="given_Kofeiini" value="-5">
-  <label for="other">Yli viisi</label></div>
+  <div><input type="radio" id="kofeiini5" name="given_Kofeiini" value="5">
+  <label for="kofeiini5">0-2 annosta</label>
+  <input type="radio" id="kofeiini2" name="given_Kofeiini" value="2">
+  <label for="kofeiini2">3-4 annosta</label><br>
+  <input type="radio" id="kofeiini-2" name="given_Kofeiini" value="-2">
+  <label for="kofeiini-2">4-5 annosta</label>
+  <input type="radio" id="kofeiini-5" name="given_Kofeiini" value="-5">
+  <label for="kofeiini-5">Yli viisi</label></div>
   
   <br>
   <div>..nautitut alkoholiannokset:</div>
-  <div><input type="radio" id="male1" name="given_Alkoholi" value="5">
-  <label for="male1">En yhtään</label>
-  <input type="radio" id="female1" name="given_Alkoholi" value="3">
-  <label for="female1">Yhden</label>
-  <input type="radio" id="other1" name="given_Alkoholi" value="-1">
-  <label for="other1">2-3</label><br>
-  <input type="radio" id="other11" name="given_Alkoholi" value="-3">
-  <label for="other11">4-6</label>
-  <input type="radio" id="other111" name="given_Alkoholi" value="-5">
-  <label for="other111">yli 6</label></div>
+  <div><input type="radio" id="alkoholi5" name="given_Alkoholi" value="5">
+  <label for="alkoholi5">En yhtään</label>
+  <input type="radio" id="alkoholi3" name="given_Alkoholi" value="3">
+  <label for="alkoholi3">Yhden</label>
+  <input type="radio" id="alkoholi-1" name="given_Alkoholi" value="-1">
+  <label for="alkoholi-1">2-3</label><br>
+  <input type="radio" id="alkoholi-3" name="given_Alkoholi" value="-3">
+  <label for="alkoholi-3">4-6</label>
+  <input type="radio" id="alkoholi-5" name="given_Alkoholi" value="-5">
+  <label for="alkoholi-5">yli 6</label></div>
   <br>
 
   <div>..ruutuaika ennen nukkumaanmenoa:</div>
-  <div><input type="radio" id="male2" name="given_Ruutu" value="5">
-  <label for="male2">Alle tunnin</label>
-  <input type="radio" id="female2" name="given_Ruutu" value="3">
-  <label for="female2">1-2 tuntia</label>
-  <input type="radio" id="other2" name="givenRuutu" value="-1">
-  <label for="other2">2-3 tuntia</label>
-  <input type="radio" id="other22" name="given_Ruutu" value="-3">
-  <label for="other22">3-4 tuntia</label>
-  <input type="radio" id="other222" name="given_Ruutu" value="-5">
-  <label for="other222">Yli 4 tuntia</label></div>
+  <div><input type="radio" id="ruutu5" name="given_Ruutu" value="5">
+  <label for="ruutu5">Alle tunnin</label>
+  <input type="radio" id="ruutu3" name="given_Ruutu" value="3">
+  <label for="ruutu3">1-2 tuntia</label>
+  <input type="radio" id="ruutu-1" name="given_Ruutu" value="-1">
+  <label for="ruutu-1">2-3 tuntia</label>
+  <input type="radio" id="ruutu-3" name="given_Ruutu" value="-3">
+  <label for="ruutu-3">3-4 tuntia</label>
+  <input type="radio" id="ruutu-5" name="given_Ruutu" value="-5">
+  <label for="ruutu-5">Yli 4 tuntia</label></div>
 <br>
 
-  <div><label for="smoke"> ..tupakointi:</label>
-  <input type="radio" id="smoke" name="given_Smoke" value="1"> Kyllä
-  <input type="radio" id="smoke" name="given_Smoke" value="0"> En</div>
+<div>..tupakointi eilen:
+<input type="radio" id="smokeYes" name="given_Smoke" value="1"> Kyllä 
+<label for="smokeYes"></label>
+<input type="radio" id="smokeNo" name="given_Smoke" value="2"> Ei
+<label for="smokeNo"></label></div>
   
-  <div><label for="medicine">..unilääkkeet:</label>
-  <input type="radio" id="medicine" name="given_Medicine" value="1" style="background-color:red;"> Kyllä
-  <input type="radio" id="medicine" name="given_Medicine" value="0"> En</div>
+  <div>
+  <label for="medicine">..unilääkkeet:</label>
+  <input type="radio" id="medicineYes" name="given_Medicine" value="1" style="background-color:red;"> Kyllä
+  <input type="radio" id="medicineNo" name="given_Medicine" value="0"> En</div>
   
 
-  <div> 
-  <a><input href="sivurunko.php?value=Tallenna" type="submit" name="submitPaivaKysely" value="Tallenna" class="buttonit"></input></a>
+  
+  <input type="submit" name="submitPaivaKysely" value="Tallenna" class="buttonit"></input>
   <input type="reset" name="resetPaivaKysely" value="Tyhjennä" id="reset" class="buttonit" ></input>
-  </div>
+ 
 
 
-  </div>
-  </p>
+  </div> 
 
 </form>
-</div>
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
-</body>
-</html>
+
