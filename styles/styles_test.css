@@ -67,6 +67,15 @@ body {
     font-family: 'Baloo Da 2', cursive, sans-serif;
     font-size: larger;
 }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
 
 /* POP-UPIT - TAUSTA*/
 
@@ -358,6 +367,14 @@ body {
     text-align: right;
     vertical-align: top;
 }
+
+.registerClose {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+#
 
 
 /*tompan jutut*/

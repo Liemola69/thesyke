@@ -12,8 +12,6 @@ session_start();
     <title>teh Syke</title>
 </head>
 <body>
-    <i class="far fa-user"></i>
-    <i class="far fa-times-circle" id="loginClose"></i>
     
     <?php
         include_once("config/https.php");
