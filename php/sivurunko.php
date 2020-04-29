@@ -67,9 +67,6 @@
         }
     ?>
 
-
-
-
     <nav id="ylaNav">
         <div id="sivunNimi"><b>PÄIVÄNÄKYMÄ</b></div>
         <div id="hampurilaisMenu" class="fa fa-bars"></div>
@@ -505,19 +502,14 @@
 
                             <div class="calendar">
                                 <div class="month">
-
-                                    <div class="prev" onclick="moveDate('prev')">
-                                        <span>&#10094;</span>
-                                    </div>
+                                    <i id="prevMonthNuoli" class='fas fa-chevron-left' onclick="moveDate('prev')"></i>
 
                                     <div>
                                         <h2 id="month"></h2>
                                         <p id="year"></p>
                                     </div>
 
-                                    <div class="next" onclick="moveDate('next')">
-                                            <span>&#10095;</span>
-                                    </div>
+                                    <i id="nextMonthNuoli" class='fas fa-chevron-right' onclick="moveDate('next')"></i>
 
                                 </div>
 
@@ -548,65 +540,52 @@
                             <i class='fas fa-chevron-up'></i>
 
                             <!--DetailsivuIconit-->
-                            
                             <div class="ikoniWrapper">
-                                <i class='fas fa-utensils ikoni' style='color: var(--liikennevaloVihrea);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-utensils ikoni'></i>
                             </div>
                             
                             <div class="ikoniWrapper">
-                                <i class='fas fa-glass-cheers ikoni' style='color:var(--liikennevaloKeltainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-glass-cheers ikoni'></i>
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-walking ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-walking ikoni'></i>
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-smoking ikoni' style='color:var(--liikennevaloVihrea);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-smoking ikoni'></i>
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-bed ikoni' style='color:var(--liikennevaloHarmaa);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-bed ikoni'></i>
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-mug-hot ikoni' style='color:var(--liikennevaloKeltainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-mug-hot ikoni'></i>
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-pills ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-pills ikoni'></i>
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-bolt ikoni' style='color:var(--liikennevaloVihrea);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-bolt ikoni'></i>
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-cloud-sun-rain ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-cloud-sun-rain ikoni'></i>
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-clock ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-clock ikoni'></i>
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-mobile-alt ikoni' style='color:var(--liikennevaloHarmaa);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-mobile-alt ikoni'></i>
                             </div>
 
                             <div class="ikoniWrapper">
-                                <i class='fas fa-band-aid ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <i class='fas fa-band-aid ikoni'></i>
                             </div>
                         </div>
                     </div>

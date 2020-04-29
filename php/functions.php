@@ -555,7 +555,6 @@
         }
     }
  
-
     // Hae päivän data tietokannasta
     function getDateData($user_ID, $currentDay, $DBH){
 
@@ -571,6 +570,7 @@
             return null;
         }
     }
+
 
     function getEmail($user_ID, $email, $password, $DBH){
 
@@ -979,8 +979,6 @@
         }
     }
 
-   
-
     // Kivut
     function getIconColorPains($value){
         if($value==0){
@@ -1051,7 +1049,4 @@
     }    
 }
 
-
-
 ?>
-

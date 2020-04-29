@@ -4,16 +4,14 @@
     include_once("functions.php");
 
     $user_ID = $_SESSION['user_ID'];
-    $currentDay = $_SESSION['currentDay'];
-    $currentMonth = date('m', strtotime($currentDay));
-    $currentYear = date('Y', strtotime($currentDay));
+    $tempDay = $_GET['tempMonth']; //temp day aina yyyy-mm-01
+    $currentMonth = date('m', strtotime($tempDay));
+    $currentYear = date('Y', strtotime($tempDay));
     $loops = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
-    
-    $searchHymioFromDate = date('Y-m-d', strtotime('first day of this month', strtotime($currentDay)));
 
     // Hae koko kuukauden hymiöt loopilla
     for($i = 0; $i < $loops; $i++){
-        $paivaOlio = getDateData($user_ID, $searchHymioFromDate, $DBH);
+        $paivaOlio = getDateData($user_ID, $tempDay, $DBH);
         /*if($paivaOlio->user_sleep_quality == null){
             echo "null" . ";";
         } else{
@@ -21,7 +19,7 @@
         }*/
         $hymiot[$i] = $paivaOlio->user_sleep_quality;
         
-        $searchHymioFromDate = date('Y-m-d', strtotime('+1 day', strtotime($searchHymioFromDate)));
+        $tempDay = date('Y-m-d', strtotime('+1 day', strtotime($tempDay)));
     }
 
     echo(json_encode($hymiot));
