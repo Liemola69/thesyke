@@ -1,6 +1,8 @@
 <?php
     include_once("../config/https.php");
     include_once("../config/config.php");
+    include("../php/functions.php");
+    
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,22 +12,34 @@
 </head>
 <body>
 
-<nav id="ylaNav">
-        <div id="sivunNimi">PÄIVÄKYSELY </div>
-        <a href="sivurunko.php" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>      
+<nav id="ylaNavKysely">
+        <div id="sivunNimi">PÄIVÄKYSELY</div>
+        <a href="sivurunko.php?moveToDay=<?php echo($_SESSION['currentDay']);?>" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>      
     </nav>
-<?php
-    
-    include("../php/functions.php");
-?>
+    <br>
+    <div class="kyselyOtsikko">&emsp;<?php getDayFormatted($_SESSION['currentDay']); 
+    //echo($currentDay);
+    ?>
+    päivän kysely 
+    </div>
     <div class=slideSivu>
 
 
 <?php   
 
-    
+    $paivaOlio = getDateData($_SESSION["user_ID"], $_SESSION['currentDay'], $DBH);
 
     if(isset($_POST['submitPaivaKysely'])){
+
+
+        $date_ID = "SELECT `date_ID` FROM `ts_date` WHERE `date_user_ID` = ". "'" . $_SESSION["user_ID"] . "' AND `date` = " . "'" . $_SESSION['currentDay'] . "';";
+        //echo($date_ID);
+            $kysely = $DBH->prepare($date_ID);
+            $kysely->execute(); 
+            
+            $dateIDExisits = $kysely->fetch(); //boolean false=ei löytynyt, true=löytyi
+           //echo($dateIDExisits[0]);
+           
 
         //kyselystä
         $_SESSION['user_sleep_quality'] = (int)$_POST['given_Quality'];
@@ -55,9 +69,11 @@
         $_SESSION['pain_indikator'] = (int)$_POST['given_Pain'];
 
 
-        
+        //haetut tiedot
         $data['date']= $_SESSION['currentDay'];
         $data['date_user_ID']= $_SESSION['user_ID'];
+
+        //$data['date_ID'] = (int)$_SESSION['date_ID'];
 
         //indikaattori
         $data['indikator']= $_SESSION['indikator'];
@@ -86,30 +102,63 @@
         $data['user_smoke'] = (int)$_SESSION['user_smoke'];
         $data['user_medicine'] = (int)$_SESSION['user_medicine'];
             
+        
+
+            if(!$dateIDExisits[0]){
+
         try{
-            // SQL-lause $data-taulukon tiedoille :key -> value
             $sql= "INSERT INTO `ts_date` (`date_user_ID`, `date`, `user_sleep_quality`,  
-            `user_vitality`, `user_pain`, `user_stress`, `user_mood`, `user_stimulant`, `user_alcohol`, 
-            `user_food`, `user_medicine`, `user_screen_time`, `user_smoke`, `indikator`, `alcohol_indikator`, `smoke_indikator`, 
-            `vitality_indikator`, `stimulant_indikator`, `medicine_indikator`, `stress_indikator`, `mood_indikator`, `screen_time_indikator`, `pain_indikator`)            
-            VALUES (:date_user_ID, :date, :user_sleep_quality, :user_vitality, :user_pain, :user_stress, :user_mood, :user_stimulant,
-            :user_alcohol, :user_food, :user_medicine, :user_screen_time, :user_smoke, :indikator, :alcohol_indikator, :smoke_indikator, 
-            :vitality_indikator, :stimulant_indikator, :medicine_indikator, :stress_indikator, :mood_indikator, :screen_time_indikator, :pain_indikator)";
+                `user_vitality`, `user_pain`, `user_stress`, `user_mood`, `user_stimulant`, `user_alcohol`, 
+                `user_food`, `user_medicine`, `user_screen_time`, `user_smoke`, `indikator`, `alcohol_indikator`, `smoke_indikator`, 
+                `vitality_indikator`, `stimulant_indikator`, `medicine_indikator`, `stress_indikator`, `mood_indikator`, `screen_time_indikator`, `pain_indikator`)            
+                VALUES (:date_user_ID, :date, :user_sleep_quality, :user_vitality, :user_pain, :user_stress, :user_mood, :user_stimulant,
+                :user_alcohol, :user_food, :user_medicine, :user_screen_time, :user_smoke, :indikator, :alcohol_indikator, :smoke_indikator, 
+                :vitality_indikator, :stimulant_indikator, :medicine_indikator, :stress_indikator, :mood_indikator, :screen_time_indikator, :pain_indikator)";
+
+                $kysely2 = $DBH->prepare($sql);
+                $kysely2->execute($data);
+
+        }catch(PDOException $e){
+            file_put_contents('../log/DBErrors.txt', 'INSERT INTO fail: ' . $e->getMessage() . "\n", FILE_APPEND);
     
-        $kysely = $DBH->prepare($sql);
-        $kysely->execute($data);
+            }        
 
-        } catch(PDOException $e){
-        file_put_contents('DBErrors.txt', 'Connection: ' . $e->getMessage() . "\n", FILE_APPEND);
+            }
+            else{
+            try{
+                $sql = 'UPDATE `ts_date` 
+                SET `user_sleep_quality` = "' . $_SESSION['user_sleep_quality'] . '", `user_vitality` = "' . $_SESSION['user_vitality'] . '",
+                `user_pain` = "' . $_SESSION['user_pain'] . '", `user_stress` = "' . $_SESSION['user_stress'] . '",
+                `user_mood` = "' . $_SESSION['user_mood'] . '", `user_stimulant` = "' . $_SESSION['user_stimulant'] . '",
+                `user_alcohol` = "' . $_SESSION['user_alcohol'] . '", `user_food` = "' . $_SESSION['user_food'] . '",
+                `user_medicine` = "' . $_SESSION['user_medicine'] . '", `user_screen_time` = "' . $_SESSION['user_screen_time'] . '", 
+                `user_smoke` = "' . $_SESSION['user_smoke'] .'", `indikator` = "' . $_SESSION['indikator'] . '",
+                 `alcohol_indikator` = "' . $_SESSION['alcohol_indikator'] . '", `smoke_indikator` = "' . $_SESSION['smoke_indikator'] . '",
+                 `vitality_indikator` = "' . $_SESSION['vitality_indikator'] . '", `stimulant_indikator` = "' . $_SESSION['stimulant_indikator'] . '",
+                 `medicine_indikator` = "' . $_SESSION['medicine_indikator'] . '",`stress_indikator` = "' . $_SESSION['stress_indikator'] . '" ,
+                 `mood_indikator` = "' . $_SESSION['mood_indikator'] . '", `screen_time_indikator` = "' . $_SESSION['screen_time_indikator'] . '",
+                 `pain_indikator` = "' . $_SESSION['pain_indikator'] . '" 
+                WHERE `date_user_ID` = "' . $_SESSION['user_ID'] . '" AND `date` = "' . $_SESSION['currentDay'] . '";';
 
-        }
-        header("Location: sivurunko.php");
-    }else{
+                $kysely = $DBH->prepare($sql);
+                $kysely->execute($data);
+            }catch(PDOException $e){
+                file_put_contents('../log/DBErrors.txt', 'Upadate fails ' . $e->getMessage() . "\n", FILE_APPEND);
+
+            }
+        
+            }
+            header("Location: sivurunko.php?moveToDay=" . $_SESSION['currentDay']);
+        }else{
         include("../forms/formPaivaKysely.php");
-    }    
+    }
+    
+    
+
 ?>
 </div>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="../js/sivurunko.js"></script>
 </body>
 </html>
 

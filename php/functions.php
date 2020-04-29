@@ -1,5 +1,287 @@
 <?php
 
+    // Hae day taulun date_ID käyttöön date_user_ID:llä ja datella
+    // Hae day-taulusta oikea tietua käyttöön
+    // Tulosta kaikki 0-zonen arvot
+    // Hae myös edeltävän päivän klo 18 -> 0-zonet
+    function calculateSleepData($paivaOlio, $previousDay, $DBH){
+        $timeLines = [
+            "00_to_01",
+            "01_to_02",
+            "02_to_03",
+            "03_to_04",
+            "04_to_05",
+            "05_to_06",
+            "06_to_07",
+            "07_to_08",
+            "08_to_09",
+            "09_to_10",
+            "10_to_11",
+            "11_to_12",
+            "12_to_13",
+            "13_to_14",
+            "14_to_15",
+            "15_to_16",
+            "16_to_17",
+            "17_to_18",
+            "18_to_19",
+            "19_to_20",
+            "20_to_21",
+            "21_to_22",
+            "22_to_23",
+            "23_to_24"
+        ];
+        $sleepTime = 0; // minuuteissa
+
+        //Tarkista tietokannasta onko uniaika/sykli tyhjä
+        if($paivaOlio->sleep_amount == null || $paivaOlio->sleep_cycles == null){
+
+            $date_ID = $previousDay->date_ID;
+            if($date_ID != null){
+                try{
+                    $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
+                    $kysely = $DBH->prepare($sql);
+                    $kysely->execute();
+                    $kysely -> setFetchMode(PDO::FETCH_OBJ);
+                    $yesterday = $kysely->fetch();
+                } catch(PDOException $e){
+                    file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to get prevday data: ' . $e->getMessage() . "\n", FILE_APPEND);
+                }
+
+                //echo("Eilen\n");
+                for($i = 0; $i < 24; $i++){ // Haetaan klo 16 -> eilisen päivän tiedot
+                    $sek = 0;
+                    $min = 0;
+                    $tunnit = 0;
+                    
+                    $temp = json_decode($yesterday->{$timeLines[$i]});
+                    
+                    $aika = str_replace("PT", "", $temp[0]->inzone);
+                    if(!strpbrk($aika, "H")){
+                        if(!strpbrk($aika, "M")){
+                            $sek = strtok($aika, "S");
+                        } else{
+                            $min = strtok($aika, "M");
+                                                
+                            if(!strpbrk($aika, "S")){
+                                $sek = 0;
+                            } else{
+                                $sek = strtok("S");
+                            }
+                        }
+                    } else{
+                        $tunnit = 1;
+                    }
+                    
+                    $aika = (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
+                    $prevDayTimeLines[$i] = $aika;
+                    
+                    /*if($aika > 30){ // Tähän jatkoksi, jos aikasemmatkin 2 on ollut +30?
+                        $sleepTime += $aika;
+                    }*/
+                }
+                //print_r($prevDayTimeLines);
+
+                // Kuluva päivä
+                $date_ID = $paivaOlio->date_ID;
+                if($date_ID != null){
+                    try{
+                        $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
+                        $kysely = $DBH->prepare($sql);
+                        $kysely->execute();
+                        $kysely -> setFetchMode(PDO::FETCH_OBJ);
+                        $today = $kysely->fetch();
+                    } catch(PDOException $e){
+                        file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to get currentday data: ' . $e->getMessage() . "\n", FILE_APPEND);
+                    }
+                } else{
+                    echo('<script>console.log("No data from today")</script>');
+                }
+
+                //echo("Tänään\n");
+                for($i = 0; $i < 24; $i++){ // Haetaan kuluvan päivän tiedot -> klo 16
+                    $sek = 0;
+                    $min = 0;
+                    $tunnit = 0;
+
+                    $temp = json_decode($today->{$timeLines[$i]});
+
+                    $aika = str_replace("PT", "", $temp[0]->inzone);
+                    if(!strpbrk($aika, "H")){
+                        if(!strpbrk($aika, "M")){ 
+                            $sek = strtok($aika, "S");
+                        } else{ 
+                            $min = strtok($aika, "M");
+                                                
+                            if(!strpbrk($aika, "S")){
+                                $sek = 0;
+                            } else{
+                                $sek = strtok("S");
+                            }
+                        }
+                    } else{
+                        $tunnit = 1;
+                    }
+                    
+                    $aika = (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
+                    $currentDayTimeLines[$i] = $aika;
+                    
+                    /*if($aika >= 30){
+                        if($i == 0){
+                            if($prevDayTimeLines[23] >= 30){ // Jos edeltävän päivän klo 23 on ollut +30min
+                                $sleepTime += $aika;
+                            }
+                        } elseif($currentDayTimeLines[$i-1] >= 30){ // Jos edeltävä tunti myös +30min
+                            $sleepTime += $aika;
+                        }
+                    }*/
+
+                    // foreachilla läpi -> lisää ensimmäinen +30 nukahtamishetken tunnistamiseksi
+                }
+                //print_r($currentDayTimeLines);
+
+                // Edeltävän päivän heräämisaika -> ei oteta uniaikaa huomioon tuplana
+                for($i = 0; $i < 24; $i++){
+                    if($prevDayTimeLines[$i] >= 30){
+                        if(!($prevDayTimeLines[$i+1] >= 30)){
+                            $heraamisAikaPrevDay = $i . ":" . $prevDayTimeLines[$i];
+                            $heraamisAikaPrevDayIndeksi = $i;
+                            //echo("Heräämisaika edeltävänä päivänä: " . $heraamisAikaPrevDay);
+                            break;
+                        }
+                    }
+                }
+                
+                // Edeltävän päivän nukkumaanmenoaika
+                for($i = ($heraamisAikaPrevDayIndeksi + 1); $i < 24; $i++){
+                    if($prevDayTimeLines[$i] >= 30){
+                        if($i == 23){ // jos ollaan edeltävän päivän 23-24 slotissa
+                            if($currentDayTimeLines[0] >= 30){ // tarkista onko kuluvan päivän 00-01 +30min
+
+                                if($i < 10){
+                                    if((60 - $prevDayTimeLines[$i]) < 10){
+                                        $nukahtamisAikaPrevDay = "0" . $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                    } else{
+                                        $nukahtamisAikaPrevDay = "0" . $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                    }
+                                } else{
+                                    if((60 - $prevDayTimeLines[$i]) < 10){
+                                        $nukahtamisAikaPrevDay = $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                    } else{
+                                        $nukahtamisAikaPrevDay = $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                    }
+                                }
+
+                                $nukahtamisAikaPrevDayIndeksi = $i;
+                                $nukahtamisAika = $previousDay->date . " " . $nukahtamisAikaPrevDay . ":00";
+                                break;
+                            }
+                        } elseif($prevDayTimeLines[$i+1] >= 30 && $prevDayTimeLines[$i+2] >= 30){ // tarkista että vähintään 2h unessa
+
+                            if($i < 10){
+                                if((60 - $prevDayTimeLines[$i]) < 10){
+                                    $nukahtamisAikaPrevDay = "0" . $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                } else{
+                                    $nukahtamisAikaPrevDay = "0" . $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                }
+                            } else{
+                                if((60 - $prevDayTimeLines[$i]) < 10){
+                                    $nukahtamisAikaPrevDay = $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                } else{
+                                    $nukahtamisAikaPrevDay = $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                }
+                            }
+
+                            $nukahtamisAikaPrevDayIndeksi = $i;
+                            $nukahtamisAika = $previousDay->date . " " . $nukahtamisAikaPrevDay . ":00";
+                            break;
+                        }
+                    }
+                }
+                
+                // Jos ei nukahtamisaikaa edeltävänä päivänä
+                if(!$nukahtamisAikaPrevDay){
+
+                    // Nukahtamisaika kuluvana päivänä
+                    for($i = 0; $i < 24; $i++){
+                        if($currentDayTimeLines[$i] >= 30){
+
+                            if($i < 10){
+                                if((60 - $currentDayTimeLines[$i]) < 10){
+                                    $nukahtamisAikaCurrentDay = "0" . $i . ":" . "0" . (60 - $currentDayTimeLines[$i]);
+                                } else{
+                                    $nukahtamisAikaCurrentDay = "0" . $i . ":" . (60 - $currentDayTimeLines[$i]);
+                                }
+                            } else{
+                                $nukahtamisAikaCurrentDay = $i . ":" . (60 - $currentDayTimeLines[$i]);
+                            }
+
+                            $nukahtamisAikaCurrentDayIndeksi = $i;
+                            $nukahtamisAika = $paivaOlio->date . " " . $nukahtamisAikaCurrentDay . ":00";
+                            break;
+                        }
+                    }
+                }
+                
+                // Heräämisaika kuluvana päivänä
+                for($i = 0; $i < 24; $i++){
+                    if($currentDayTimeLines[$i] >= 30){
+                        if(!($currentDayTimeLines[$i+1] >= 30)){
+
+                            if($i < 10){
+                                if($currentDayTimeLines[$i] < 10){
+                                    $heraamisAikaCurrentDay = "0" . $i . ":" . "0" . $currentDayTimeLines[$i];
+                                } else{
+                                    $heraamisAikaCurrentDay = "0" . $i . ":" . $currentDayTimeLines[$i];
+                                }
+                            } else{
+                                $heraamisAikaCurrentDay = $i . ":" . $currentDayTimeLines[$i];
+                            }
+
+                            $heraamisAikaCurrentDayIndeksi = $i;
+                            $heraamisAika = $paivaOlio->date . " " . $heraamisAikaCurrentDay . ":00";
+                            break;
+                        }
+                    }
+                }
+                
+                // Lasketaan uniaika
+                if($nukahtamisAikaPrevDayIndeksi){ //jos nukahtanut edeltävän päivän puolella
+                    for($i = $nukahtamisAikaPrevDayIndeksi; $i < 24; $i++){
+                        $sleepTime += $prevDayTimeLines[$i];
+                    }
+
+                    for($i = 0; $i < ($heraamisAikaCurrentDayIndeksi + 1); $i++){
+                        $sleepTime += $currentDayTimeLines[$i];
+                    }
+                } else{ //jos nukahtanut kuluvan päivän aikana
+                    for($i = $nukahtamisAikaCurrentDayIndeksi; $i < ($heraamisAikaCurrentDayIndeksi+1); $i++){
+                        $sleepTime += $currentDayTimeLines[$i];
+                    }
+                }
+
+                $sleepCycle = floor($sleepTime * 60 / 5400);
+
+                // Tallenna tietokantaan
+                try{
+                    $sql = 'UPDATE `ts_date` 
+                    SET sleep_amount = ' . ($sleepTime*60) .  ', sleep_cycles = ' . $sleepCycle .  ', 
+                    sleep_start = "' . $nukahtamisAika . '", sleep_end = "' . $heraamisAika . '" 
+                    WHERE date_user_ID = ' . $paivaOlio->date_user_ID . ' AND date_ID = ' . $date_ID . ';';
+                    $kysely = $DBH->prepare($sql);
+                    $kysely->execute();
+                    echo('<script>console.log("Tiedot päivitetty")</script>');
+                } catch(PDOException $e){
+                    file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to save sleeptime: ' . $e->getMessage() . "\n", FILE_APPEND);
+                }
+            } else{
+                echo('<script>console.log("No data from yesterday, can`t calculate uniaika/sykli")</script>');
+            }
+        } else{
+            echo('<script>console.log("Tiedot löytyy jo")</script>');
+        }
+    }
+
     /**
      * Tarkistaa Polarin serveriltä, onko uutta dataa tuotu laitteelta
      * Palauttaa transaction id:n, jolla voidaan hakea dataa sovellukseen
@@ -571,6 +853,23 @@
         }
     }
 
+
+    function getEmail($user_ID, $email, $password, $DBH){
+
+        $sql = "SELECT * FROM `ts_user` WHERE `user_ID` = '" . $user_ID . "';";
+        $kysely = $DBH->prepare($sql);
+        $kysely->execute();
+        $kysely -> setFetchMode(PDO::FETCH_OBJ);
+        $vastaus = $kysely->fetch();
+
+        if($vastaus){
+            return $vastaus;
+        } else{
+            return null;
+        }
+    }
+
+
     // Palauta päivän uniaika formatoituna hh tuntia mm minuuttia
     function getUniAika($paivaOlio){
         if($paivaOlio->sleep_amount == NULL){
@@ -594,10 +893,10 @@
     // Muuttaa pääsivun ison hymiön värin unenlaadun mukaan
     function getHymio($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
-        if($unenLaatu == 0){
+
+        if($unenLaatu == null || $unenLaatu == 0){
             echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
-        }
-        elseif($unenLaatu > 2){
+        } elseif($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio" style="color: var(--liikennevaloVihrea);"');
         } elseif($unenLaatu <= 2 && $unenLaatu >= -2){
@@ -844,10 +1143,10 @@
     // Muuta pääsivun hymiön väri unenlaadun mukaisesti
     function getHymioFromDate($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
-        if($unenLaatu == 0){
+
+        if($unenLaatu == null || $unenLaatu == 0){
             echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-        }
-        elseif($unenLaatu > 2){
+        } elseif($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio-viikko" style="color: var(--liikennevaloVihrea);"');
         }elseif($unenLaatu <= 2 && $unenLaatu >= -2){
@@ -889,6 +1188,71 @@
         
         return $mounths;
     }*/
+
+    // Hakee päivämäärän mukaan kyselyn tiedot tietokannasta ja palauttaa muutos% progressbariin
+    function getDayProgressValue($day){
+        $pos = 0;
+        $neg = 0;
+
+        $icon = [
+            "$day->user_food", 
+            "$day->user_alcohol", 
+            "0", 
+            "$day->user_smoke", 
+            "$day->user_vitality", 
+            "$day->user_stimulant", 
+            "$day->user_medicine", 
+            "$day->user_stress", 
+            "$day->user_mood", 
+            "0", 
+            "$day->user_screen_time", 
+            "$day->user_pain"
+        ];
+
+        for($i = 0; $i < 12; $i++){
+            $value = $icon[$i];
+
+            if($value == 0){
+                $pos += 0;
+            } elseif($value > 0){
+                $pos += $value;
+            } else{
+                $neg += (-1) * $value;
+            }
+        }
+
+        //echo("<div>" . $pos . "-" . $neg . "</div>");
+
+        if($pos == 0 && $neg == 0){
+            echo("<div>" . 50 . "-" . 50 . "</div>");
+            return 50;
+        } elseif($pos == $neg){
+            echo("<div>" . 50 . "-" . 50 . "</div>");
+            return 50;
+        } elseif($neg > $pos){
+            $tulos = round(100*(0.5 + ($pos-$neg)/$neg));
+            if($tulos < 0){
+                $tulos = 0;
+            } elseif($tulos > 100){
+                $tulos = 100;
+            }
+            echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
+            return $tulos;
+        }else{
+            if($neg == 0){
+                $neg = 1;
+            }
+            $tulos = round(100*(0.5 + ($pos-$neg)/$neg));
+
+            if($tulos < 0){
+                $tulos = 0;
+            } elseif($tulos > 100){
+                $tulos = 100;
+            }
+            echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
+            return $tulos;
+        }
+    }
 
     //** Ikoni funktiot */
       // < -2 = punainen 
@@ -974,7 +1338,7 @@
     }
 
      // Lääkkeet (boolean)
-     function getIconColorMedicine($value){
+    function getIconColorMedicine($value){
         if($value == 1){
             echo("var(--liikennevaloVihrea)");
         } elseif($value==0){
@@ -983,7 +1347,7 @@
     }
 
      // ruutuaika
-     function getIconColorScreenTime($value){
+    function getIconColorScreenTime($value){
         if($value==0){
             echo("var(--liikennevaloHarmaa)");
         }elseif($value > 0){
@@ -1004,32 +1368,67 @@
     }
 
      // Aktiivisuus
-     function getIconColorActivity($value){
+    function getIconColorActivity($value){
         echo("var(--liikennevaloHarmaa)");
     }
 
-     //hae tavoiteuniaika tietokannasta (EI TOIMI)
-     /*function getSleepGoalData($mapping_sleep_amount, $DBH){
+    // Nukuttu aika
+    function getIconColorSleepAmount($value){
+        if($value == null){
+            echo("var(--liikennevaloHarmaa)");
+        }elseif($value >= 28800){
+            echo("var(--liikennevaloVihrea)");
+        } elseif($value >= 21600 && $value < 28800){
+            echo("var(--liikennevaloKeltainen)");
+        } elseif($value < 21600 && $value > 0){
+            echo("var(--liikennevaloPunainen)");
+        }
+    }
 
-        $sql = "SELECT mapping_sleep_amount FROM ts_parameter_mapping WHERE `user_ID` ='" . $user_ID . "' AND `mapping_sleep_amount` = " . "'" . $mapping_sleep_amount . "';";
-        $kysely = $DBH->prepare($sql);
-        $kysely->execute();
-        $kysely -> setFetchMode(PDO::FETCH_OBJ);
-        $vastaus = $kysely->fetch();
-    } */
+    // Määrittää ikonien värin viikkonäkymän detailsivulla
+    function getIconColor($iconName, $value){
+        if($iconName == 2){ // Aktiivisuus
+            return 'style="color: var(--liikennevaloHarmaa)";';
+        } else if($iconName == 3){ // Tupakka
 
+            if($value == 0){
+                return 'style="color: var(--liikennevaloHarmaa)";';
+            }else if($value == 1){
+                return 'style="color: var(--liikennevaloPunainen)";';
+            }else if($value == 2){
+                return 'style="color: var(--liikennevaloVihrea)";';
+            }
+        } else if($iconName == 6){ // Lääkkeet
 
-   // Nukuttu aika
-   function getIconColorSleepAmount($value){
-    if($value == null){
-        echo("var(--liikennevaloHarmaa)");
-    }elseif($value >= 28800){
-        echo("var(--liikennevaloVihrea)");
-    } elseif($value >= 21600 && $value < 28800){
-        echo("var(--liikennevaloKeltainen)");
-    } elseif($value < 21600 && $value > 0){
-        echo("var(--liikennevaloPunainen)");
-    }    
-}
+            if($value == 1){
+                return 'style="color: var(--liikennevaloVihrea)";';
+            } else if($value == 0){
+                return 'style="color: var(--liikennevaloHarmaa)";';
+            }
+        } else{ // Muille
 
+            if($value == 0){
+                return 'style="color: var(--liikennevaloHarmaa)";';
+            }else if($value > 0){
+                return 'style="color: var(--liikennevaloVihrea)";';
+            }else if($value < 0){
+                return 'style="color: var(--liikennevaloPunainen)";';
+            }
+        }
+    }
+
+    // Palauttaa indikaattorin viikkonäkymän detailsivulla keskiarvon mukaisesti
+    function getIndicator($value){
+        if($value > 3){
+            return 'class = "fas fa-laugh hymio-indikaattori" style = "color: var(--liikennevaloVihrea)"';
+        } else if($value > 0){
+            return 'class = "fas fa-smile hymio-indikaattori" style = "color: var(--liikennevaloVihrea)"';
+        } else if($value == 0){
+            return 'class = "fas fa-meh-blank hymio-indikaattori" style = "color: var(--liikennevaloHarmaa)"';
+        } else if($value < 0 && $value > -4){
+            return 'class = "fas fa-frown hymio-indikaattori" style = "color: var(--liikennevaloPunainen)"';
+        } else if($value < -3){
+            return 'class = "fas fa-sad-tear hymio-indikaattori" style = "color: var(--liikennevaloPunainen)"';
+        }
+    }
 ?>
