@@ -71,14 +71,14 @@
         $kysely -> setFetchMode(PDO::FETCH_OBJ);
         $vastaus = $kysely -> fetch();
                     
-        $_SESSION['fetched_user_ID'] = $vastaus->user_ID;
-        $data3['user_ID'] = $_SESSION['fetched_user_ID'];
+        $_SESSION['user_ID'] = $vastaus->user_ID;
+        $data['user_ID'] = $_SESSION['user_ID'];
 
-        $sql = "INSERT INTO `ts_user_parameters` (`user_ID`, `parameters_ID`, `parameters_stimulants`, `parameters_alcohol`, `parameters_medicine`, `parameters_drug`, `parameters_smoke`)            
-        VALUES (:user_ID, NULL, :parameters_stimulants, :parameters_alcohol, :parameters_medicine, :parameters_drug, :parameters_smoke)";
+        $sql = "INSERT INTO `ts_user_parameters` (`user_ID`, `parameters_ID`, `parameters_stimulants`, `parameters_alcohol`, `parameters_medicine`, `parameters_drug`, `parameters_screen_time`, `parameters_smoke`, `parameters_user_agreement`, `parameters_email_marketing`, `parameters_gdpr`, `parameters_fall_asleep_time`)
+        VALUES (:user_ID, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
         
         $kysely = $DBH->prepare($sql);
-        $kysely->execute($data3);
+        $kysely->execute($data);
 
     } catch(PDOException $e){
         file_put_contents('log/DBErrors.txt', 'Connection: ' . $e->getMessage() . "\n", FILE_APPEND);

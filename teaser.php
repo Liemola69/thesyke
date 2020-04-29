@@ -5,8 +5,8 @@ include_once("config/config.php");
 //Session debuggaus, kommentoi pois tarvittaessa
 //echo session_id();
 //print_r($_POST);
-print_r($_SESSION);
-print_r($data);
+//print_r($_SESSION);
+//print_r($data);
 
 ?>
 
