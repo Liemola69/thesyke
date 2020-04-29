@@ -14,7 +14,7 @@
 
 <nav id="ylaNavKysely">
         <div id="sivunNimi">PÄIVÄKYSELY</div>
-        <a href="sivurunko.php" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>      
+        <a href="sivurunko.php?moveToDay=<?php echo($_SESSION['currentDay']);?>" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>      
     </nav>
     <br>
     <div class="kyselyOtsikko">&emsp;<?php getDayFormatted($_SESSION['currentDay']); 
@@ -148,7 +148,7 @@
             }
         
             }
-            header("Location: sivurunko.php?moveToDay=".$_SESSION['currentDay']);
+            header("Location: sivurunko.php?moveToDay=" . $_SESSION['currentDay']);
         }else{
         include("../forms/formPaivaKysely.php");
     }

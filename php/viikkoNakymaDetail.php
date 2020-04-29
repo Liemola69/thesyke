@@ -30,7 +30,7 @@
         $medicine[$i] = $paivaOlio->user_medicine;
         $stress[$i] = $paivaOlio->user_stress;
         $mood[$i] = $paivaOlio->user_mood;
-        $sleepTime[$i] = 0;
+        $sleepTime[$i] = $paivaOlio->sleep_amount;
         $screentime[$i] = $paivaOlio->user_screen_time;
         $pain[$i] = $paivaOlio->user_pain;
 
