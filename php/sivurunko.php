@@ -131,24 +131,22 @@
                                 <i id="prevDayNuoli" class='fas fa-chevron-left'></i>
                                 <?php getDayFormatted($_SESSION['currentDay']); ?>
                                 <i id="nextDayNuoli" class='fas fa-chevron-right'></i>
-                                
                             </div>
                             
-
                             <!-- Unenlaatu hymiö -->
                             <div class="dailySmiley">
-                            <!-- Menee päiväkyselysivulle -->
-                            <a class="dailyButton fas fa-plus-circle" href="kysely.php"></a>  
-                            <i <?php 
-                                if($paivaOlio == null){
-                                    echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
-                                                                        
-                                } else{
-                                    getHymio($paivaOlio);
-                                }
-                            ?>></i>
-                            <a class="dailyButton fas fa-info-circle"></a>
-                            
+                                <!-- Menee päiväkyselysivulle -->
+                                <a class="dailyButton fas fa-plus-circle" href="kysely.php"></a>  
+                                <i <?php 
+                                    if($paivaOlio == null){
+                                        echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
+                                                                            
+                                    } else{
+                                        getHymio($paivaOlio);
+                                    }
+                                    ?>>
+                                </i>
+                                <a class="dailyButton fas fa-info-circle"></a>
                             </div>
 
                             <!--inforuudut-->
@@ -170,13 +168,11 @@
                                 </div>       
                             </div>
 
-
                             <!--progress/meter bar-->
                             <div class="clear">
                                 <progress class="attributes_balance" value="65" min="0" max="100"></progress>
                             </div>
                            
-
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-down'></i>
 
@@ -274,11 +270,6 @@
                         </div>
                     </div>
                 </div>
-
-                
-
-
-
             </div>
 
             <!--viikkosivu-->
@@ -290,132 +281,14 @@
                             <!--Ylälaidan viikkobanneri-->
                             <div id="paasivuViikkoNav">
                                 <i id="prevWeekNuoli" class='fas fa-chevron-left'></i>
-                                <?php echo ("Viikko " . $_SESSION['currentWeek']); ?>
+                                <div id="viikkoOtsikko"><?php echo ("VIIKKO " . $_SESSION['currentWeek']); ?></div>
                                 <i id="nextWeekNuoli" class='fas fa-chevron-right'></i>
                             </div>
 
                             <!-- Viikonpäivä listaus -->
                             <div>
                                 <ul id="viikonpaivaLista">
-                                    
-                                    <li class="viikkoNakymaTietue">
-                                    
-                                        <div><?php echo $_SESSION['days'][0]; ?></div>
-                                        
-                                        <?php $monday = getDateData($user_ID, $_SESSION['days'][0], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($monday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($monday);
-                                                }
-                                            ?>>
-                                        </i>
-
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][1]; ?></div>
-                                        
-                                        <?php $tuesday = getDateData($user_ID, $_SESSION['days'][1], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($tuesday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($tuesday);
-                                                }
-                                            ?>>
-                                        </i>
-                                        
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][2]; ?></div>
-                                            
-                                        <?php $wednesday = getDateData($user_ID, $_SESSION['days'][2], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($wednesday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($wednesday);
-                                                }
-                                            ?>>
-                                        </i>        
-                                        
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][3]; ?></div>
-                                            
-                                        <?php $thursday = getDateData($user_ID, $_SESSION['days'][3], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($thursday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($thursday);
-                                                }
-                                            ?>>
-                                        </i>
-                                            
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][4]; ?></div>
-                                            
-                                        <?php $friday = getDateData($user_ID, $_SESSION['days'][4], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($friday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($friday);
-                                                }
-                                            ?>>
-                                        </i>
-                                            
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][5]; ?></div>
-                                            
-                                        <?php $saturday = getDateData($user_ID, $_SESSION['days'][5], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($saturday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($saturday);
-                                                }
-                                            ?>>
-                                        </i>
-                                                                       
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][6]; ?></div>
-                                            
-                                        <?php $sunday = getDateData($user_ID, $_SESSION['days'][6], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($sunday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($sunday);
-                                                }
-                                            ?>>
-                                        </i>
-            
-                                    </li>
+                                    <?php include("viikkonakyma.php"); ?>
                                 </ul>
                             </div>
 
@@ -428,73 +301,13 @@
                             <i class='fas fa-chevron-up'></i>
 
                             <!--DetailsivuIconit-->
-                            
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-utensils ikoni' style='color: var(--liikennevaloVihrea);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-                                
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-glass-cheers ikoni' style='color:var(--liikennevaloKeltainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-walking ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-smoking ikoni' style='color:var(--liikennevaloVihrea);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-bed ikoni' style='color:var(--liikennevaloHarmaa);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-mug-hot ikoni' style='color:var(--liikennevaloKeltainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-pills ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-bolt ikoni' style='color:var(--liikennevaloVihrea);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-cloud-sun-rain ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-clock ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class= 'fas fa-mobile-alt ikoni' style='color:var(--liikennevaloHarmaa);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-band-aid ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
+                            <?php include("viikkoNakymaDetail.php"); ?>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!--kuukausisivu-->
-            
             <div id="kuukausiSivu" class="swiper-slide">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
@@ -528,66 +341,18 @@
                             </div>
 
                             <!--sivuvaihtoNuoli-->
-
                             <i class='fas fa-chevron-down'></i>
                             
-
                         </div>
                         
-
                         <div id="kuukausiDetailSivu" class="swiper-slide detailWrapper">
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-up'></i>
 
                             <!--DetailsivuIconit-->
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-utensils ikoni'></i>
-                            </div>
-                            
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-glass-cheers ikoni'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-walking ikoni'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-smoking ikoni'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-bed ikoni'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-mug-hot ikoni'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-pills ikoni'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-bolt ikoni'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-cloud-sun-rain ikoni'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-clock ikoni'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-mobile-alt ikoni'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-band-aid ikoni'></i>
-                            </div>
+                            <?php include("kuukausiNakymaDetail.php"); ?>
                         </div>
+                        
                     </div>
                 </div>
             </div>

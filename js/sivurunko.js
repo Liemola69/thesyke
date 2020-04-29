@@ -95,7 +95,7 @@ paasivuKuukausiWrapper.style.gridTemplateRows = "auto 10%" + alaNav.clientHeight
 
 // Aseta detailsivun viimeinen grid alaNavin kokoiseksi
 for(let i = 0; i < 3; i++){
-    detailWrapper[i].style.gridTemplateRows = "auto auto auto auto auto " + alaNav.clientHeight + "px";
+    detailWrapper[i].style.gridTemplateRows = "10% auto auto auto auto 5% " + alaNav.clientHeight + "px";
 }
 
 window.addEventListener("resize", function(evt){
@@ -264,7 +264,7 @@ function korjaaSisallonKorkeus(){
 
     // Korjaa detailsivun viimeinen grid alaNavin kokoiseksi
     for(let i = 0; i < 3; i++){
-        detailWrapper[i].style.gridTemplateRows = "auto auto auto auto auto " + alaNav.clientHeight + "px";
+        detailWrapper[i].style.gridTemplateRows = "10% auto auto auto auto 5% " + alaNav.clientHeight + "px";
     }
 }
 
@@ -520,24 +520,24 @@ function luoHymio(i){
     if(i == null){
         hymio.classList.add('fas');
         hymio.classList.add('fa-meh-blank');
-        hymio.classList.add('hymio-viikko');
+        hymio.classList.add('hymio-kuukausi');
         hymio.style.color = "var(--liikennevaloHarmaa)";
     } else{
 
         if(i > 2){
             hymio.classList.add('fas');
             hymio.classList.add('fa-laugh');
-            hymio.classList.add('hymio-viikko');
+            hymio.classList.add('hymio-kuukausi');
             hymio.style.color = "var(--liikennevaloVihrea)";
         } else if(i <= 2 && i >= -2){
             hymio.classList.add('fas');
             hymio.classList.add('fa-meh');
-            hymio.classList.add('hymio-viikko');
+            hymio.classList.add('hymio-kuukausi');
             hymio.style.color = "var(--liikennevaloKeltainen)";
         } else if(i < -2){
             hymio.classList.add('fas');
             hymio.classList.add('fa-frown');
-            hymio.classList.add('hymio-viikko');
+            hymio.classList.add('hymio-kuukausi');
             hymio.style.color = "var(--liikennevaloPunainen)";
         }
     }
