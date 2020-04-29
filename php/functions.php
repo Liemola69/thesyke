@@ -80,7 +80,7 @@
                         $sleepTime += $aika;
                     }*/
                 }
-                print_r($prevDayTimeLines);
+                //print_r($prevDayTimeLines);
 
                 // Kuluva päivä
                 $date_ID = $paivaOlio->date_ID;
@@ -138,7 +138,7 @@
 
                     // foreachilla läpi -> lisää ensimmäinen +30 nukahtamishetken tunnistamiseksi
                 }
-                print_r($currentDayTimeLines);
+                //print_r($currentDayTimeLines);
 
                 // Edeltävän päivän heräämisaika -> ei oteta uniaikaa huomioon tuplana
                 for($i = 0; $i < 24; $i++){
@@ -1414,6 +1414,21 @@
             }else if($value < 0){
                 return 'style="color: var(--liikennevaloPunainen)";';
             }
+        }
+    }
+
+    // Palauttaa indikaattorin viikkonäkymän detailsivulla keskiarvon mukaisesti
+    function getIndicator($value){
+        if($value > 3){
+            return 'class = "fas fa-laugh hymio-indikaattori" style = "color: var(--liikennevaloVihrea)"';
+        } else if($value > 0){
+            return 'class = "fas fa-smile hymio-indikaattori" style = "color: var(--liikennevaloVihrea)"';
+        } else if($value == 0){
+            return 'class = "fas fa-meh-blank hymio-indikaattori" style = "color: var(--liikennevaloHarmaa)"';
+        } else if($value < 0 && $value > -4){
+            return 'class = "fas fa-frown hymio-indikaattori" style = "color: var(--liikennevaloPunainen)"';
+        } else if($value < -3){
+            return 'class = "fas fa-sad-tear hymio-indikaattori" style = "color: var(--liikennevaloPunainen)"';
         }
     }
 ?>

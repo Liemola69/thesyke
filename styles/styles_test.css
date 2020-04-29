@@ -621,9 +621,7 @@ progress[value]  {
     font-size: 5vw;
     padding: 0 5px;
 }
-.hymio-indikaattori{
-    font-size: 6vw;
-}
+
 .ikoniWrapper{
     box-shadow: 0px 0px 8px;
     margin: 5px 5px;
@@ -637,15 +635,6 @@ progress[value]  {
 
 .hymio-indikaattori{
     font-size: 6vw;
-}
-
-.ikoniWrapper{
-    box-shadow: 0px 0px 5px;
-    margin: 5px 5px;
-    display: flex;
-    justify-content: center;
-    flex-flow: column;
-    border-radius: 20px;
 }
 
 i[class^="fas fa-chevron"]{
