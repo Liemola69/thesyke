@@ -431,7 +431,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /*border: solid 1px;*/
     border: solid 1px rgba(255, 255, 255, 0.3);
     color: white;
     padding: 0 5px;
@@ -444,12 +443,19 @@ body {
 
 #viikonpaiva{
     width: 20%;
+    display: flex;
+    justify-content: flex-start;
     font-size: 1.3em;
 }
 
 .viikkoPvm{
     width: 20%;
     font-size: 1.1em;
+    line-height: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 #ylaValikko{
@@ -560,7 +566,7 @@ progress[value]  {
 }
 
 .progressBarViikko{
-    height: 2em;
+    height: 1em;
 }
 
 .progressViikko{
@@ -568,7 +574,13 @@ progress[value]  {
     line-height: 0px;
     height: 100%;
     display: flex;
+    flex-flow: column;
+    justify-content: center;
     align-items: center;
+}
+
+.progressViikko div{
+    margin-bottom: 5px;
 }
 
 .fa-arrow-alt-circle-down{
@@ -727,8 +739,7 @@ i[class^="fas fa-chevron"]{
 }
 
 .today {
-    background-color:var(--tehosteVari);
-    color: #fff;
+    border: solid 3px var(--tehosteVari);
     border-radius: 10px;
 }
 
@@ -806,7 +817,7 @@ i[class^="fas fa-chevron"]{
 }
 
 .highlight{
-    box-shadow: 0px 0px 5px;
+    box-shadow: 0px 0px 10px var(--tehosteVari);
     border-radius: 10px;
 }
 

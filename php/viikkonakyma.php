@@ -21,7 +21,9 @@
                 echo(getHymioFromDate($day) . ">");
             }
         echo('</i>');
-        echo('<div class="progressViikko"><progress class="attributes_balance progressBarViikko" value="' . getDayProgressValue($day) . '" min="0" max="100"></progress></div>');
+        echo('<div class="progressViikko">');
+        echo('<progress class="attributes_balance progressBarViikko" value="' . getDayProgressValue($day) . '" min="0" max="100"></progress>');
+        echo('</div>');
     }
 
 ?>

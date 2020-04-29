@@ -33,112 +33,240 @@
         ];
         $sleepTime = 0; // minuuteissa
 
-        // Eilinen päivä 18->
-        $date_ID = $previousDay->date_ID;
+        //Tarkista tietokannasta onko uniaika/sykli tyhjä
+        if($paivaOlio->sleep_amount == null || $paivaOlio->sleep_cycles == null){
 
-        // Järjestä uusiksi niin, että tarkistus tietokannasta ensin -> vasta sitten laskenta jos tarvii
-        if($date_ID != null){
-            try{
-                $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
-                $kysely = $DBH->prepare($sql);
-                $kysely->execute();
-                $kysely -> setFetchMode(PDO::FETCH_OBJ);
-                $yesterday = $kysely->fetch();
-            } catch(PDOException $e){
-                file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to get day data: ' . $e->getMessage() . "\n", FILE_APPEND);
-            }
-
-            //echo("Eilen\n");
-            for($i = 18; $i < 24; $i++){ // Haetaan klo 18 -> eilisen päivän tiedot
-                $sek = 0;
-                $min = 0;
-                $tunnit = 0;
-                
-                $temp = json_decode($yesterday->{$timeLines[$i]});
-                
-                $aika = str_replace("PT", "", $temp[0]->inzone);
-                if(!strpbrk($aika, "H")){
-                    if(!strpbrk($aika, "M")){
-                        $sek = strtok($aika, "S");
-                    } else{
-                        $min = strtok($aika, "M");
-                                            
-                        if(!strpbrk($aika, "S")){
-                            $sek = 0;
-                        } else{
-                            $sek = strtok("S");
-                        }
-                    }
-                } else{
-                    $tunnit = 1;
-                }
-                
-                $aika = (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
-                $prevDayTimeLines[$i] = $aika;
-                
-                if($aika > 30){
-                    $sleepTime += $aika;
-                }
-            }
-            //print_r($prevDayTimeLines);
-
-            // Kuluva päivä
-            $date_ID = $paivaOlio->date_ID;
+            $date_ID = $previousDay->date_ID;
             if($date_ID != null){
                 try{
                     $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
                     $kysely = $DBH->prepare($sql);
                     $kysely->execute();
                     $kysely -> setFetchMode(PDO::FETCH_OBJ);
-                    $today = $kysely->fetch();
+                    $yesterday = $kysely->fetch();
                 } catch(PDOException $e){
-                    file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to get day data: ' . $e->getMessage() . "\n", FILE_APPEND);
+                    file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to get prevday data: ' . $e->getMessage() . "\n", FILE_APPEND);
                 }
-            } else{
-                echo('<script>console.log("No data from today")</script>');
-            }
 
-            //echo("Tänään\n");
-            for($i = 0; $i < 14; $i++){ // Haetaan kuluvan päivän tiedot -> klo 14
-                $sek = 0;
-                $min = 0;
-                $tunnit = 0;
-
-                $temp = json_decode($today->{$timeLines[$i]});
-
-                $aika = str_replace("PT", "", $temp[0]->inzone);
-                if(!strpbrk($aika, "H")){ // jos ei H
-                    if(!strpbrk($aika, "M")){ //jos ei M
-                        $sek = strtok($aika, "S");
-                    } else{ // jos on M
-                        $min = strtok($aika, "M");
-                                            
-                        if(!strpbrk($aika, "S")){
-                            $sek = 0;
+                //echo("Eilen\n");
+                for($i = 0; $i < 24; $i++){ // Haetaan klo 16 -> eilisen päivän tiedot
+                    $sek = 0;
+                    $min = 0;
+                    $tunnit = 0;
+                    
+                    $temp = json_decode($yesterday->{$timeLines[$i]});
+                    
+                    $aika = str_replace("PT", "", $temp[0]->inzone);
+                    if(!strpbrk($aika, "H")){
+                        if(!strpbrk($aika, "M")){
+                            $sek = strtok($aika, "S");
                         } else{
-                            $sek = strtok("S");
+                            $min = strtok($aika, "M");
+                                                
+                            if(!strpbrk($aika, "S")){
+                                $sek = 0;
+                            } else{
+                                $sek = strtok("S");
+                            }
+                        }
+                    } else{
+                        $tunnit = 1;
+                    }
+                    
+                    $aika = (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
+                    $prevDayTimeLines[$i] = $aika;
+                    
+                    /*if($aika > 30){ // Tähän jatkoksi, jos aikasemmatkin 2 on ollut +30?
+                        $sleepTime += $aika;
+                    }*/
+                }
+                print_r($prevDayTimeLines);
+
+                // Kuluva päivä
+                $date_ID = $paivaOlio->date_ID;
+                if($date_ID != null){
+                    try{
+                        $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
+                        $kysely = $DBH->prepare($sql);
+                        $kysely->execute();
+                        $kysely -> setFetchMode(PDO::FETCH_OBJ);
+                        $today = $kysely->fetch();
+                    } catch(PDOException $e){
+                        file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to get currentday data: ' . $e->getMessage() . "\n", FILE_APPEND);
+                    }
+                } else{
+                    echo('<script>console.log("No data from today")</script>');
+                }
+
+                //echo("Tänään\n");
+                for($i = 0; $i < 24; $i++){ // Haetaan kuluvan päivän tiedot -> klo 16
+                    $sek = 0;
+                    $min = 0;
+                    $tunnit = 0;
+
+                    $temp = json_decode($today->{$timeLines[$i]});
+
+                    $aika = str_replace("PT", "", $temp[0]->inzone);
+                    if(!strpbrk($aika, "H")){
+                        if(!strpbrk($aika, "M")){ 
+                            $sek = strtok($aika, "S");
+                        } else{ 
+                            $min = strtok($aika, "M");
+                                                
+                            if(!strpbrk($aika, "S")){
+                                $sek = 0;
+                            } else{
+                                $sek = strtok("S");
+                            }
+                        }
+                    } else{
+                        $tunnit = 1;
+                    }
+                    
+                    $aika = (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
+                    $currentDayTimeLines[$i] = $aika;
+                    
+                    /*if($aika >= 30){
+                        if($i == 0){
+                            if($prevDayTimeLines[23] >= 30){ // Jos edeltävän päivän klo 23 on ollut +30min
+                                $sleepTime += $aika;
+                            }
+                        } elseif($currentDayTimeLines[$i-1] >= 30){ // Jos edeltävä tunti myös +30min
+                            $sleepTime += $aika;
+                        }
+                    }*/
+
+                    // foreachilla läpi -> lisää ensimmäinen +30 nukahtamishetken tunnistamiseksi
+                }
+                print_r($currentDayTimeLines);
+
+                // Edeltävän päivän heräämisaika -> ei oteta uniaikaa huomioon tuplana
+                for($i = 0; $i < 24; $i++){
+                    if($prevDayTimeLines[$i] >= 30){
+                        if(!($prevDayTimeLines[$i+1] >= 30)){
+                            $heraamisAikaPrevDay = $i . ":" . $prevDayTimeLines[$i];
+                            $heraamisAikaPrevDayIndeksi = $i;
+                            //echo("Heräämisaika edeltävänä päivänä: " . $heraamisAikaPrevDay);
+                            break;
                         }
                     }
-                } else{ // jos H
-                    $tunnit = 1;
                 }
                 
-                $aika = (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
-                $currentDayTimeLines[$i] = $aika;
-                
-                if($aika > 30){
-                    $sleepTime += $aika;
+                // Edeltävän päivän nukkumaanmenoaika
+                for($i = ($heraamisAikaPrevDayIndeksi + 1); $i < 24; $i++){
+                    if($prevDayTimeLines[$i] >= 30){
+                        if($i == 23){ // jos ollaan edeltävän päivän 23-24 slotissa
+                            if($currentDayTimeLines[0] >= 30){ // tarkista onko kuluvan päivän 00-01 +30min
+
+                                if($i < 10){
+                                    if((60 - $prevDayTimeLines[$i]) < 10){
+                                        $nukahtamisAikaPrevDay = "0" . $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                    } else{
+                                        $nukahtamisAikaPrevDay = "0" . $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                    }
+                                } else{
+                                    if((60 - $prevDayTimeLines[$i]) < 10){
+                                        $nukahtamisAikaPrevDay = $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                    } else{
+                                        $nukahtamisAikaPrevDay = $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                    }
+                                }
+
+                                $nukahtamisAikaPrevDayIndeksi = $i;
+                                $nukahtamisAika = $previousDay->date . " " . $nukahtamisAikaPrevDay . ":00";
+                                break;
+                            }
+                        } elseif($prevDayTimeLines[$i+1] >= 30 && $prevDayTimeLines[$i+2] >= 30){ // tarkista että vähintään 2h unessa
+
+                            if($i < 10){
+                                if((60 - $prevDayTimeLines[$i]) < 10){
+                                    $nukahtamisAikaPrevDay = "0" . $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                } else{
+                                    $nukahtamisAikaPrevDay = "0" . $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                }
+                            } else{
+                                if((60 - $prevDayTimeLines[$i]) < 10){
+                                    $nukahtamisAikaPrevDay = $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                } else{
+                                    $nukahtamisAikaPrevDay = $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                }
+                            }
+
+                            $nukahtamisAikaPrevDayIndeksi = $i;
+                            $nukahtamisAika = $previousDay->date . " " . $nukahtamisAikaPrevDay . ":00";
+                            break;
+                        }
+                    }
                 }
-            }
-            //print_r($currentDayTimeLines);
+                
+                // Jos ei nukahtamisaikaa edeltävänä päivänä
+                if(!$nukahtamisAikaPrevDay){
 
-            $sleepCycle = floor($sleepTime * 60 / 5400);
+                    // Nukahtamisaika kuluvana päivänä
+                    for($i = 0; $i < 24; $i++){
+                        if($currentDayTimeLines[$i] >= 30){
 
-            //tallenna tietokantaan
-            if($paivaOlio->sleep_amount == null || $paivaOlio->sleep_cycles == null){
+                            if($i < 10){
+                                if((60 - $currentDayTimeLines[$i]) < 10){
+                                    $nukahtamisAikaCurrentDay = "0" . $i . ":" . "0" . (60 - $currentDayTimeLines[$i]);
+                                } else{
+                                    $nukahtamisAikaCurrentDay = "0" . $i . ":" . (60 - $currentDayTimeLines[$i]);
+                                }
+                            } else{
+                                $nukahtamisAikaCurrentDay = $i . ":" . (60 - $currentDayTimeLines[$i]);
+                            }
+
+                            $nukahtamisAikaCurrentDayIndeksi = $i;
+                            $nukahtamisAika = $paivaOlio->date . " " . $nukahtamisAikaCurrentDay . ":00";
+                            break;
+                        }
+                    }
+                }
+                
+                // Heräämisaika kuluvana päivänä
+                for($i = 0; $i < 24; $i++){
+                    if($currentDayTimeLines[$i] >= 30){
+                        if(!($currentDayTimeLines[$i+1] >= 30)){
+
+                            if($i < 10){
+                                if($currentDayTimeLines[$i] < 10){
+                                    $heraamisAikaCurrentDay = "0" . $i . ":" . "0" . $currentDayTimeLines[$i];
+                                } else{
+                                    $heraamisAikaCurrentDay = "0" . $i . ":" . $currentDayTimeLines[$i];
+                                }
+                            } else{
+                                $heraamisAikaCurrentDay = $i . ":" . $currentDayTimeLines[$i];
+                            }
+
+                            $heraamisAikaCurrentDayIndeksi = $i;
+                            $heraamisAika = $paivaOlio->date . " " . $heraamisAikaCurrentDay . ":00";
+                            break;
+                        }
+                    }
+                }
+                
+                // Lasketaan uniaika
+                if($nukahtamisAikaPrevDayIndeksi){ //jos nukahtanut edeltävän päivän puolella
+                    for($i = $nukahtamisAikaPrevDayIndeksi; $i < 24; $i++){
+                        $sleepTime += $prevDayTimeLines[$i];
+                    }
+
+                    for($i = 0; $i < ($heraamisAikaCurrentDayIndeksi + 1); $i++){
+                        $sleepTime += $currentDayTimeLines[$i];
+                    }
+                } else{ //jos nukahtanut kuluvan päivän aikana
+                    for($i = $nukahtamisAikaCurrentDayIndeksi; $i < ($heraamisAikaCurrentDayIndeksi+1); $i++){
+                        $sleepTime += $currentDayTimeLines[$i];
+                    }
+                }
+
+                $sleepCycle = floor($sleepTime * 60 / 5400);
+
+                // Tallenna tietokantaan
                 try{
                     $sql = 'UPDATE `ts_date` 
-                    SET sleep_amount = ' . ($sleepTime*60) .  ', sleep_cycles = ' . $sleepCycle .  ' 
+                    SET sleep_amount = ' . ($sleepTime*60) .  ', sleep_cycles = ' . $sleepCycle .  ', 
+                    sleep_start = "' . $nukahtamisAika . '", sleep_end = "' . $heraamisAika . '" 
                     WHERE date_user_ID = ' . $paivaOlio->date_user_ID . ' AND date_ID = ' . $date_ID . ';';
                     $kysely = $DBH->prepare($sql);
                     $kysely->execute();
@@ -147,10 +275,10 @@
                     file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to save sleeptime: ' . $e->getMessage() . "\n", FILE_APPEND);
                 }
             } else{
-                echo('<script>console.log("Tiedot löytyy jo")</script>');
+                echo('<script>console.log("No data from yesterday, can`t calculate uniaika/sykli")</script>');
             }
         } else{
-            echo('<script>console.log("No data from yesterday, can`t calculate uniaika/sykli")</script>');
+            echo('<script>console.log("Tiedot löytyy jo")</script>');
         }
     }
 
@@ -748,8 +876,10 @@
     // Muuttaa pääsivun ison hymiön värin unenlaadun mukaan
     function getHymio($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
-
-        if($unenLaatu > 2){
+        
+        if($unenLaatu == null){
+            echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
+        } elseif($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio" style="color: var(--liikennevaloVihrea);"');
         } elseif($unenLaatu <= 2 && $unenLaatu >= -2){
@@ -758,8 +888,6 @@
         } elseif($unenLaatu < -2){
             //fa-frown
             echo('class="fas fa-frown hymio" style="color: var(--liikennevaloPunainen);"');
-        }elseif($unenLaatu == null){
-            echo('class="fas fa-frown hymio" style="color: var(--liikennevaloHarmaa);"');
         }
     }
 
@@ -767,7 +895,9 @@
     function getHymioFromDate($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
 
-        if($unenLaatu > 2){
+        if($unenLaatu == null){
+            echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
+        } elseif($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio-viikko" style="color: var(--liikennevaloVihrea);"');
         } elseif($unenLaatu <= 2 && $unenLaatu >= -2){
@@ -776,8 +906,6 @@
         } elseif($unenLaatu < -2){
             //fa-frown
             echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloPunainen);"');
-        }elseif($unenLaatu == null){
-            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
         }
     }
 
@@ -844,19 +972,36 @@
             }
         }
 
-        echo($pos . "-" . $neg);
+        //echo("<div>" . $pos . "-" . $neg . "</div>");
 
         if($pos == 0 && $neg == 0){
+            echo("<div>" . 50 . "-" . 50 . "</div>");
             return 50;
         } elseif($pos == $neg){
+            echo("<div>" . 50 . "-" . 50 . "</div>");
             return 50;
         } elseif($neg > $pos){
-            return round(100*(0.5 + ($pos-$neg)/$neg));
+            $tulos = round(100*(0.5 + ($pos-$neg)/$neg));
+            if($tulos < 0){
+                $tulos = 0;
+            } elseif($tulos > 100){
+                $tulos = 100;
+            }
+            echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
+            return $tulos;
         }else{
             if($neg == 0){
                 $neg = 1;
             }
-            return round(100*(0.5 + ($pos-$neg)/$neg));
+            $tulos = round(100*(0.5 + ($pos-$neg)/$neg));
+
+            if($tulos < 0){
+                $tulos = 0;
+            } elseif($tulos > 100){
+                $tulos = 100;
+            }
+            echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
+            return $tulos;
         }
     }
 
