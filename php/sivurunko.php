@@ -81,6 +81,8 @@
                 <li id="kayttoehdotValikkoLinkki">Käyttöehdot</li>
                 <li></li>
                 <li onclick='window.location.href="sivurunko.php?logOut=true"'>Kirjaudu ulos </li>
+                <li onclick='window.location.href="deleteAccount.php"'>Poista tili </li>
+                
             </ul>
         </div>
     </nav>
@@ -183,63 +185,87 @@
 
                             <!--DetailsivuIconit-->
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-utensils ikoni' style='color: <?php $value = $paivaOlio->user_food; getIconColorFood($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                    <div style='color: <?php $value = $paivaOlio->user_food; getIconColorFood($value); ?>;'>
+                                    <i class='fas fa-utensils ikoni'></i>
+                                    <i <?php getFoodIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
                                 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-glass-cheers ikoni' style='color:<?php $value = $paivaOlio->user_alcohol; getIconColorAlcohol($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                    <div style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorAlcohol($value); ?>;'>
+                                    <i class='fas fa-glass-cheers ikoni'></i>
+                                    <i <?php getAlcoholIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-walking ikoni' style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                    <div style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;'>
+                                    <i class='fas fa-walking ikoni'></i>
+                                    <i <?php getActivityIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-smoking ikoni' style='color:<?php $value = $paivaOlio->user_smoke; getIconColorSmoke($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                    <div style='color:<?php $value = $paivaOlio->user_smoke; getIconColorSmoke($value); ?>;'>
+                                    <i class='fas fa-smoking ikoni'></i>
+                                    <i <?php getSmokeIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-bed ikoni' style='color: <?php $value = $paivaOlio->user_vitality; getIconColorVitality($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                    <div style='color: <?php $value = $paivaOlio->user_vitality; getIconColorVitality($value); ?>;'>
+                                    <i class='fas fa-bed ikoni'></i>
+                                    <i <?php getVitalityIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-mug-hot ikoni' style='color:<?php $value = $paivaOlio->user_stimulant; getIconColorStimulant($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                    <div style='color:<?php $value = $paivaOlio->user_stimulant; getIconColorStimulant($value); ?>;'>
+                                    <i class='fas fa-mug-hot ikoni'></i>
+                                    <i <?php getStimulantIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-pills ikoni' style='color:<?php $value = $paivaOlio->user_medicine; getIconColorMedicine($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                    <div style='color:<?php $value = $paivaOlio->user_medicine; getIconColorMedicine($value); ?>;'>
+                                    <i class='fas fa-pills ikoni'></i>
+                                    <i <?php getMedicineIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-bolt ikoni' style='color:<?php $value = $paivaOlio->user_stress; getIconColorStress($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                    <div style='color:<?php $value = $paivaOlio->user_stress; getIconColorStress($value); ?>;'>
+                                    <i class='fas fa-bolt ikoni'></i>
+                                    <i <?php getStressIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-cloud-sun-rain ikoni' style='color:<?php $value = $paivaOlio->user_mood; getIconColorMood($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div style='color:<?php $value = $paivaOlio->user_mood; getIconColorMood($value); ?>;'>
+                                    <i class='fas fa-cloud-sun-rain ikoni'></i>
+                                    <i <?php getMoodIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-clock ikoni' style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorSleepAmount($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div style='color: <?php $value = $paivaOlio->sleep_amount; getIconColorSleepAmount($value); ?>;'>
+                                    <i class='fas fa-clock ikoni'></i>
+                                    <i <?php getSleepAmountIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-mobile-alt ikoni' style='color:<?php $value = $paivaOlio->user_drug; getIconColorScreenTime($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                    <div style='color:<?php $value = $paivaOlio->user_screen_time; getIconColorScreenTime($value); ?>;'>
+                                    <i class='fas fa-mobile-alt ikoni'></i>
+                                    <i <?php getScreenTimeIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <i class='fas fa-band-aid ikoni' style='color:<?php $value = $paivaOlio->user_pain; getIconColorPains($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div style='color:<?php $value = $paivaOlio->user_pain; getIconColorPains($value); ?>;'>
+                                    <i class='fas fa-band-aid ikoni'></i>
+                                    <i <?php getPainIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
                         </div>
                     </div>
