@@ -572,6 +572,20 @@
         }
     }
 
+    function getEmail($user_ID, $email, $password, $DBH){
+
+        $sql = "SELECT * FROM `ts_user` WHERE `user_ID` = '" . $user_ID . "';";
+        $kysely = $DBH->prepare($sql);
+        $kysely->execute();
+        $kysely -> setFetchMode(PDO::FETCH_OBJ);
+        $vastaus = $kysely->fetch();
+
+        if($vastaus){
+            return $vastaus;
+        } else{
+            return null;
+        }
+    }
 
 
     // Palauta päivän uniaika formatoituna hh tuntia mm minuuttia
@@ -1026,7 +1040,7 @@
 
    // Nukuttu aika
    function getIconColorSleepAmount($value){
-    if($value == null){
+    if($value == 0){
         echo("var(--liikennevaloHarmaa)");
     }elseif($value >= 28800){
         echo("var(--liikennevaloVihrea)");

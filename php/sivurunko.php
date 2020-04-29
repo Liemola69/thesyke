@@ -84,6 +84,8 @@
                 <li id="kayttoehdotValikkoLinkki">Käyttöehdot</li>
                 <li></li>
                 <li onclick='window.location.href="sivurunko.php?logOut=true"'>Kirjaudu ulos </li>
+                <li onclick='window.location.href="deleteAccount.php"'>Poista tili </li>
+                
             </ul>
         </div>
     </nav>
@@ -253,7 +255,7 @@
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                <div style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorSleepAmount($value); ?>;'>
+                                <div style='color: <?php $value = $paivaOlio->sleep_amount; getIconColorSleepAmount($value); ?>;'>
                                     <i class='fas fa-clock ikoni'></i>
                                     <i <?php getSleepAmountIndikator($paivaOlio); ?>></i>
                                     </div>

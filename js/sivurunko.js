@@ -509,3 +509,33 @@ function luoHymio(i){
     }
     return hymio;
 }
+
+//kyselyn ohje-popupit
+// When the user clicks on div, open the popup
+function myKofeinFunction() {
+    var kofeiinipopup = document.getElementById("myKofeiiniPopup");
+    kofeiinipopup.classList.toggle("show");
+  }
+  
+  function myAlcoholFunction() {
+    var alkoholipopup = document.getElementById("myAlkoholiPopup");
+    alkoholipopup.classList.toggle("show");
+  }
+  function myScreenTimeFunction() {
+    var screenTimepopup = document.getElementById("myScreenTimePopup");
+    screenTimepopup.classList.toggle("show");
+  }
+  function myInfoFunction() {
+    var infopopup = document.getElementById("myInfoPopup");
+    infopopup.classList.toggle("show");
+  }
+  function myDeleteAccountFunction(){
+    var deletePopup = document.getElementById("myDeleteAccount");
+    deletePopup.classList.toggle("show"); 
+  }
+  function myFunction() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+  }
+
+  
