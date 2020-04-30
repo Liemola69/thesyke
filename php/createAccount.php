@@ -33,7 +33,7 @@ session_start();
                 if(strlen($password) > 7){
 
                     //Tarkista että salasanat ovat samat
-                    if($_POST['givenPassword'] != $_POST['givenVerifiedPassword']){
+                    if($_POST['givenPassword'] == $_POST['givenVerifiedPassword']){
                         
                     //Tallenna syötetyt tiedot sessiomuuttujiin
                     $_SESSION['email'] = $_POST['givenEmail'];
