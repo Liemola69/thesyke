@@ -170,7 +170,8 @@
 
                             <!--progress/meter bar-->
                             <div class="clear">
-                                <progress class="attributes_balance" value="65" min="0" max="100"></progress>
+                                <h3>UNEEN VAIKUTTAVAT TEKIJÄT</H3>
+                                <progress class="attributes_balance progressBarPaiva" value="' . getDayProgressValue($day) . '" min="0" max="100"></progress>
                             </div>
                            
                             <!--sivuvaihtoNuoli-->
@@ -184,89 +185,220 @@
                             <i class='fas fa-chevron-up'></i>
 
                             <!--DetailsivuIconit-->
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoFood')">
                                     <div style='color: <?php $value = $paivaOlio->user_food; getIconColorFood($value); ?>;'>
                                     <i class='fas fa-utensils ikoni'></i>
                                     <i <?php getFoodIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
                                 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoAlcohol')">
                                     <div style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorAlcohol($value); ?>;'>
                                     <i class='fas fa-glass-cheers ikoni'></i>
                                     <i <?php getAlcoholIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoActivity')">
                                     <div style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;'>
                                     <i class='fas fa-walking ikoni'></i>
                                     <i <?php getActivityIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoSmoke')">
                                     <div style='color:<?php $value = $paivaOlio->user_smoke; getIconColorSmoke($value); ?>;'>
                                     <i class='fas fa-smoking ikoni'></i>
                                     <i <?php getSmokeIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoVitality')">
                                     <div style='color: <?php $value = $paivaOlio->user_vitality; getIconColorVitality($value); ?>;'>
                                     <i class='fas fa-bed ikoni'></i>
                                     <i <?php getVitalityIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoStimulant')">
                                     <div style='color:<?php $value = $paivaOlio->user_stimulant; getIconColorStimulant($value); ?>;'>
                                     <i class='fas fa-mug-hot ikoni'></i>
                                     <i <?php getStimulantIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoMedicine')">
                                     <div style='color:<?php $value = $paivaOlio->user_medicine; getIconColorMedicine($value); ?>;'>
                                     <i class='fas fa-pills ikoni'></i>
                                     <i <?php getMedicineIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoStress')">
                                     <div style='color:<?php $value = $paivaOlio->user_stress; getIconColorStress($value); ?>;'>
                                     <i class='fas fa-bolt ikoni'></i>
                                     <i <?php getStressIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoMood')">
                                 <div style='color:<?php $value = $paivaOlio->user_mood; getIconColorMood($value); ?>;'>
                                     <i class='fas fa-cloud-sun-rain ikoni'></i>
                                     <i <?php getMoodIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoSleepAmount')">
                                 <div style='color: <?php $value = $paivaOlio->sleep_amount; getIconColorSleepAmount($value); ?>;'>
                                     <i class='fas fa-clock ikoni'></i>
                                     <i <?php getSleepAmountIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoScreenTime')">
                                     <div style='color:<?php $value = $paivaOlio->user_screen_time; getIconColorScreenTime($value); ?>;'>
                                     <i class='fas fa-mobile-alt ikoni'></i>
                                     <i <?php getScreenTimeIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
+                                <div class="ikoniWrapper" onclick="dayInfo('infoPains')">
                                 <div style='color:<?php $value = $paivaOlio->user_pain; getIconColorPains($value); ?>;'>
                                     <i class='fas fa-band-aid ikoni'></i>
                                     <i <?php getPainIndikator($paivaOlio); ?>></i>
                                     </div>
                                 </div>
+
+                                <script>
+                                function dayInfo(i) {
+                                document.getElementById(i).style.visibility='visible';
+                                }
+
+                                function closeDayInfo(i) {
+                                document.getElementById(i).style.visibility='hidden';
+                                }
+                                </script>
+
+                                <div class=infoDaily id="infoFood" style="visibility: hidden">
+                                    <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoFood')"></i>
+                                        <h3>Ravinto</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                
+                                <div class=infoDaily id="infoAlcohol" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoAlcohol')"></i>
+                                        <h3>Alkoholi</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>​​​​​​​​​​​​​​​​​​​​​​​​​​​
+
+                                <div class=infoDaily id="infoActivity" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoActivity')"></i>
+                                        <h3>Liikunta</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoSmoke" style="visibility: hidden">​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoSmoke')"></i>
+                                        <h3>Tupakointi</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoVitality" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoVitality')"></i>
+                                        <h3>Vireystila</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoStimulant" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoStimulant')"></i>
+                                        <h3>Kofeiini</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoMedicine" style="visibility: hidden">​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoMedicine')"></i>
+                                        <h3>Lääkkeet</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoStress" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoStress')"></i>
+                                        <h3>Stressi</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoMood" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoMood')"></i>
+                                        <h3>Mieliala</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoSleepAmount" style="visibility: hidden">​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoSleepAmount')"></i>
+                                        <h3>Unen määrä</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoScreenTime" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoScreenTime')"></i>
+                                        <h3>Ruutuaika</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoPains" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoPains')"></i>
+                                        <h3>Kivut</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
                         </div>
                     </div>
                 </div>

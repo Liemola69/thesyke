@@ -67,6 +67,15 @@ body {
     font-family: 'Baloo Da 2', cursive, sans-serif;
     font-size: larger;
 }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
 
 /* POP-UPIT - TAUSTA*/
 
@@ -104,6 +113,79 @@ body {
 /* POP-UPIT - SISÄLLÖT*/
 
 .popupContent {  
+    background: var(--paaTaustavari);
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+}
+
+.infoDaily {
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoFood {
+    visibility: hidden;
+}
+
+.infoAlcohol {
+    visibility: hidden;
+}
+
+.infoActivity {
+    visibility: hidden;
+}
+
+.infoSmoke {
+    visibility: hidden;
+}
+
+.infoVitality {
+    visibility: hidden;
+}
+
+.infoStimulant {
+    visibility: hidden;
+}
+
+.infoMedicine {
+    visibility: hidden;
+}
+
+.infoStress {
+    visibility: hidden;
+}
+
+.infoMood {
+    visibility: hidden;
+}
+
+.infoSleepAmount {
+    visibility: hidden;
+}
+
+.infoScreenTime {
+    visibility: hidden;
+}
+
+.infoPains {
+    visibility: hidden;
+}
+
+
+/* POP-UPIT - SISÄLLÖT*/
+
+.infoContent {  
     background: var(--paaTaustavari);
     padding: 20px;
     border-radius: 5px;
@@ -359,6 +441,23 @@ body {
     vertical-align: top;
 }
 
+.registerClose {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+.loginClose {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+.infoClose {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
 
 /*tompan jutut*/
 
@@ -596,7 +695,6 @@ progress[value]  {
 .ikoni{
     font-size: 3em;
     margin: 5px;
-
 }
 
 .ikoniHuutomerkki{
