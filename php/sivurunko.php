@@ -199,7 +199,7 @@
                                 </div>
 
                                 <div class="ikoniWrapper">
-                                    <div style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;'>
+                                    <div style='color: <?php $value = $paivaOlio->user_activity; getIconColorActivity($value); ?>;'>
                                     <i class='fas fa-walking ikoni'></i>
                                     <i <?php getActivityIndikator($paivaOlio); ?>></i>
                                     </div>
