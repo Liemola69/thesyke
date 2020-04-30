@@ -1,5 +1,287 @@
 <?php
 
+    // Hae day taulun date_ID käyttöön date_user_ID:llä ja datella
+    // Hae day-taulusta oikea tietua käyttöön
+    // Tulosta kaikki 0-zonen arvot
+    // Hae myös edeltävän päivän klo 18 -> 0-zonet
+    function calculateSleepData($paivaOlio, $previousDay, $DBH){
+        $timeLines = [
+            "00_to_01",
+            "01_to_02",
+            "02_to_03",
+            "03_to_04",
+            "04_to_05",
+            "05_to_06",
+            "06_to_07",
+            "07_to_08",
+            "08_to_09",
+            "09_to_10",
+            "10_to_11",
+            "11_to_12",
+            "12_to_13",
+            "13_to_14",
+            "14_to_15",
+            "15_to_16",
+            "16_to_17",
+            "17_to_18",
+            "18_to_19",
+            "19_to_20",
+            "20_to_21",
+            "21_to_22",
+            "22_to_23",
+            "23_to_24"
+        ];
+        $sleepTime = 0; // minuuteissa
+
+        //Tarkista tietokannasta onko uniaika/sykli tyhjä
+        if($paivaOlio->sleep_amount == null || $paivaOlio->sleep_cycles == null){
+
+            $date_ID = $previousDay->date_ID;
+            if($date_ID != null){
+                try{
+                    $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
+                    $kysely = $DBH->prepare($sql);
+                    $kysely->execute();
+                    $kysely -> setFetchMode(PDO::FETCH_OBJ);
+                    $yesterday = $kysely->fetch();
+                } catch(PDOException $e){
+                    file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to get prevday data: ' . $e->getMessage() . "\n", FILE_APPEND);
+                }
+
+                //echo("Eilen\n");
+                for($i = 0; $i < 24; $i++){ // Haetaan klo 16 -> eilisen päivän tiedot
+                    $sek = 0;
+                    $min = 0;
+                    $tunnit = 0;
+                    
+                    $temp = json_decode($yesterday->{$timeLines[$i]});
+                    
+                    $aika = str_replace("PT", "", $temp[0]->inzone);
+                    if(!strpbrk($aika, "H")){
+                        if(!strpbrk($aika, "M")){
+                            $sek = strtok($aika, "S");
+                        } else{
+                            $min = strtok($aika, "M");
+                                                
+                            if(!strpbrk($aika, "S")){
+                                $sek = 0;
+                            } else{
+                                $sek = strtok("S");
+                            }
+                        }
+                    } else{
+                        $tunnit = 1;
+                    }
+                    
+                    $aika = (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
+                    $prevDayTimeLines[$i] = $aika;
+                    
+                    /*if($aika > 30){ // Tähän jatkoksi, jos aikasemmatkin 2 on ollut +30?
+                        $sleepTime += $aika;
+                    }*/
+                }
+                //print_r($prevDayTimeLines);
+
+                // Kuluva päivä
+                $date_ID = $paivaOlio->date_ID;
+                if($date_ID != null){
+                    try{
+                        $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
+                        $kysely = $DBH->prepare($sql);
+                        $kysely->execute();
+                        $kysely -> setFetchMode(PDO::FETCH_OBJ);
+                        $today = $kysely->fetch();
+                    } catch(PDOException $e){
+                        file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to get currentday data: ' . $e->getMessage() . "\n", FILE_APPEND);
+                    }
+                } else{
+                    echo('<script>console.log("No data from today")</script>');
+                }
+
+                //echo("Tänään\n");
+                for($i = 0; $i < 24; $i++){ // Haetaan kuluvan päivän tiedot -> klo 16
+                    $sek = 0;
+                    $min = 0;
+                    $tunnit = 0;
+
+                    $temp = json_decode($today->{$timeLines[$i]});
+
+                    $aika = str_replace("PT", "", $temp[0]->inzone);
+                    if(!strpbrk($aika, "H")){
+                        if(!strpbrk($aika, "M")){ 
+                            $sek = strtok($aika, "S");
+                        } else{ 
+                            $min = strtok($aika, "M");
+                                                
+                            if(!strpbrk($aika, "S")){
+                                $sek = 0;
+                            } else{
+                                $sek = strtok("S");
+                            }
+                        }
+                    } else{
+                        $tunnit = 1;
+                    }
+                    
+                    $aika = (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
+                    $currentDayTimeLines[$i] = $aika;
+                    
+                    /*if($aika >= 30){
+                        if($i == 0){
+                            if($prevDayTimeLines[23] >= 30){ // Jos edeltävän päivän klo 23 on ollut +30min
+                                $sleepTime += $aika;
+                            }
+                        } elseif($currentDayTimeLines[$i-1] >= 30){ // Jos edeltävä tunti myös +30min
+                            $sleepTime += $aika;
+                        }
+                    }*/
+
+                    // foreachilla läpi -> lisää ensimmäinen +30 nukahtamishetken tunnistamiseksi
+                }
+                //print_r($currentDayTimeLines);
+
+                // Edeltävän päivän heräämisaika -> ei oteta uniaikaa huomioon tuplana
+                for($i = 0; $i < 24; $i++){
+                    if($prevDayTimeLines[$i] >= 30){
+                        if(!($prevDayTimeLines[$i+1] >= 30)){
+                            $heraamisAikaPrevDay = $i . ":" . $prevDayTimeLines[$i];
+                            $heraamisAikaPrevDayIndeksi = $i;
+                            //echo("Heräämisaika edeltävänä päivänä: " . $heraamisAikaPrevDay);
+                            break;
+                        }
+                    }
+                }
+                
+                // Edeltävän päivän nukkumaanmenoaika
+                for($i = ($heraamisAikaPrevDayIndeksi + 1); $i < 24; $i++){
+                    if($prevDayTimeLines[$i] >= 30){
+                        if($i == 23){ // jos ollaan edeltävän päivän 23-24 slotissa
+                            if($currentDayTimeLines[0] >= 30){ // tarkista onko kuluvan päivän 00-01 +30min
+
+                                if($i < 10){
+                                    if((60 - $prevDayTimeLines[$i]) < 10){
+                                        $nukahtamisAikaPrevDay = "0" . $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                    } else{
+                                        $nukahtamisAikaPrevDay = "0" . $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                    }
+                                } else{
+                                    if((60 - $prevDayTimeLines[$i]) < 10){
+                                        $nukahtamisAikaPrevDay = $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                    } else{
+                                        $nukahtamisAikaPrevDay = $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                    }
+                                }
+
+                                $nukahtamisAikaPrevDayIndeksi = $i;
+                                $nukahtamisAika = $previousDay->date . " " . $nukahtamisAikaPrevDay . ":00";
+                                break;
+                            }
+                        } elseif($prevDayTimeLines[$i+1] >= 30 && $prevDayTimeLines[$i+2] >= 30){ // tarkista että vähintään 2h unessa
+
+                            if($i < 10){
+                                if((60 - $prevDayTimeLines[$i]) < 10){
+                                    $nukahtamisAikaPrevDay = "0" . $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                } else{
+                                    $nukahtamisAikaPrevDay = "0" . $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                }
+                            } else{
+                                if((60 - $prevDayTimeLines[$i]) < 10){
+                                    $nukahtamisAikaPrevDay = $i . ":" . "0" . (60 - $prevDayTimeLines[$i]);
+                                } else{
+                                    $nukahtamisAikaPrevDay = $i . ":" . (60 - $prevDayTimeLines[$i]);
+                                }
+                            }
+
+                            $nukahtamisAikaPrevDayIndeksi = $i;
+                            $nukahtamisAika = $previousDay->date . " " . $nukahtamisAikaPrevDay . ":00";
+                            break;
+                        }
+                    }
+                }
+                
+                // Jos ei nukahtamisaikaa edeltävänä päivänä
+                if(!$nukahtamisAikaPrevDay){
+
+                    // Nukahtamisaika kuluvana päivänä
+                    for($i = 0; $i < 24; $i++){
+                        if($currentDayTimeLines[$i] >= 30){
+
+                            if($i < 10){
+                                if((60 - $currentDayTimeLines[$i]) < 10){
+                                    $nukahtamisAikaCurrentDay = "0" . $i . ":" . "0" . (60 - $currentDayTimeLines[$i]);
+                                } else{
+                                    $nukahtamisAikaCurrentDay = "0" . $i . ":" . (60 - $currentDayTimeLines[$i]);
+                                }
+                            } else{
+                                $nukahtamisAikaCurrentDay = $i . ":" . (60 - $currentDayTimeLines[$i]);
+                            }
+
+                            $nukahtamisAikaCurrentDayIndeksi = $i;
+                            $nukahtamisAika = $paivaOlio->date . " " . $nukahtamisAikaCurrentDay . ":00";
+                            break;
+                        }
+                    }
+                }
+                
+                // Heräämisaika kuluvana päivänä
+                for($i = 0; $i < 24; $i++){
+                    if($currentDayTimeLines[$i] >= 30){
+                        if(!($currentDayTimeLines[$i+1] >= 30)){
+
+                            if($i < 10){
+                                if($currentDayTimeLines[$i] < 10){
+                                    $heraamisAikaCurrentDay = "0" . $i . ":" . "0" . $currentDayTimeLines[$i];
+                                } else{
+                                    $heraamisAikaCurrentDay = "0" . $i . ":" . $currentDayTimeLines[$i];
+                                }
+                            } else{
+                                $heraamisAikaCurrentDay = $i . ":" . $currentDayTimeLines[$i];
+                            }
+
+                            $heraamisAikaCurrentDayIndeksi = $i;
+                            $heraamisAika = $paivaOlio->date . " " . $heraamisAikaCurrentDay . ":00";
+                            break;
+                        }
+                    }
+                }
+                
+                // Lasketaan uniaika
+                if($nukahtamisAikaPrevDayIndeksi){ //jos nukahtanut edeltävän päivän puolella
+                    for($i = $nukahtamisAikaPrevDayIndeksi; $i < 24; $i++){
+                        $sleepTime += $prevDayTimeLines[$i];
+                    }
+
+                    for($i = 0; $i < ($heraamisAikaCurrentDayIndeksi + 1); $i++){
+                        $sleepTime += $currentDayTimeLines[$i];
+                    }
+                } else{ //jos nukahtanut kuluvan päivän aikana
+                    for($i = $nukahtamisAikaCurrentDayIndeksi; $i < ($heraamisAikaCurrentDayIndeksi+1); $i++){
+                        $sleepTime += $currentDayTimeLines[$i];
+                    }
+                }
+
+                $sleepCycle = floor($sleepTime * 60 / 5400);
+
+                // Tallenna tietokantaan
+                try{
+                    $sql = 'UPDATE `ts_date` 
+                    SET sleep_amount = ' . ($sleepTime*60) .  ', sleep_cycles = ' . $sleepCycle .  ', 
+                    sleep_start = "' . $nukahtamisAika . '", sleep_end = "' . $heraamisAika . '" 
+                    WHERE date_user_ID = ' . $paivaOlio->date_user_ID . ' AND date_ID = ' . $date_ID . ';';
+                    $kysely = $DBH->prepare($sql);
+                    $kysely->execute();
+                    echo('<script>console.log("Tiedot päivitetty")</script>');
+                } catch(PDOException $e){
+                    file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to save sleeptime: ' . $e->getMessage() . "\n", FILE_APPEND);
+                }
+            } else{
+                echo('<script>console.log("No data from yesterday, can`t calculate uniaika/sykli")</script>');
+            }
+        } else{
+            echo('<script>console.log("Tiedot löytyy jo")</script>');
+        }
+    }
+
     /**
      * Tarkistaa Polarin serveriltä, onko uutta dataa tuotu laitteelta
      * Palauttaa transaction id:n, jolla voidaan hakea dataa sovellukseen
@@ -464,7 +746,7 @@
         $token = $responseJSON->access_token;
         $polar_ID = $responseJSON->x_user_id;
 
-        // Viedään kantaan käyttäjän token ja polar_ID
+        // Viedään kantaan käyttäjän token ja polar_ID 
         try{
             $sql = 'UPDATE `ts_user` SET `polar_token` = "' . $token . '", `polar_ID` = "' . $polar_ID . '" WHERE `user_ID` = "' . $user_ID . '";';
             $kysely = $DBH->prepare($sql);
@@ -555,7 +837,6 @@
         }
     }
  
-
     // Hae päivän data tietokannasta
     function getDateData($user_ID, $currentDay, $DBH){
 
@@ -572,6 +853,21 @@
         }
     }
 
+
+    function getEmail($user_ID, $email, $password, $DBH){
+
+        $sql = "SELECT * FROM `ts_user` WHERE `user_ID` = '" . $user_ID . "';";
+        $kysely = $DBH->prepare($sql);
+        $kysely->execute();
+        $kysely -> setFetchMode(PDO::FETCH_OBJ);
+        $vastaus = $kysely->fetch();
+
+        if($vastaus){
+            return $vastaus;
+        } else{
+            return null;
+        }
+    }
 
 
     // Palauta päivän uniaika formatoituna hh tuntia mm minuuttia
@@ -598,7 +894,9 @@
     function getHymio($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
 
-        if($unenLaatu > 2){
+        if($unenLaatu == null || $unenLaatu == 0){
+            echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
+        } elseif($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio" style="color: var(--liikennevaloVihrea);"');
         } elseif($unenLaatu <= 2 && $unenLaatu >= -2){
@@ -607,8 +905,238 @@
         } elseif($unenLaatu < -2){
             //fa-frown
             echo('class="fas fa-frown hymio" style="color: var(--liikennevaloPunainen);"');
-        }elseif($unenLaatu == null){
-            echo('class="fas fa-frown hymio" style="color: var(--liikennevaloHarmaa);"');
+        }
+    }
+
+    //ruoka-indikaattori
+    function getFoodIndikator($paivaOlio){
+        $indikaattori = $paivaOlio->indikator;
+
+        if($indikaattori > 3){
+            echo('class="fas fa-laugh hymio-indikaattori"');
+        }
+        elseif($indikaattori > 0 && $indikaattori < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-indikaattori"');
+        } elseif($indikaattori == 0){
+            //fa-meh
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($indikaattori < 0 && $indikaattori > -4){
+            //fa-meh
+            echo('class="fas fa-frown hymio-indikaattori"');
+        } elseif($indikaattori < -3){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-indikaattori"');
+        }
+    }
+    //alkoholi-indikaattori
+    function getAlcoholIndikator($paivaOlio){
+        $alcohol_indikaattori = $paivaOlio->alcohol_indikator;
+
+        if($alcohol_indikaattori > 3){
+            echo('class="fas fa-laugh hymio-indikaattori"');
+        }
+        elseif($alcohol_indikaattori > 0 && $alcohol_indikaattori < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-indikaattori"');
+        } elseif($alcohol_indikaattori == 0){
+            //fa-meh
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($alcohol_indikaattori < 0 && $alcohol_indikaattori > -4){
+            //fa-meh
+            echo('class="fas fa-frown hymio-indikaattori"');
+        } elseif($alcohol_indikaattori < -3){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-indikaattori"');
+        }
+    }
+    //aktiivisuus-indikaattori
+    function getActivityIndikator($paivaOlio){
+        $activity_indikaattori = $paivaOlio->activity_indikator;
+
+        if($activity_indikaattori > 3){
+            echo('class="fas fa-laugh hymio-indikaattori"');
+        }
+        elseif($activity_indikaattori > 0 && $activity_indikaattori < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-indikaattori"');
+        } elseif($activity_indikaattori == 0){
+            //fa-meh
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($activity_indikaattori < 0 && $activity_indikaattori > -4){
+            //fa-meh
+            echo('class="fas fa-frown hymio-indikaattori"');
+        } elseif($activity_indikaattori < -3){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-indikaattori"');
+        }
+    }
+    //tupakointi-indikaattori
+    function getSmokeIndikator($paivaOlio){
+        $smoke_indikaattori = $paivaOlio->smoke_indikator;
+        if($smoke_indikaattori == 0){
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($smoke_indikaattori == 1){
+            echo('class="fas fa-frown hymio-indikaattori"');
+        }elseif($smoke_indikaattori == 2){
+            echo('class="fas fa-smile hymio-indikaattori"');
+        }
+    }
+
+    //vireys-indikaattori
+    function getVitalityIndikator($paivaOlio){
+        $vitality_indikaattori = $paivaOlio->vitality_indikator;
+
+        if($vitality_indikaattori > 3){
+            echo('class="fas fa-laugh hymio-indikaattori"');
+        }
+        elseif($vitality_indikaattori > 0 && $vitality_indikaattori < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-indikaattori"');
+        } elseif($vitality_indikaattori == 0){
+            //fa-meh
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($vitality_indikaattori < 0 && $vitality_indikaattori > -4){
+            //fa-meh
+            echo('class="fas fa-frown hymio-indikaattori"');
+        } elseif($vitality_indikaattori < -3){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-indikaattori"');
+        }
+    }
+    //lääke-indikaattori
+     function getMedicineIndikator($paivaOlio){
+        $medicine_indikaattori = $paivaOlio->medicine_indikator;
+        if($medicine_indikaattori == 0){
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($medicine_indikaattori == 1){
+            echo('class="fas fa-smile hymio-indikaattori"');
+        }
+    }
+    //kofeiinituotteiden-indikaattori
+    function getStimulantIndikator($paivaOlio){
+        $stimulant_indikaattori = $paivaOlio->stimulant_indikator;
+
+        if($stimulant_indikaattori > 3){
+            echo('class="fas fa-laugh hymio-indikaattori"');
+        }
+        elseif($stimulant_indikaattori > 0 && $stimulant_indikaattori < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-indikaattori"');
+        } elseif($stimulant_indikaattori == 0){
+            //fa-meh
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($stimulant_indikaattori < 0 && $stimulant_indikaattori > -4){
+            //fa-meh
+            echo('class="fas fa-frown hymio-indikaattori"');
+        } elseif($stimulant_indikaattori < -3){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-indikaattori"');
+        }
+    }
+    //stressi-indikaattori
+    function getStressIndikator($paivaOlio){
+        $stress_indikaattori = $paivaOlio->stress_indikator;
+
+        if($stress_indikaattori > 3){
+            echo('class="fas fa-laugh hymio-indikaattori"');
+        }
+        elseif($stress_indikaattori > 0 && $stress_indikaattori < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-indikaattori"');
+        } elseif($stress_indikaattori == 0){
+            //fa-meh
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($stress_indikaattori < 0 && $stress_indikaattori > -4){
+            //fa-meh
+            echo('class="fas fa-frown hymio-indikaattori"');
+        } elseif($stress_indikaattori < -3){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-indikaattori"');
+        }
+    }
+    //mieliala-indikaattori
+    function getMoodIndikator($paivaOlio){
+        $mood_indikaattori = $paivaOlio->mood_indikator;
+
+        if($mood_indikaattori > 3){
+            echo('class="fas fa-laugh hymio-indikaattori"');
+        }
+        elseif($mood_indikaattori > 0 && $mood_indikaattori < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-indikaattori"');
+        } elseif($mood_indikaattori == 0){
+            //fa-meh
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($mood_indikaattori < 0 && $mood_indikaattori > -4){
+            //fa-meh
+            echo('class="fas fa-frown hymio-indikaattori"');
+        } elseif($mood_indikaattori < -3){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-indikaattori"');
+        }
+    }
+    //uniaika-indikaattori
+    function getSleepAmountIndikator($paivaOlio){
+        $sleep_amount_indikaattori = $paivaOlio->sleep_amount_indikator;
+
+        if($sleep_amount_indikaattori > 3){
+            echo('class="fas fa-laugh hymio-indikaattori"');
+        }
+        elseif($sleep_amount_indikaattori > 0 && $sleep_amount_indikaattori < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-indikaattori"');
+        } elseif($sleep_amount_indikaattori == 0){
+            //fa-meh
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($sleep_amount_indikaattori < 0 && $sleep_amount_indikaattori > -4){
+            //fa-meh
+            echo('class="fas fa-frown hymio-indikaattori"');
+        } elseif($sleep_amount_indikaattori < -3){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-indikaattori"');
+        }
+    }
+    //ruutuaika-indikaattori
+    function getScreenTimeIndikator($paivaOlio){
+        $screen_time_indikaattori = $paivaOlio->screen_time_indikator;
+
+        if($screen_time_indikaattori > 3){
+            echo('class="fas fa-laugh hymio-indikaattori"');
+        }
+        elseif($screen_time_indikaattori > 0 && $screen_time_indikaattori < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-indikaattori"');
+        } elseif($screen_time_indikaattori == 0){
+            //fa-meh
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($screen_time_indikaattori < 0 && $screen_time_indikaattori > -4){
+            //fa-meh
+            echo('class="fas fa-frown hymio-indikaattori"');
+        } elseif($screen_time_indikaattori < -3){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-indikaattori"');
+        }
+    }
+    //kipu-indikaattori
+    function getPainIndikator($paivaOlio){
+        $pain_indikaattori = $paivaOlio->pain_indikator;
+
+        if($pain_indikaattori > 3){
+            echo('class="fas fa-laugh hymio-indikaattori"');
+        }
+        elseif($pain_indikaattori > 0 && $pain_indikaattori < 4){
+            //fa-laugh
+            echo('class="fas fa-smile hymio-indikaattori"');
+        } elseif($pain_indikaattori == 0){
+            //fa-meh
+            echo('class="fas fa-meh-blank hymio-indikaattori"');
+        }elseif($pain_indikaattori < 0 && $pain_indikaattori > -4){
+            //fa-meh
+            echo('class="fas fa-frown hymio-indikaattori"');
+        } elseif($pain_indikaattori < -3){
+            //fa-frown
+            echo('class="fas fa-sad-tear hymio-indikaattori"');
         }
     }
 
@@ -616,17 +1144,17 @@
     function getHymioFromDate($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
 
-        if($unenLaatu > 2){
+        if($unenLaatu == null || $unenLaatu == 0){
+            echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
+        } elseif($unenLaatu > 2){
             //fa-laugh
             echo('class="fas fa-laugh hymio-viikko" style="color: var(--liikennevaloVihrea);"');
-        } elseif($unenLaatu <= 2 && $unenLaatu >= -2){
+        }elseif($unenLaatu <= 2 && $unenLaatu >= -2){
             //fa-meh
             echo('class="fas fa-meh hymio-viikko" style="color: var(--liikennevaloKeltainen);"');
         } elseif($unenLaatu < -2){
             //fa-frown
             echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloPunainen);"');
-        }elseif($unenLaatu == null){
-            echo('class="fas fa-frown hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
         }
     }
 
@@ -661,6 +1189,71 @@
         return $mounths;
     }*/
 
+    // Hakee päivämäärän mukaan kyselyn tiedot tietokannasta ja palauttaa muutos% progressbariin
+    function getDayProgressValue($day){
+        $pos = 0;
+        $neg = 0;
+
+        $icon = [
+            "$day->user_food", 
+            "$day->user_alcohol", 
+            "0", 
+            "$day->user_smoke", 
+            "$day->user_vitality", 
+            "$day->user_stimulant", 
+            "$day->user_medicine", 
+            "$day->user_stress", 
+            "$day->user_mood", 
+            "0", 
+            "$day->user_screen_time", 
+            "$day->user_pain"
+        ];
+
+        for($i = 0; $i < 12; $i++){
+            $value = $icon[$i];
+
+            if($value == 0){
+                $pos += 0;
+            } elseif($value > 0){
+                $pos += $value;
+            } else{
+                $neg += (-1) * $value;
+            }
+        }
+
+        //echo("<div>" . $pos . "-" . $neg . "</div>");
+
+        if($pos == 0 && $neg == 0){
+            echo("<div>" . 50 . "-" . 50 . "</div>");
+            return 50;
+        } elseif($pos == $neg){
+            echo("<div>" . 50 . "-" . 50 . "</div>");
+            return 50;
+        } elseif($neg > $pos){
+            $tulos = round(100*(0.5 + ($pos-$neg)/$neg));
+            if($tulos < 0){
+                $tulos = 0;
+            } elseif($tulos > 100){
+                $tulos = 100;
+            }
+            echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
+            return $tulos;
+        }else{
+            if($neg == 0){
+                $neg = 1;
+            }
+            $tulos = round(100*(0.5 + ($pos-$neg)/$neg));
+
+            if($tulos < 0){
+                $tulos = 0;
+            } elseif($tulos > 100){
+                $tulos = 100;
+            }
+            echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
+            return $tulos;
+        }
+    }
+
     //** Ikoni funktiot */
       // < -2 = punainen 
         // < 2 = && > -2 = keltainen 
@@ -669,99 +1262,83 @@
 
     // Ruoka
     function getIconColorFood($value){
-        if($value > 2){
+        if($value==0){
+            echo(" var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
+        }elseif($value < 0){
             echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
-            echo("var(--liikennevaloHarmaa)");
         }
     }
-
+  
     // Alkoholi
     function getIconColorAlcohol($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
     // Vireys
     function getIconColorVitality($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
     // Piristeet
     function getIconColorStimulant($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
     // Stressi
     function getIconColorStress($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
     // Mieliala
     function getIconColorMood($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
-   
-
     // Kivut
     function getIconColorPains($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
 
      // Lääkkeet (boolean)
-     function getIconColorMedicine($value){
+    function getIconColorMedicine($value){
         if($value == 1){
             echo("var(--liikennevaloVihrea)");
         } elseif($value==0){
@@ -770,57 +1347,88 @@
     }
 
      // ruutuaika
-     function getIconColorScreenTime($value){
-        if($value > 2){
-            echo("var(--liikennevaloVihrea)");
-        } elseif($value >= (-2) && $value <= 2){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < (-2)){
-            echo("var(--liikennevaloPunainen)");
-        }elseif($value==0){
+    function getIconColorScreenTime($value){
+        if($value==0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
         }
     }
     // Tupakointi (boolean)
     function getIconColorSmoke($value){
-        if($value == 1){
-            echo("var(--liikennevaloPunainen)");
-        } else{
+        if($value == 0){
             echo("var(--liikennevaloHarmaa)");
+        }elseif($value == 1){
+            echo("var(--liikennevaloPunainen)");
+        }elseif($value == 2){
+            echo("var(--liikennevaloVihrea)");
         }
     }
 
      // Aktiivisuus
-     function getIconColorActivity($value){
+    function getIconColorActivity($value){
         echo("var(--liikennevaloHarmaa)");
     }
 
-     //hae tavoiteuniaika tietokannasta (EI TOIMI)
-     /*function getSleepGoalData($mapping_sleep_amount, $DBH){
+    // Nukuttu aika
+    function getIconColorSleepAmount($value){
+        if($value == null){
+            echo("var(--liikennevaloHarmaa)");
+        }elseif($value >= 28800){
+            echo("var(--liikennevaloVihrea)");
+        } elseif($value >= 21600 && $value < 28800){
+            echo("var(--liikennevaloKeltainen)");
+        } elseif($value < 21600 && $value > 0){
+            echo("var(--liikennevaloPunainen)");
+        }
+    }
 
-        $sql = "SELECT mapping_sleep_amount FROM ts_parameter_mapping WHERE `user_ID` ='" . $user_ID . "' AND `mapping_sleep_amount` = " . "'" . $mapping_sleep_amount . "';";
-        $kysely = $DBH->prepare($sql);
-        $kysely->execute();
-        $kysely -> setFetchMode(PDO::FETCH_OBJ);
-        $vastaus = $kysely->fetch();
-    } */
+    // Määrittää ikonien värin viikkonäkymän detailsivulla
+    function getIconColor($iconName, $value){
+        if($iconName == 2){ // Aktiivisuus
+            return 'style="color: var(--liikennevaloHarmaa)";';
+        } else if($iconName == 3){ // Tupakka
 
+            if($value == 0){
+                return 'style="color: var(--liikennevaloHarmaa)";';
+            }else if($value == 1){
+                return 'style="color: var(--liikennevaloPunainen)";';
+            }else if($value == 2){
+                return 'style="color: var(--liikennevaloVihrea)";';
+            }
+        } else if($iconName == 6){ // Lääkkeet
 
-   // Nukuttu aika
-   function getIconColorSleepAmount($value){
-      
-    if($value >= 28800){
-        echo("var(--liikennevaloVihrea)");
-    } elseif($value >= 21600 && $value < 28800){
-        echo("var(--liikennevaloKeltainen)");
-    } elseif($value < 21600 && $value > 0){
-        echo("var(--liikennevaloPunainen)");
-    } else{
-        echo("var(--liikennevaloHarmaa)");
-    }    
-}
+            if($value == 1){
+                return 'style="color: var(--liikennevaloVihrea)";';
+            } else if($value == 0){
+                return 'style="color: var(--liikennevaloHarmaa)";';
+            }
+        } else{ // Muille
 
+            if($value == 0){
+                return 'style="color: var(--liikennevaloHarmaa)";';
+            }else if($value > 0){
+                return 'style="color: var(--liikennevaloVihrea)";';
+            }else if($value < 0){
+                return 'style="color: var(--liikennevaloPunainen)";';
+            }
+        }
+    }
 
-
+    // Palauttaa indikaattorin viikkonäkymän detailsivulla keskiarvon mukaisesti
+    function getIndicator($value){
+        if($value > 3){
+            return 'class = "fas fa-laugh hymio-indikaattori" style = "color: var(--liikennevaloVihrea)"';
+        } else if($value > 0){
+            return 'class = "fas fa-smile hymio-indikaattori" style = "color: var(--liikennevaloVihrea)"';
+        } else if($value == 0){
+            return 'class = "fas fa-meh-blank hymio-indikaattori" style = "color: var(--liikennevaloHarmaa)"';
+        } else if($value < 0 && $value > -4){
+            return 'class = "fas fa-frown hymio-indikaattori" style = "color: var(--liikennevaloPunainen)"';
+        } else if($value < -3){
+            return 'class = "fas fa-sad-tear hymio-indikaattori" style = "color: var(--liikennevaloPunainen)"';
+        }
+    }
 ?>
-

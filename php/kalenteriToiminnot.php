@@ -85,10 +85,8 @@
         $_SESSION['days'] = getWeekDays($currentDay);
         $paivaOlio = getDateData($user_ID, $currentDay, $DBH);
     }
-
-
-
     
-
+    //Laske uniaika/sykli päivältä
+    $previousDay = getDateData($user_ID, getPrevDay($_SESSION['currentDay']), $DBH);
+    calculateSleepData($paivaOlio, $previousDay, $DBH);
 ?>
-

@@ -16,9 +16,10 @@
 body{
     background-color: var(--paaTaustavari);
     color: var(--fonttiVari);
-    font-family: 'Baloo Da 2', cursive, sans-serif;
-    font-size: 5vw;
+    font-family: sans-serif;
+    font-size: 20px;
     margin: 0;
+    
     
 }
 
@@ -90,7 +91,7 @@ body{
 #sivunNimi{
     width: 100%;
     color: var(--tehosteVari);
-    font-size: 1.4em;
+    font-size: 24px;
 }
 
 #ylaValikko li{
@@ -100,7 +101,7 @@ body{
 
 
 /* Navigation Settings */
-#ylaNav{
+#ylaNavKysely{
     display: flex;
     align-items: center;
     width: 100vw;
@@ -109,9 +110,18 @@ body{
     z-index: 2;
     text-align: center;
 }
+#ylaNavDeleteAccount{
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 50px;
+  background: var(--ylaValikkovari);
+  z-index: 2;
+  text-align: center;
+}
 
 .buttonit {
-  background: var(--tehosteVari);
+    background: var(--tehosteVari);
     color: var(--fonttiVari);
     display: inline-block;
     text-align: center;
@@ -121,6 +131,25 @@ body{
     border-radius: 5px;
     box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
     font-size: x-large;
+}
+.deleteAccountButton{
+    background: rgb(151, 8, 8);
+    margin: auto 5px auto 0px;
+    color:white; 
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    width: 70%;
+    height: 80%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
+    font-size: x-large;
+}
+p{
+  font-size: 20px;
+  text-align: center;
+  margin: 5px;
+  line-height: 30px;
 }
 
 .buttonit:active {
@@ -137,6 +166,215 @@ body{
   right: 10px;
   cursor: pointer;
 }
+#closeDeleteAccount{
+  color: var(--tehosteVari);
+    font-size: 30px;
+    width: fit-content;
+    padding: 10px 15px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
+
+
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  background-color: var(--ylaValikkovari);
+  color: #fff;
+  text-align: start;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  line-height: 30px;
+  padding: 20px;
+  border-radius: 5px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 90%;
+  height:320px;
+  overflow:auto;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+
+}
+
+.popupInfo {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+/* The actual popup */
+.popupInfo .popupInfotext {
+  visibility: hidden;
+  background-color: var(--ylaValikkovari);
+  color: #fff;
+  text-align: start;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: 125%;
+  line-height: 30px;
+  padding: 20px;
+  border-radius: 5px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 90%;
+  height:320px;
+  overflow:auto;
+}
+
+.popupInfo .popupInfotext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+
+}
+
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+  width: 90%;
+  
+}
+
+
+/* Toggle this class - hide and show the popup */
+.popupInfo .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+  width: 90%;
+  }
+
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+#questonmark{
+  color: var(--tehosteVari);
+  font-size: 30px;
+}
+#kysymys1{
+  color: var(--tehosteVari);
+  font-size: 30px;
+}
+
+#myDeleteAccount{
+  color: var(--tehosteVari);
+  font-size: 30px;
+  margin: 10px;
+}
+
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: var(--tehosteVari);
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+.kyselyOtsikko{
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 22px;
+}
+
 
 
 

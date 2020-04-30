@@ -10,7 +10,6 @@
     --tehosteVari2:#7bb3b9;
     --fonttiVari:rgb(255, 255, 255);
     --fonttiVari2:rgb(28, 28, 28);
-    
 }
 
 * {
@@ -19,8 +18,6 @@
 
 html {
     height: 100%;
-
-  
 }
 
 body {
@@ -70,6 +67,15 @@ body {
     font-family: 'Baloo Da 2', cursive, sans-serif;
     font-size: larger;
 }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
 
 /* POP-UPIT - TAUSTA*/
 
@@ -107,6 +113,79 @@ body {
 /* POP-UPIT - SISÄLLÖT*/
 
 .popupContent {  
+    background: var(--paaTaustavari);
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+}
+
+.infoDaily {
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoFood {
+    visibility: hidden;
+}
+
+.infoAlcohol {
+    visibility: hidden;
+}
+
+.infoActivity {
+    visibility: hidden;
+}
+
+.infoSmoke {
+    visibility: hidden;
+}
+
+.infoVitality {
+    visibility: hidden;
+}
+
+.infoStimulant {
+    visibility: hidden;
+}
+
+.infoMedicine {
+    visibility: hidden;
+}
+
+.infoStress {
+    visibility: hidden;
+}
+
+.infoMood {
+    visibility: hidden;
+}
+
+.infoSleepAmount {
+    visibility: hidden;
+}
+
+.infoScreenTime {
+    visibility: hidden;
+}
+
+.infoPains {
+    visibility: hidden;
+}
+
+
+/* POP-UPIT - SISÄLLÖT*/
+
+.infoContent {  
     background: var(--paaTaustavari);
     padding: 20px;
     border-radius: 5px;
@@ -362,6 +441,23 @@ body {
     vertical-align: top;
 }
 
+.registerClose {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+.loginClose {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+.infoClose {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
 
 /*tompan jutut*/
 
@@ -386,7 +482,7 @@ body {
 .detailWrapper{
     display: grid;
     grid-template-columns: auto auto auto;
-    padding: 0 5% 0 5%;
+    padding: 0 5% 10% 5%;
     box-sizing: border-box;
     background-color: var(--paaTaustavari);
 }
@@ -423,19 +519,42 @@ body {
     flex-flow: column nowrap;
     justify-content: space-around;
     height: 100%;
+    margin-bottom: 0px;
+}
+
+#viikkoOtsikko{
+    font-size: 2em;
 }
 
 .viikkoNakymaTietue{
     display: flex;
     align-items: center;
-    border: solid 1px;
+    justify-content: space-between;
+    border: solid 1px rgba(255, 255, 255, 0.3);
     color: white;
-    padding: 0 10px;
+    padding: 0 5px;
     height: 100%;
+    width: 95%;
+    margin: 5px auto;
+    border-radius: 15px;
+    user-select: none;
 }
 
-.viikkoNakymaTietue:hover{
-    background-color: var(--liikennevaloHarmaa);
+#viikonpaiva{
+    width: 20%;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 1.3em;
+}
+
+.viikkoPvm{
+    width: 20%;
+    font-size: 1.1em;
+    line-height: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 #ylaValikko{
@@ -526,7 +645,7 @@ body {
 
 ::-webkit-progress-bar {
     background-color: var(--liikennevaloPunainen);
-  }
+}
 
 progress[value]  {
     -webkit-appearance: none;
@@ -536,10 +655,32 @@ progress[value]  {
     border: none;
   
     width: 100%;
-    height: 3em;
+    /*height: 3em;*/
   
     color: var(--liikennevaloVihrea); 
-  }
+}
+
+.attributes_balance{
+    height: 3em;
+}
+
+.progressBarViikko{
+    height: 1em;
+}
+
+.progressViikko{
+    width: 40%;
+    line-height: 0px;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.progressViikko div{
+    margin-bottom: 5px;
+}
 
 .fa-arrow-alt-circle-down{
     font-size: 4em;
@@ -553,7 +694,7 @@ progress[value]  {
 
 .ikoni{
     font-size: 3em;
-
+    margin: 5px;
 }
 
 .ikoniHuutomerkki{
@@ -570,7 +711,28 @@ progress[value]  {
 
 .hymio-viikko{
     font-size: 5vw;
-    padding: 0 10px;
+    padding: 0 5px;
+    width: 10%;
+}
+
+.hymio-kuukausi{
+    font-size: 5vw;
+    padding: 0 5px;
+}
+
+.ikoniWrapper{
+    box-shadow: 0px 0px 8px;
+    margin: 5px 5px;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    border-radius: 20px;
+    background-color: var(--alaValikkovari);
+
+}
+
+.hymio-indikaattori{
+    font-size: 6vw;
 }
 
 i[class^="fas fa-chevron"]{
@@ -586,7 +748,6 @@ i[class^="fas fa-chevron"]{
 .fa-chevron-up{
     grid-column-start: 1;
     grid-column-end: 4;
-    margin: 10px;
 }
 
 .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{
@@ -617,20 +778,20 @@ i[class^="fas fa-chevron"]{
     font-weight: bold;
 }
 
-
-
-@media only screen and (max-width: 320px) {
-
-}
-
 /* Kalenteri näkymän muotoilut */
 .calendar {
     margin: auto;
-    margin-top: 5px;
-    width: 90%;
+    width: 95%;
     height: 100%;
-    background-color: rgb(226, 222, 222);
     box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.2);
+}
+
+#month{
+    font-size: 2em;
+}
+
+#year{
+    font-size: 2em;
 }
 
 .month {
@@ -639,14 +800,13 @@ i[class^="fas fa-chevron"]{
     align-items: center;
     width: 100%;
     text-align: center;
-    background-color: var(--tehosteVari2);
-    color: var(--fonttiVari2);
-    font-size: 34px;
+    background-color: var(--paaTaustavari);
+    color: var(--fonttiVari);
 }
 
 .weekdays {
-    background-color: rgb(6, 114, 109);
-    color: #fff;
+    background-color: var(--tehosteVari);
+    color: var(--fonttiVari2);
     padding: 7px 0;
     display: flex;
     font-size: 20px;
@@ -654,7 +814,6 @@ i[class^="fas fa-chevron"]{
 
 .daysOfMonth {
     font-weight: 300;
-    padding: 10px 0;
     display: flex;
     flex-wrap: wrap;
     font-size: 18px
@@ -664,6 +823,7 @@ i[class^="fas fa-chevron"]{
 .daysOfMonth div {
     text-align: center;
     width: 14.28%;
+    user-select: none;
 }
 
 .daysOfMonth div {
@@ -680,45 +840,14 @@ i[class^="fas fa-chevron"]{
 }
 
 .today {
-    background-color:var(--tehosteVari);
-    color: #fff;
+    border: solid 3px var(--tehosteVari);
+    border-radius: 10px;
 }
 
 .daysOfMonth div:hover {
     cursor: pointer;
     background-color: rgba(112, 161, 179, 0.8)
 }
-
-.prev,
-.next {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 23px;
-    background-color: var(--tehosteVari);
-    transition: all 0.4s;
-}
-
-.prev:hover,
-.next:hover {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-#month {
-    font-size: 30px;
-    font-weight: 500;
-    color: var(--fonttiVari2);
-}
-#year{
-    color: var(--fonttiVari2); 
-}
-
-
-
 
 .slideSivu{
     background-color: var(--paaTaustavari);
@@ -775,19 +904,70 @@ i[class^="fas fa-chevron"]{
     border-radius: 50%;
     background: var(--tehosteVari);
     cursor: pointer;
-  }
+}
 
-  .dailyButton {
+.dailyButton {
     color: var(--tehosteVari);
     font-size: 3em;
-  }
+}
 
-  #kyna{
+#kyna{
     color: var(--tehosteVari);
     font-size: 3em;
     box-shadow: 2px  5px 25px -7px whitesmoke;
-  }
+}
 
 .highlight{
-    box-shadow: 0px 0px 5px 4px white;
+    box-shadow: 0px 0px 10px var(--tehosteVari);
+    border-radius: 10px;
+}
+
+@media only screen and (max-height: 750px) {
+    #month{
+        margin: 10px 0 0 0;
+    }
+
+    #year{
+        margin: 0;
+    }
+
+    .weekdays{
+        font-size: 15px;
+    }
+
+    .daysOfMonth{
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-height: 680px){
+    .daysOfMonth div{
+        padding: 8px 0;
+    }
+}
+
+@media only screen and (max-height: 650px){
+    .daysOfMonth div{
+        padding: 6px 0;
+    }
+}
+
+@media only screen and (max-height: 600px){
+    .daysOfMonth div{
+        padding: 4px 0;
+    }
+
+    #month{
+        font-size: 1.5em;
+    }
+
+    #year{
+        font-size: 1.5em;
+    }
+}
+
+@media only screen and (max-height: 540px){
+    .daysOfMonth div{
+        padding: 3px 0;
+    }
 }

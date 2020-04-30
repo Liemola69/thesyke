@@ -67,9 +67,6 @@
         }
     ?>
 
-
-
-
     <nav id="ylaNav">
         <div id="sivunNimi"><b>PÄIVÄNÄKYMÄ</b></div>
         <div id="hampurilaisMenu" class="fa fa-bars"></div>
@@ -84,6 +81,8 @@
                 <li id="kayttoehdotValikkoLinkki">Käyttöehdot</li>
                 <li></li>
                 <li onclick='window.location.href="sivurunko.php?logOut=true"'>Kirjaudu ulos </li>
+                <li onclick='window.location.href="deleteAccount.php"'>Poista tili </li>
+                
             </ul>
         </div>
     </nav>
@@ -132,24 +131,22 @@
                                 <i id="prevDayNuoli" class='fas fa-chevron-left'></i>
                                 <?php getDayFormatted($_SESSION['currentDay']); ?>
                                 <i id="nextDayNuoli" class='fas fa-chevron-right'></i>
-                                
                             </div>
                             
-
                             <!-- Unenlaatu hymiö -->
                             <div class="dailySmiley">
-                            <!-- Menee päiväkyselysivulle -->
-                            <a class="dailyButton fas fa-plus-circle" href="kysely.php"></a>  
-                            <i <?php 
-                                if($paivaOlio == null){
-                                    echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
-                                                                        
-                                } else{
-                                    getHymio($paivaOlio);
-                                }
-                            ?>></i>
-                            <a class="dailyButton fas fa-info-circle"></a>
-                            
+                                <!-- Menee päiväkyselysivulle -->
+                                <a class="dailyButton fas fa-plus-circle" href="kysely.php"></a>  
+                                <i <?php 
+                                    if($paivaOlio == null){
+                                        echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
+                                                                            
+                                    } else{
+                                        getHymio($paivaOlio);
+                                    }
+                                    ?>>
+                                </i>
+                                <a class="dailyButton fas fa-info-circle"></a>
                             </div>
 
                             <!--inforuudut-->
@@ -171,13 +168,12 @@
                                 </div>       
                             </div>
 
-
                             <!--progress/meter bar-->
                             <div class="clear">
-                                <progress class="attributes_balance" value="65" min="0" max="100"></progress>
+                                <h3>UNEEN VAIKUTTAVAT TEKIJÄT</H3>
+                                <progress class="attributes_balance progressBarPaiva" value="' . getDayProgressValue($day) . '" min="0" max="100"></progress>
                             </div>
                            
-
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-down'></i>
 
@@ -189,73 +185,223 @@
                             <i class='fas fa-chevron-up'></i>
 
                             <!--DetailsivuIconit-->
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-utensils ikoni' style='color: <?php $value = $paivaOlio->user_food; getIconColorFood($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoFood')">
+                                    <div style='color: <?php $value = $paivaOlio->user_food; getIconColorFood($value); ?>;'>
+                                    <i class='fas fa-utensils ikoni'></i>
+                                    <i <?php getFoodIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
                                 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-glass-cheers ikoni' style='color:<?php $value = $paivaOlio->user_alcohol; getIconColorAlcohol($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoAlcohol')">
+                                    <div style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorAlcohol($value); ?>;'>
+                                    <i class='fas fa-glass-cheers ikoni'></i>
+                                    <i <?php getAlcoholIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-walking ikoni' style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoActivity')">
+                                    <div style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;'>
+                                    <i class='fas fa-walking ikoni'></i>
+                                    <i <?php getActivityIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-smoking ikoni' style='color:<?php $value = $paivaOlio->user_smoke; getIconColorSmoke($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoSmoke')">
+                                    <div style='color:<?php $value = $paivaOlio->user_smoke; getIconColorSmoke($value); ?>;'>
+                                    <i class='fas fa-smoking ikoni'></i>
+                                    <i <?php getSmokeIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-bed ikoni' style='color: <?php $value = $paivaOlio->user_vitality; getIconColorVitality($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoVitality')">
+                                    <div style='color: <?php $value = $paivaOlio->user_vitality; getIconColorVitality($value); ?>;'>
+                                    <i class='fas fa-bed ikoni'></i>
+                                    <i <?php getVitalityIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-mug-hot ikoni' style='color:<?php $value = $paivaOlio->user_stimulant; getIconColorStimulant($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoStimulant')">
+                                    <div style='color:<?php $value = $paivaOlio->user_stimulant; getIconColorStimulant($value); ?>;'>
+                                    <i class='fas fa-mug-hot ikoni'></i>
+                                    <i <?php getStimulantIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-pills ikoni' style='color:<?php $value = $paivaOlio->user_medicine; getIconColorMedicine($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoMedicine')">
+                                    <div style='color:<?php $value = $paivaOlio->user_medicine; getIconColorMedicine($value); ?>;'>
+                                    <i class='fas fa-pills ikoni'></i>
+                                    <i <?php getMedicineIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-bolt ikoni' style='color:<?php $value = $paivaOlio->user_stress; getIconColorStress($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoStress')">
+                                    <div style='color:<?php $value = $paivaOlio->user_stress; getIconColorStress($value); ?>;'>
+                                    <i class='fas fa-bolt ikoni'></i>
+                                    <i <?php getStressIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-cloud-sun-rain ikoni' style='color:<?php $value = $paivaOlio->user_mood; getIconColorMood($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoMood')">
+                                <div style='color:<?php $value = $paivaOlio->user_mood; getIconColorMood($value); ?>;'>
+                                    <i class='fas fa-cloud-sun-rain ikoni'></i>
+                                    <i <?php getMoodIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-clock ikoni' style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorSleepAmount($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoSleepAmount')">
+                                <div style='color: <?php $value = $paivaOlio->sleep_amount; getIconColorSleepAmount($value); ?>;'>
+                                    <i class='fas fa-clock ikoni'></i>
+                                    <i <?php getSleepAmountIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-mobile-alt ikoni' style='color:<?php $value = $paivaOlio->user_drug; getIconColorScreenTime($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoScreenTime')">
+                                    <div style='color:<?php $value = $paivaOlio->user_screen_time; getIconColorScreenTime($value); ?>;'>
+                                    <i class='fas fa-mobile-alt ikoni'></i>
+                                    <i <?php getScreenTimeIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-band-aid ikoni' style='color:<?php $value = $paivaOlio->user_pain; getIconColorPains($value); ?>;'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
+                                <div class="ikoniWrapper" onclick="dayInfo('infoPains')">
+                                <div style='color:<?php $value = $paivaOlio->user_pain; getIconColorPains($value); ?>;'>
+                                    <i class='fas fa-band-aid ikoni'></i>
+                                    <i <?php getPainIndikator($paivaOlio); ?>></i>
+                                    </div>
                                 </div>
+
+                                <script>
+                                function dayInfo(i) {
+                                document.getElementById(i).style.visibility='visible';
+                                }
+
+                                function closeDayInfo(i) {
+                                document.getElementById(i).style.visibility='hidden';
+                                }
+                                </script>
+
+                                <div class=infoDaily id="infoFood" style="visibility: hidden">
+                                    <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoFood')"></i>
+                                        <h3>Ravinto</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                
+                                <div class=infoDaily id="infoAlcohol" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoAlcohol')"></i>
+                                        <h3>Alkoholi</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>​​​​​​​​​​​​​​​​​​​​​​​​​​​
+
+                                <div class=infoDaily id="infoActivity" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoActivity')"></i>
+                                        <h3>Liikunta</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoSmoke" style="visibility: hidden">​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoSmoke')"></i>
+                                        <h3>Tupakointi</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoVitality" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoVitality')"></i>
+                                        <h3>Vireystila</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoStimulant" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoStimulant')"></i>
+                                        <h3>Kofeiini</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoMedicine" style="visibility: hidden">​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoMedicine')"></i>
+                                        <h3>Lääkkeet</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoStress" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoStress')"></i>
+                                        <h3>Stressi</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoMood" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoMood')"></i>
+                                        <h3>Mieliala</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoSleepAmount" style="visibility: hidden">​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoSleepAmount')"></i>
+                                        <h3>Unen määrä</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoScreenTime" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoScreenTime')"></i>
+                                        <h3>Ruutuaika</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                <div class=infoDaily id="infoPains" style="visibility: hidden">
+                                <div class="infoContent">
+                                        <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoPains')"></i>
+                                        <h3>Kivut</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                    </div>
+                                </div>
+                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
                         </div>
                     </div>
                 </div>
-
-                
-
-
-
             </div>
 
             <!--viikkosivu-->
@@ -267,132 +413,14 @@
                             <!--Ylälaidan viikkobanneri-->
                             <div id="paasivuViikkoNav">
                                 <i id="prevWeekNuoli" class='fas fa-chevron-left'></i>
-                                <?php echo ("Viikko " . $_SESSION['currentWeek']); ?>
+                                <div id="viikkoOtsikko"><?php echo ("VIIKKO " . $_SESSION['currentWeek']); ?></div>
                                 <i id="nextWeekNuoli" class='fas fa-chevron-right'></i>
                             </div>
 
                             <!-- Viikonpäivä listaus -->
                             <div>
                                 <ul id="viikonpaivaLista">
-                                    
-                                    <li class="viikkoNakymaTietue">
-                                    
-                                        <div><?php echo $_SESSION['days'][0]; ?></div>
-                                        
-                                        <?php $monday = getDateData($user_ID, $_SESSION['days'][0], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($monday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($monday);
-                                                }
-                                            ?>>
-                                        </i>
-
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][1]; ?></div>
-                                        
-                                        <?php $tuesday = getDateData($user_ID, $_SESSION['days'][1], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($tuesday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($tuesday);
-                                                }
-                                            ?>>
-                                        </i>
-                                        
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][2]; ?></div>
-                                            
-                                        <?php $wednesday = getDateData($user_ID, $_SESSION['days'][2], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($wednesday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($wednesday);
-                                                }
-                                            ?>>
-                                        </i>        
-                                        
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][3]; ?></div>
-                                            
-                                        <?php $thursday = getDateData($user_ID, $_SESSION['days'][3], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($thursday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($thursday);
-                                                }
-                                            ?>>
-                                        </i>
-                                            
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][4]; ?></div>
-                                            
-                                        <?php $friday = getDateData($user_ID, $_SESSION['days'][4], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($friday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($friday);
-                                                }
-                                            ?>>
-                                        </i>
-                                            
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][5]; ?></div>
-                                            
-                                        <?php $saturday = getDateData($user_ID, $_SESSION['days'][5], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($saturday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($saturday);
-                                                }
-                                            ?>>
-                                        </i>
-                                                                       
-                                    </li>
-
-                                    <li class="viikkoNakymaTietue">
-                                        
-                                        <div><?php echo $_SESSION['days'][6]; ?></div>
-                                            
-                                        <?php $sunday = getDateData($user_ID, $_SESSION['days'][6], $DBH);?>
-                                        <i 
-                                            <?php 
-                                                if($sunday == null){
-                                                    echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
-                                                } else{
-                                                    getHymioFromDate($sunday);
-                                                }
-                                            ?>>
-                                        </i>
-            
-                                    </li>
+                                    <?php include("viikkonakyma.php"); ?>
                                 </ul>
                             </div>
 
@@ -405,73 +433,13 @@
                             <i class='fas fa-chevron-up'></i>
 
                             <!--DetailsivuIconit-->
-                            
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-utensils ikoni' style='color: var(--liikennevaloVihrea);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-                                
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-glass-cheers ikoni' style='color:var(--liikennevaloKeltainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-walking ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-smoking ikoni' style='color:var(--liikennevaloVihrea);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-bed ikoni' style='color:var(--liikennevaloHarmaa);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-mug-hot ikoni' style='color:var(--liikennevaloKeltainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-pills ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-bolt ikoni' style='color:var(--liikennevaloVihrea);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-cloud-sun-rain ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-clock ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class= 'fas fa-mobile-alt ikoni' style='color:var(--liikennevaloHarmaa);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
-
-                                <div class="ikoniWrapper">
-                                    <i class='fas fa-band-aid ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                    <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                                </div>
+                            <?php include("viikkoNakymaDetail.php"); ?>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!--kuukausisivu-->
-            
             <div id="kuukausiSivu" class="swiper-slide">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
@@ -479,19 +447,14 @@
 
                             <div class="calendar">
                                 <div class="month">
-
-                                    <div class="prev" onclick="moveDate('prev')">
-                                        <span>&#10094;</span>
-                                    </div>
+                                    <i id="prevMonthNuoli" class='fas fa-chevron-left' onclick="moveDate('prev')"></i>
 
                                     <div>
                                         <h2 id="month"></h2>
                                         <p id="year"></p>
                                     </div>
 
-                                    <div class="next" onclick="moveDate('next')">
-                                            <span>&#10095;</span>
-                                    </div>
+                                    <i id="nextMonthNuoli" class='fas fa-chevron-right' onclick="moveDate('next')"></i>
 
                                 </div>
 
@@ -510,79 +473,18 @@
                             </div>
 
                             <!--sivuvaihtoNuoli-->
-
                             <i class='fas fa-chevron-down'></i>
                             
-
                         </div>
                         
-
                         <div id="kuukausiDetailSivu" class="swiper-slide detailWrapper">
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-up'></i>
 
                             <!--DetailsivuIconit-->
-                            
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-utensils ikoni' style='color: var(--liikennevaloVihrea);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-                            
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-glass-cheers ikoni' style='color:var(--liikennevaloKeltainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-walking ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-smoking ikoni' style='color:var(--liikennevaloVihrea);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-bed ikoni' style='color:var(--liikennevaloHarmaa);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-mug-hot ikoni' style='color:var(--liikennevaloKeltainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-pills ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-bolt ikoni' style='color:var(--liikennevaloVihrea);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-cloud-sun-rain ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-clock ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-mobile-alt ikoni' style='color:var(--liikennevaloHarmaa);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
-
-                            <div class="ikoniWrapper">
-                                <i class='fas fa-band-aid ikoni' style='color:var(--liikennevaloPunainen);'></i>
-                                <i class='fas fa-exclamation-circle ikoniHuutomerkki'></i>
-                            </div>
+                            <?php include("kuukausiNakymaDetail.php"); ?>
                         </div>
+                        
                     </div>
                 </div>
             </div>
