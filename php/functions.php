@@ -36,10 +36,11 @@
         //Tarkista tietokannasta onko uniaika/sykli tyhjä
         if($paivaOlio->sleep_amount == null || $paivaOlio->sleep_cycles == null){
 
-            $date_ID = $previousDay->date_ID;
-            if($date_ID != null){
+            //$date_ID = $previousDay->date_ID;
+            $prevDate_ID = $previousDay->date_ID;
+            if($prevDate_ID != null){
                 try{
-                    $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
+                    $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $prevDate_ID;
                     $kysely = $DBH->prepare($sql);
                     $kysely->execute();
                     $kysely -> setFetchMode(PDO::FETCH_OBJ);
@@ -83,10 +84,11 @@
                 //print_r($prevDayTimeLines);
 
                 // Kuluva päivä
-                $date_ID = $paivaOlio->date_ID;
-                if($date_ID != null){
+                //$date_ID = $paivaOlio->date_ID;
+                $currentDate_ID = $paivaOlio->date_ID;
+                if($currentDate_ID != null){
                     try{
-                        $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $date_ID;
+                        $sql = 'SELECT * FROM `ts_day` WHERE date_ID =' . $currentDate_ID;
                         $kysely = $DBH->prepare($sql);
                         $kysely->execute();
                         $kysely -> setFetchMode(PDO::FETCH_OBJ);
@@ -262,12 +264,18 @@
 
                 $sleepCycle = floor($sleepTime * 60 / 5400);
 
+                // Laske aktiivisuusarvo tietokantaan ja liitä tallennukseen
+                $user_activity = calculateActivity($timeLines, $nukahtamisAikaPrevDayIndeksi, $nukahtamisAikaCurrentDayIndeksi, $previousDay, $paivaOlio, $DBH);
+
                 // Tallenna tietokantaan
                 try{
-                    $sql = 'UPDATE `ts_date` 
-                    SET sleep_amount = ' . ($sleepTime*60) .  ', sleep_cycles = ' . $sleepCycle .  ', 
-                    sleep_start = "' . $nukahtamisAika . '", sleep_end = "' . $heraamisAika . '" 
-                    WHERE date_user_ID = ' . $paivaOlio->date_user_ID . ' AND date_ID = ' . $date_ID . ';';
+                    $sql = 'UPDATE `ts_date` SET 
+                    sleep_amount = ' . ($sleepTime*60) .  ', 
+                    sleep_cycles = ' . $sleepCycle .  ', 
+                    user_activity = ' . $user_activity . ', 
+                    sleep_start = "' . $nukahtamisAika . '", 
+                    sleep_end = "' . $heraamisAika . '" 
+                    WHERE date_user_ID = ' . $paivaOlio->date_user_ID . ' AND date_ID = ' . $currentDate_ID . ';';
                     $kysely = $DBH->prepare($sql);
                     $kysely->execute();
                     echo('<script>console.log("Tiedot päivitetty")</script>');
@@ -279,6 +287,190 @@
             }
         } else{
             echo('<script>console.log("Tiedot löytyy jo")</script>');
+        }
+    }
+
+    function calculateActivity($timeLines, $nukahtamisAikaPrevDayIndeksi, $nukahtamisAikaCurrentDayIndeksi , $previousDay, $paivaOlio, $DBH){
+        // zone 3-4 3h ennen nukkumaanmenoa -> punanen (vähintään 10min)
+        // zone 2 +60min
+        // rauhallinen liikunta +60min ++
+
+        //echo("\nprevday: " . $nukahtamisAikaPrevDayIndeksi);
+        //echo("\ncurrentday: " . $nukahtamisAikaCurrentDayIndeksi);
+
+        // Tarkista kumman päivän puolella nukahtanut
+        if(isset($nukahtamisAikaCurrentDayIndeksi)){ // Nukahtanut kuluvan päivän puolella
+            //echo("\nsama");
+            $i = $nukahtamisAikaCurrentDayIndeksi;
+            for($i; $i >= 0; $i--){
+                if($i == 0){
+                    $prevDay = 3-$nukahtamisAikaCurrentDayIndeksi;
+                    for($j = 0; $j < $prevDay; $j++){
+                        $prevDayIndeksit[] = 23-$j;
+                    }
+                    break;
+                }
+                $currentDayIndeksit[] = $i-1;
+            }
+
+            // -> Hae molemmat päivät day-taulusta
+            try{ // Hae kuluva päivä
+                $sql = 'SELECT * FROM ts_day WHERE date_ID =' . $paivaOlio->date_ID . ';';
+                $kysely = $DBH->prepare($sql);
+                $kysely->execute();
+                $kysely->setFetchMode(PDO::FETCH_OBJ);
+                $currentDayOlio = $kysely->fetch();
+            } catch(PDOException $e){
+                file_put_contents('../log/DBErrors.txt', 'calculateActivityWarning() failed to get current day data: ' . $e->getMessage() . "\n", FILE_APPEND);
+            }
+
+            try{ // Hae edeltävä päivä
+                $sql = 'SELECT * FROM ts_day WHERE date_ID =' . $previousDay->date_ID . ';';
+                $kysely = $DBH->prepare($sql);
+                $kysely->execute();
+                $kysely->setFetchMode(PDO::FETCH_OBJ);
+                $prevDayOlio = $kysely->fetch();
+            } catch(PDOException $e){
+                file_put_contents('../log/DBErrors.txt', 'calculateActivityWarning() failed to get prevday data: ' . $e->getMessage() . "\n", FILE_APPEND);
+            }
+
+            // Hae unta 3h edeltävät zonet
+            for($i = 0; $i < 3; $i++){
+                $todayZones[] = $currentDayOlio->{$timeLines[$currentDayIndeksit[$i]]};
+                $prevZones[] = $prevDayOlio->{$timeLines[$prevDayIndeksit[$i]]}; 
+                
+                $todayZonesJSON[] = json_decode($todayZones[$i]);
+                $prevZonesJSON[] = json_decode($prevZones[$i]);
+            }
+
+            //print_r($todayZonesJSON);
+            //print_r($prevZonesJSON);
+
+            // Haetaan 3-4 zonet
+            for($i = 0; $i < 3; $i++){
+                if($todayZonesJSON[$i][3]->inzone != null){
+                    $temp[] = $todayZonesJSON[$i][3]->inzone;
+                }
+                
+                if($todayZonesJSON[$i][4]->inzone != null){
+                    $temp[] = $todayZonesJSON[$i][4]->inzone;
+                } 
+                
+                if($prevZonesJSON[$i][3]->inzone != null){
+                    $temp[] = $prevZonesJSON[$i][3]->inzone;
+                }
+                
+                if($prevZonesJSON[$i][4]->inzone != null){
+                    $temp[] = $prevZonesJSON[$i][4]->inzone;
+                }
+            }
+
+            print_r($temp);
+            $aika = 0;
+
+            // Summataan aika 3- ja 4 zonella
+            foreach($temp as $value){
+                $tunnit = 0;
+                $min = 0;
+                $sek = 0;
+
+                //echo $value;
+                $zonessa = str_replace("PT", "", $value);
+                if(!strpbrk($zonessa, "H")){
+                    if(!strpbrk($zonessa, "M")){ 
+                        $sek = strtok($zonessa, "S");
+                    } else{ 
+                        $min = strtok($zonessa, "M");
+                                                
+                        if(!strpbrk($zonessa, "S")){
+                                $sek = 0;
+                        } else{
+                                $sek = strtok("S");
+                        }
+                    }
+                } else{
+                        $tunnit = 1;
+                }
+                $aika += (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
+            }
+
+        } elseif(isset($nukahtamisAikaPrevDayIndeksi)){ // Nukahtanut edeltävän päivän puolella
+            //echo("\neilen");
+            $i = $nukahtamisAikaPrevDayIndeksi;
+            for($j = 1; $j < 4; $j++){
+                $prevDayIndeksit[] = $i-$j;
+            }
+
+            // Hae edeltävä päivä day-taulusta
+            try{
+                $sql = 'SELECT * FROM ts_day WHERE date_ID =' . $previousDay->date_ID . ';';
+                $kysely = $DBH->prepare($sql);
+                $kysely->execute();
+                $kysely->setFetchMode(PDO::FETCH_OBJ);
+                $prevDayOlio = $kysely->fetch();
+            } catch(PDOException $e){
+                file_put_contents('../log/DBErrors.txt', 'calculateActivityWarning() failed to get prevday data: ' . $e->getMessage() . "\n", FILE_APPEND);
+            }
+
+            // Haetaan zonet 3h nukahtamista edeltävältä ajalta
+            for($i = 0; $i < 3; $i++){
+                $prevZones[] = $prevDayOlio->{$timeLines[$prevDayIndeksit[$i]]}; 
+                $prevZonesJSON[] = json_decode($prevZones[$i]);
+            }
+
+            //print_r($prevZonesJSON);
+
+            // Haetaan 3-4 zonet
+            for($i = 0; $i < 3; $i++){
+
+                if($prevZonesJSON[$i][3]->inzone != null){
+                    $temp[] = $prevZonesJSON[$i][3]->inzone;
+                }
+                
+                if($prevZonesJSON[$i][4]->inzone != null){
+                    $temp[] = $prevZonesJSON[$i][4]->inzone;
+                }
+            }
+
+            //print_r($temp);
+
+            // Lasketaan aika 3- ja 4-zonella
+            foreach($temp as $value){
+                $tunnit = 0;
+                $min = 0;
+                $sek = 0;
+
+                $zonessa = str_replace("PT", "", $value);
+                if(!strpbrk($zonessa, "H")){
+                    if(!strpbrk($zonessa, "M")){ 
+                        $sek = strtok($zonessa, "S");
+                    } else{ 
+                        $min = strtok($zonessa, "M");
+                                                
+                        if(!strpbrk($zonessa, "S")){
+                                $sek = 0;
+                        } else{
+                                $sek = strtok("S");
+                        }
+                    }
+                } else{
+                        $tunnit = 1;
+                }
+                $aika += (round($sek/60) + $min + ($tunnit*60)); //minuuteissa
+            }
+        }
+
+        // Määritä lukuarvo tietokantaan
+        //echo $aika;
+
+        if($aika > 30){
+            return "-5";
+        } elseif($aika > 20){
+            return "-3";
+        } elseif($aika > 10){
+            return "-1";
+        } else{
+            return "5";
         }
     }
 
@@ -1221,13 +1413,13 @@
             }
         }
 
-        //echo("<div>" . $pos . "-" . $neg . "</div>");
+        echo("<div>" . $pos . "-" . $neg . "</div>");
 
         if($pos == 0 && $neg == 0){
-            echo("<div>" . 50 . "-" . 50 . "</div>");
+            //echo("<div>" . 50 . "-" . 50 . "</div>");
             return 50;
         } elseif($pos == $neg){
-            echo("<div>" . 50 . "-" . 50 . "</div>");
+            //echo("<div>" . 50 . "-" . 50 . "</div>");
             return 50;
         } elseif($neg > $pos){
             $tulos = round(100*(0.5 + ($pos-$neg)/$neg));
@@ -1236,7 +1428,7 @@
             } elseif($tulos > 100){
                 $tulos = 100;
             }
-            echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
+            //echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
             return $tulos;
         }else{
             if($neg == 0){
@@ -1249,7 +1441,7 @@
             } elseif($tulos > 100){
                 $tulos = 100;
             }
-            echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
+            //echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
             return $tulos;
         }
     }
@@ -1369,7 +1561,13 @@
 
      // Aktiivisuus
     function getIconColorActivity($value){
-        echo("var(--liikennevaloHarmaa)");
+        if($value==0){
+            echo("var(--liikennevaloHarmaa)");
+        }elseif($value > 0){
+            echo("var(--liikennevaloVihrea)");
+        }elseif($value < 0){
+            echo("var(--liikennevaloPunainen)");
+        }
     }
 
     // Nukuttu aika
@@ -1387,9 +1585,7 @@
 
     // Määrittää ikonien värin viikkonäkymän detailsivulla
     function getIconColor($iconName, $value){
-        if($iconName == 2){ // Aktiivisuus
-            return 'style="color: var(--liikennevaloHarmaa)";';
-        } else if($iconName == 3){ // Tupakka
+        if($iconName == 3){ // Tupakka
 
             if($value == 0){
                 return 'style="color: var(--liikennevaloHarmaa)";';
