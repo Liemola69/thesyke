@@ -34,9 +34,9 @@
                 $emailKannassa = $kysely->fetch();
                 //echo($emailKannassa[0]);
 
-            //$salaSana = "SELECT `password` FROM `ts_user` WHERE `user_ID` = ". "'" . $_SESSION["user_ID"] . "';";
-            //echo($salaSana);
-                /*$kysely2 = $DBH->prepare($salaSana);
+            $salaSana = "SELECT `password` FROM `ts_user` WHERE `user_ID` = ". "'" . $_SESSION["user_ID"] . "';";
+            echo($salaSana);
+                $kysely2 = $DBH->prepare($salaSana);
                 $kysely2->execute(); 
                 $salasanaKannassa = $kysely2->fetch();
                 //echo($salasanaKannassa[0]);*/
@@ -47,8 +47,8 @@
         $_SESSION['email'] = $_POST['givenEmail'];
         
         $user_pass  = $_POST['givenPassword'];
-        /*echo($user_pass);
-        $_SESSION['password'] = $_POST['givenPassword'];*/
+        
+        $_SESSION['password'] = $_POST['givenPassword'];
 
 
         if($emailKannassa[0] == $user_email){
@@ -59,14 +59,14 @@
             
             $newDate_ID = $kysely->fetch();
 
-            while($newDate_ID == true){
-                $sql3 = "DELETE FROM ts_day";
+            while($newDate_ID==true){
+                $sql3 = "DELETE FROM `ts_day` WHERE `date_ID` = ". "'" . $newDate_ID . "';";
+                $kysely3 = $DBH->prepare($sql3);
+                $kysely3->execute();
             }*/
+
             
 
-            /*$sql3 = "DELETE FROM `ts_day` WHERE `user_ID` = ". "'" . $_SESSION['user_ID'] . "';";
-            $kysely3 = $DBH->prepare($sql3);
-            $kysely3->execute();*/
 
             $sql2 = "DELETE FROM `ts_parameter_mapping` WHERE `user_ID` = ". "'" . $_SESSION['user_ID'] . "';";
             $kysely2 = $DBH->prepare($sql2);

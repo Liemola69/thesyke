@@ -283,9 +283,10 @@
                                     <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoFood')"></i>
                                         <h3>Ravinto</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa ruokailuasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <br>
+                                        <p>Lisää ravinnon ja unen vaikutuksista voit lukea täältä <a href="ohjeFood.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
+
                                     </div>
                                 </div>​​​​​​​​​​​​​​​​​​​​​​​​​​​
                                 
@@ -293,9 +294,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoAlcohol')"></i>
                                         <h3>Alkoholi</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa alkoholin käyttöäsi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <br>
+                                        <p>Lisää alkoholin ja unen vaikutuksista voit lukea täältä <a href="ohjeAlcohol.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>​​​​​​​​​​​​​​​​​​​​​​​​​​​
 
@@ -303,9 +304,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoActivity')"></i>
                                         <h3>Liikunta</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa edellisen päivän fyysistä aktiivisuuttasi ennen nukkumaan menemistä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <br>
+                                        <p>Lisää aktiivisuuden ja unen vaikutuksista voit lukea täältä <a href="ohjeActivity.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​
@@ -313,9 +314,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoSmoke')"></i>
                                         <h3>Tupakointi</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa tupakointiasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <br>
+                                        <p>Lisää tupakoinnin ja unen vaikutuksista voit lukea täältä <a href="ohjeSmoke.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​
@@ -323,9 +324,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoVitality')"></i>
                                         <h3>Vireystila</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa subjektiivista kokemustasi tämän päivän vireystilasta. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä.</p>
+                                        <br>
+                                        <p>Vireydellä tarkoitetaan tässä sovelluksessa sitä, kuinka virkeäksi tai väsyneeksi koet itsesi kyseisenä päivänä.</p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​
@@ -333,9 +334,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoStimulant')"></i>
                                         <h3>Kofeiini</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa uneen tai nukahtamiseen vaikuttavien lääkkeiden käyttämistä edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <br>
+                                        <p>Lisää kofeiinin ja unen vaikutuksista voit lukea täältä <a href="ohjeCaffeine.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​
@@ -343,9 +344,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoMedicine')"></i>
                                         <h3>Lääkkeet</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa nauttimasi kofeiinin määrää edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <br>
+                                        <p>Lisää kofeiinin ja unen vaikutuksista voit lukea täältä <a href="ohjeMedicine.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​
@@ -353,9 +354,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoStress')"></i>
                                         <h3>Stressi</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa stressitasoasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <br>
+                                        <p>Lisää stressin ja unen vaikutuksista voit lukea täältä <a href="ohjeStress.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​
@@ -363,9 +364,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoMood')"></i>
                                         <h3>Mieliala</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa mielialaasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <br>
+                                        <p>Lisää mielialan ja unen vaikutuksista voit lukea täältä <a href="ohjeMood.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​
@@ -373,9 +374,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoSleepAmount')"></i>
                                         <h3>Unen määrä</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa edellisenä yönä nukutun unen määrää. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä sekä asettamasi uniaikatavoitteen täyttymisestä.</p>
+                                        <br>
+                                        <p>Lisää ihmisen unentarpeesta voit lukea täältä <a href="ohjeSleepAmount.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​
@@ -383,9 +384,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoScreenTime')"></i>
                                         <h3>Ruutuaika</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa edellisen illan ruutuaikaa. Ruutuajalla tarkoitetaan aikaa, jonka on viettänyt katsoessa televisiota, ollessa tietokoneella tai tabletilla tai selatessa älypuhelinta. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <br>
+                                        <p>Lisää ruutuajan ja unen vaikutuksista voit lukea täältä <a href="ohjeScreenTime.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​
@@ -393,9 +394,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoPains')"></i>
                                         <h3>Kivut</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                        <p>Tämä ikoni kuvaa edellisen päivän kiputuloja. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä.</p>
+                                        <br>
+                                        <p>Lisää kivun ja unen vaikutuksista voit lukea täältä <a href="ohjePain.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​

@@ -211,12 +211,14 @@ p{
 
 /* Popup arrow */
 .popup .popuptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-
+    content: "";
+    position: absolute;
+    bottom: 0%;
+    left: 93%;
+    margin-left: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
 }
 
 .popupInfo {
@@ -252,12 +254,15 @@ p{
 }
 
 .popupInfo .popupInfotext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-
+  
+    content: "";
+    position: absolute;
+    bottom: 0%;
+    left: 93%;
+    margin-left: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
 }
 
 
@@ -375,6 +380,13 @@ p{
   font-size: 22px;
 }
 
+p{
+  margin: 20px;
+}
+.ohjeOtsikko{
+  margin: 20px;
+  font-size: 22px;
+}
 
 
 
