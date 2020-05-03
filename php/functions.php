@@ -276,10 +276,21 @@
                     file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to save sleeptime: ' . $e->getMessage() . "\n", FILE_APPEND);
                 }
             } else{
-                echo('<script>console.log("No data from yesterday, can`t calculate uniaika/sykli")</script>');
+                //echo('<script>console.log("No data from yesterday, can`t calculate uniaika/sykli")</script>');
+                /*echo('<script>
+                let uniAika = document.createElement("div");
+                uniAika.setAttribute("class", "snackbar");
+                let uniAikaText = document.createTextNode("Uniaikaa ei voitu laskea, koska tiedot eiliseltä puuttuvat.");
+                uniAika.classList.add("show");
+                uniAika.appendChild(uniAikaText);
+                document.body.appendChild(uniAika);
+                setTimeout(function(){ 
+                    document.body.removeChild(uniAika);
+                }, 3000);
+                </script>');*/
             }
         } else{
-            echo('<script>console.log("Tiedot löytyy jo")</script>');
+            //echo('<script>console.log("Tiedot löytyy jo")</script>');
         }
     }
 
@@ -486,7 +497,6 @@
         $response = curl_exec($curl);
         $responseJSON = json_decode($response);
         $serverResponse = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        //echo ("Hae user ID:llä activity transactions: " . $serverResponse . "<br>");
         curl_close($curl);
 
         $transactionID = $responseJSON->{'transaction-id'};
@@ -499,7 +509,7 @@
      * Palauttaa taulukon, johon tallennettu aktiivisuusdatan id:t 
      */
     function getPolarActivityList($polar_ID, $polar_token, $transactionID){
-        // Transaction IDllä activity lista
+        // Transaction ID:llä activity lista
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -521,12 +531,22 @@
         $response = curl_exec($curl);
         $activityListJSON = json_decode($response);
         $serverResponse = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        //echo ("Transaction ID:llä haettu activity lista" . $transactionID . "<br>");
         curl_close($curl);
 
         // Jos ei päivitettävää dataa, palauta null
         // Jos on päivitettävää dataa, tallenna taulukkoon activity id:t.
         if(!$activityListJSON || $activityListJSON == null){
+            echo('<script>
+                let snack = document.createElement("div");
+                snack.setAttribute("class", "snackbar");
+                let text = document.createTextNode("Ei päivitettävää dataa");
+                snack.classList.add("show");
+                snack.appendChild(text);
+                document.body.appendChild(snack);
+                setTimeout(function(){ 
+                    document.body.removeChild(snack); 
+                }, 3000);
+                </script>');
             return null;
         } else{
             foreach($activityListJSON->{'activity-log'} as $activityID){
@@ -754,6 +774,7 @@
     
                         $kysely = $DBH->prepare($sql);
                         $kysely->execute();
+                        $onnistuiko = true;
                     } catch(PDOException $e){
                         file_put_contents('../log/DBErrors.txt', 'failed to update day-table, getPolarZoneData(): ' . $e->getMessage() . "\n", FILE_APPEND);
                     }
@@ -793,11 +814,25 @@
         
                         $kysely = $DBH->prepare($sql);
                         $kysely->execute();
+                        $onnistuiko = true;
                     } catch(PDOException $e){
                         file_put_contents('../log/DBErrors.txt', 'failed to create row at day-table, getPolarZoneData(): ' . $e->getMessage() . "\n", FILE_APPEND);
                     }
                 }
             }
+        }
+        if($onnistuiko){
+            echo('<script>
+            let snack = document.createElement("div");
+            snack.setAttribute("class", "snackbar");
+            let text = document.createTextNode("Polar synkronoitu onnistuneesti!");
+            snack.classList.add("show");
+            snack.appendChild(text);
+            document.body.appendChild(snack);
+            setTimeout(function(){ 
+                document.body.removeChild(snack); 
+            }, 3000);
+            </script>');
         }
     }
     
