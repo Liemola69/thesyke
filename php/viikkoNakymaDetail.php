@@ -15,6 +15,21 @@
         "fa-band-aid"
     ];
 
+    $infoName = [
+        "infoFood",
+        "infoAlcohol",
+        "infoActivity",
+        "infoSmoke",
+        "infoVitality",
+        "infoStimulant",
+        "infoMedicine",
+        "infoStress",
+        "infoMood",
+        "infoSleepAmount",
+        "infoScreenTime",
+        "infoPains"
+    ];
+
     $viikko = getWeekDays($_SESSION['currentDay']);
     $date = $viikko[0];
 
@@ -62,10 +77,9 @@
     
     // Tulosta ikonit ja indikaattorit väreillä
     for($i = 0; $i < 12; $i++){
-        echo('<div class="ikoniWrapper"' . getIndicator($icons[$i]) . '>');
+        echo('<div id = "' . $infoName[$i] . '" class="ikoniWrapper"' . getIndicator($icons[$i]) . '>');
             echo('<i class="fas ' . $iconName[$i] . ' ikoni" ' . getIconColor($iconName[$i], $icons[$i]) . '></i>');
             echo('<i ' . getIndicator($icons[$i]) . '></i>');
         echo('</div>');
     }
 ?>
-
