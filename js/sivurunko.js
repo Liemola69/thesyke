@@ -613,15 +613,12 @@ let iconsMonth = document.getElementById('kuukausiDetailSivu').children;
  */
 function updateIconColor(values){
     let iconColor = JSON.parse(values);
+    console.log(iconColor);
     let indikaattori;
     deleteIndicators();
 
     for(let i = 0; i < 12; i++){
-        if(i == 2){ // Aktiivisuus
-            iconsMonth[i+1].style.color = "var(--liikennevaloHarmaa)";
-            indikaattori = getIndicator(iconColor[i]);
-
-        } else if(i == 3){ // Tupakka
+        if(i == 3){ // Tupakka
 
             if(iconColor[i] == 0){
                 iconsMonth[i+1].style.color = "var(--liikennevaloHarmaa)";
