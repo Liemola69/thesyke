@@ -24,7 +24,7 @@ let paasivuPaivaWrapper = document.querySelector(".paasivuPaivaWrapper");
 
 // Viikkonäkymän muuttujat
 let paasivuViikkoWrapper = document.querySelector(".paasivuViikkoWrapper");
-let viikonpaivaListaItem = document.getElementById("viikonpaivaLista").getElementsByTagName("li");
+let viikonpaivaListaItem = document.querySelectorAll(".viikkoNakymaTietue");
 
 // Kuukausinäkymän muuttujat
 let paasivuKuukausiWrapper = document.querySelector(".paasivuKuukausiWrapper");
@@ -496,7 +496,7 @@ function printMonthHymio(hymio){
 // Parametrina tietokannasta haettu numeroarvo
 function luoHymio(i){
     let hymio = document.createElement("i");
-    if(i == null){
+    if(i == null || i == 0){
         hymio.classList.add('fas');
         hymio.classList.add('fa-meh-blank');
         hymio.classList.add('hymio-kuukausi');
@@ -592,7 +592,7 @@ let iconsMonth = document.getElementById('kuukausiDetailSivu').children;
  */
 function updateIconColor(values){
     let iconColor = JSON.parse(values);
-    console.log(iconColor);
+    //console.log(iconColor);
     let indikaattori;
     deleteIndicators();
 
@@ -687,4 +687,3 @@ function dayInfo(i) {
     function closeDayInfo(i) {
     document.getElementById(i).style.visibility='hidden';
     }
-
