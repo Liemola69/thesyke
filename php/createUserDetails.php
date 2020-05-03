@@ -28,7 +28,7 @@
         $_SESSION['age'] = (int)$_POST['given_age'];
         $_SESSION['gender'] = $_POST['given_gender'];
         $_SESSION['height'] = (int)$_POST['given_height'];
-        $_SESSION['aweight'] = (int)$_POST['given_weight'];
+        $_SESSION['weight'] = (int)$_POST['given_weight'];
         $_SESSION['parameters_user_agreement'] = $_POST['given_parameters_user_agreement'];
         $_SESSION['parameters_email_marketing'] = $_POST['given_parameters_email_marketing'];
         $_SESSION['parameters_gdpr'] = $_POST['given_parameters_gdpr'];

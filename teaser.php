@@ -6,6 +6,7 @@ include_once("config/config.php");
 //echo session_id();
 //print_r($_POST);
 //print_r($_SESSION);
+//print_r($data);
 
 ?>
 
@@ -111,11 +112,11 @@ include_once("config/config.php");
         //document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", true);
     })
 
-    document.getElementById("registerClose").addEventListener("click", function(){
+    //document.getElementById("registerClose").addEventListener("click", function(){
         //document.querySelector(".registerPopupContent").classList.toggle("registerPopupContentAnimation", false);
-        document.querySelector(".registerPopup").style.visibility = "hidden";
-        document.location = 'php/resetVariables.php';
-    })
+        //document.querySelector(".registerPopup").style.visibility = "hidden";
+        //document.location = 'php/resetVariables.php';
+    //})
 
 
 </script>

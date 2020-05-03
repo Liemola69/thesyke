@@ -938,7 +938,7 @@
         $token = $responseJSON->access_token;
         $polar_ID = $responseJSON->x_user_id;
 
-        // Viedään kantaan käyttäjän token ja polar_ID
+        // Viedään kantaan käyttäjän token ja polar_ID 
         try{
             $sql = 'UPDATE `ts_user` SET `polar_token` = "' . $token . '", `polar_ID` = "' . $polar_ID . '" WHERE `user_ID` = "' . $user_ID . '";';
             $kysely = $DBH->prepare($sql);
