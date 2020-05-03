@@ -17,29 +17,27 @@
         <div id="sivunNimi">POISTA TILI </div>
         <a href="sivurunko.php" id="closeDeleteAccount" class='fas fa-times-circle' style='text-decoration:none;'></a>      
 </nav>
-
-
-
 <?php
 
+//jos formissa on painettu delete-nappulaa
     if(isset($_POST["delete"])){
 
         $paivaOljo = getUserData($_SESSION["user_ID"], $DBH);
 
     //hae tietokannasta tallennettu sähköpostiosoite
             $email = "SELECT `email` FROM `ts_user` WHERE `user_ID` = ". "'" . $_SESSION["user_ID"] . "';";
-            //echo($email);
+            
                 $kysely = $DBH->prepare($email);
                 $kysely->execute(); 
                 $emailKannassa = $kysely->fetch();
-                //echo($emailKannassa[0]);
+                
 
             $salaSana = "SELECT `password` FROM `ts_user` WHERE `user_ID` = ". "'" . $_SESSION["user_ID"] . "';";
-            echo($salaSana);
+            //echo($salaSana);
                 $kysely2 = $DBH->prepare($salaSana);
                 $kysely2->execute(); 
                 $salasanaKannassa = $kysely2->fetch();
-                //echo($salasanaKannassa[0]);*/
+               
 
         //kyselyn perusteella annetut tiedot
         $user_email  = $_POST['givenEmail'];
@@ -50,23 +48,14 @@
         
         $_SESSION['password'] = $_POST['givenPassword'];
 
-
+        //tarkistetaan täsmääkö annettu sähköposti kantaan tallennetun kanssa
         if($emailKannassa[0] == $user_email){
 
-            /*$date_ID = "SELECT `date_ID` FROM `ts_date` WHERE `date_user_ID` = " . "'" . $_SESSION['user_ID'] . "';";
-            $kysely = $DBH->prepare($date_ID);
-            $kysely->execute(); 
-            
-            $newDate_ID = $kysely->fetch();
+            //poistetaan kaikki taulut erikseen
 
-            while($newDate_ID==true){
-                $sql3 = "DELETE FROM `ts_day` WHERE `date_ID` = ". "'" . $newDate_ID . "';";
-                $kysely3 = $DBH->prepare($sql3);
-                $kysely3->execute();
-            }*/
-
-            
-
+            $sql3 = "DELETE FROM `ts_day` WHERE `user_ID` = ". "'" . $_SESSION['user_ID'] . "';";
+            $kysely3 = $DBH->prepare($sql3);
+            $kysely3->execute();
 
             $sql2 = "DELETE FROM `ts_parameter_mapping` WHERE `user_ID` = ". "'" . $_SESSION['user_ID'] . "';";
             $kysely2 = $DBH->prepare($sql2);
@@ -83,12 +72,14 @@
             $sql = "DELETE FROM `ts_user` WHERE `user_ID` = ". "'" . $_SESSION['user_ID'] . "';";
             $kysely = $DBH->prepare($sql);
             $kysely->execute();
-           //echo($sql2);
            
+           
+           //takaisin kirjautumissivulle
             header("Location: ../teaser.php"); 
             
-            
+            //jos annettu sposti ei täsmää kannassa olevan kanssa
         }else{
+            include("../forms/formDeleteAccount.php");
             echo("Antamasi tiedot eivät täsmää kirjautumistietojesi kanssa. Yritä uudelleen!");
         }
 
