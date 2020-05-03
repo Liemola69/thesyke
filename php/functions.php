@@ -586,7 +586,7 @@
                     try{
                         $sql = "INSERT INTO `ts_day` (date_ID , 00_to_01, 01_to_02, 02_to_03, 03_to_04, 04_to_05, 05_to_06, 06_to_07,
                         07_to_08, 08_to_09, 09_to_10, 10_to_11, 11_to_12, 12_to_13, 13_to_14, 14_to_15, 15_to_16, 16_to_17, 
-                        17_to_18, 18_to_19, 19_to_20, 20_to_21, 21_to_22, 22_to_23, 23_to_24) 
+                        17_to_18, 18_to_19, 19_to_20, 20_to_21, 21_to_22, 22_to_23, 23_to_24, user_ID) 
                         VALUES (" . $date_ID[0] . ",'"
                         . json_encode($activityZonesJSON->samples[0]->{'activity-zones'}) . "','" 
                         . json_encode($activityZonesJSON->samples[1]->{'activity-zones'}) . "','"
@@ -611,7 +611,8 @@
                         . json_encode($activityZonesJSON->samples[20]->{'activity-zones'}) . "','" 
                         . json_encode($activityZonesJSON->samples[21]->{'activity-zones'}) . "','" 
                         . json_encode($activityZonesJSON->samples[22]->{'activity-zones'}) . "','"
-                        . json_encode($activityZonesJSON->samples[23]->{'activity-zones'}) . "');";
+                        . json_encode($activityZonesJSON->samples[23]->{'activity-zones'}) . "','"
+                        . $user_ID ."');";
         
                         $kysely = $DBH->prepare($sql);
                         $kysely->execute();

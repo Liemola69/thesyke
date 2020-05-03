@@ -185,99 +185,77 @@
                             <i class='fas fa-chevron-up'></i>
 
                             <!--DetailsivuIconit-->
-                                <div class="ikoniWrapper" onclick="dayInfo('infoFood')">
-                                    <div style='color: <?php $value = $paivaOlio->user_food; getIconColorFood($value); ?>;'>
+                                <div class="ikoniWrapper" style='color: <?php $value = $paivaOlio->user_food; getIconColorFood($value); ?>;' onclick="dayInfo('infoFood')">                                   
                                     <i class='fas fa-utensils ikoni'></i>
                                     <i <?php getFoodIndikator($paivaOlio); ?>></i>
-                                    </div>
+                                    
                                 </div>
                                 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoAlcohol')">
-                                    <div style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorAlcohol($value); ?>;'>
+                                <div class="ikoniWrapper" style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorAlcohol($value); ?>;' onclick="dayInfo('infoAlcohol')">
                                     <i class='fas fa-glass-cheers ikoni'></i>
                                     <i <?php getAlcoholIndikator($paivaOlio); ?>></i>
-                                    </div>
                                 </div>
 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoActivity')">
-                                    <div style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;'>
+                                <div class="ikoniWrapper" style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;' onclick="dayInfo('infoActivity')">
                                     <i class='fas fa-walking ikoni'></i>
                                     <i <?php getActivityIndikator($paivaOlio); ?>></i>
-                                    </div>
+                                    
                                 </div>
 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoSmoke')">
-                                    <div style='color:<?php $value = $paivaOlio->user_smoke; getIconColorSmoke($value); ?>;'>
+                                <div class="ikoniWrapper" style='color:<?php $value = $paivaOlio->user_smoke; getIconColorSmoke($value); ?>;' onclick="dayInfo('infoSmoke')">
                                     <i class='fas fa-smoking ikoni'></i>
                                     <i <?php getSmokeIndikator($paivaOlio); ?>></i>
-                                    </div>
+                                    
                                 </div>
 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoVitality')">
-                                    <div style='color: <?php $value = $paivaOlio->user_vitality; getIconColorVitality($value); ?>;'>
+                                <div class="ikoniWrapper" style='color: <?php $value = $paivaOlio->user_vitality; getIconColorVitality($value); ?>;' onclick="dayInfo('infoVitality')">
                                     <i class='fas fa-bed ikoni'></i>
                                     <i <?php getVitalityIndikator($paivaOlio); ?>></i>
-                                    </div>
+                                    
                                 </div>
 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoStimulant')">
-                                    <div style='color:<?php $value = $paivaOlio->user_stimulant; getIconColorStimulant($value); ?>;'>
+                                <div class="ikoniWrapper" style='color:<?php $value = $paivaOlio->user_stimulant; getIconColorStimulant($value); ?>;' onclick="dayInfo('infoStimulant')">
                                     <i class='fas fa-mug-hot ikoni'></i>
                                     <i <?php getStimulantIndikator($paivaOlio); ?>></i>
-                                    </div>
+                                    
                                 </div>
 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoMedicine')">
-                                    <div style='color:<?php $value = $paivaOlio->user_medicine; getIconColorMedicine($value); ?>;'>
+                                <div class="ikoniWrapper" style='color:<?php $value = $paivaOlio->user_medicine; getIconColorMedicine($value); ?>;' onclick="dayInfo('infoMedicine')">
                                     <i class='fas fa-pills ikoni'></i>
                                     <i <?php getMedicineIndikator($paivaOlio); ?>></i>
-                                    </div>
+                                   
                                 </div>
 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoStress')">
-                                    <div style='color:<?php $value = $paivaOlio->user_stress; getIconColorStress($value); ?>;'>
+                                <div class="ikoniWrapper" style='color:<?php $value = $paivaOlio->user_stress; getIconColorStress($value); ?>;' onclick="dayInfo('infoStress')">
                                     <i class='fas fa-bolt ikoni'></i>
                                     <i <?php getStressIndikator($paivaOlio); ?>></i>
-                                    </div>
+
                                 </div>
 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoMood')">
-                                <div style='color:<?php $value = $paivaOlio->user_mood; getIconColorMood($value); ?>;'>
+                                <div class="ikoniWrapper" style='color:<?php $value = $paivaOlio->user_mood; getIconColorMood($value); ?>;' onclick="dayInfo('infoMood')">
                                     <i class='fas fa-cloud-sun-rain ikoni'></i>
                                     <i <?php getMoodIndikator($paivaOlio); ?>></i>
-                                    </div>
+                                    
                                 </div>
 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoSleepAmount')">
-                                <div style='color: <?php $value = $paivaOlio->sleep_amount; getIconColorSleepAmount($value); ?>;'>
-                                    <i class='fas fa-clock ikoni'></i>
+                                <div class="ikoniWrapper" style='color: <?php $value = $paivaOlio->sleep_amount; getIconColorSleepAmount($value); ?>;' onclick="dayInfo('infoSleepAmount')">
+                                     <i class='fas fa-clock ikoni'></i>
                                     <i <?php getSleepAmountIndikator($paivaOlio); ?>></i>
-                                    </div>
+                                    
                                 </div>
 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoScreenTime')">
-                                    <div style='color:<?php $value = $paivaOlio->user_screen_time; getIconColorScreenTime($value); ?>;'>
+                                <div class="ikoniWrapper" style='color:<?php $value = $paivaOlio->user_screen_time; getIconColorScreenTime($value); ?>;' onclick="dayInfo('infoScreenTime')">
                                     <i class='fas fa-mobile-alt ikoni'></i>
                                     <i <?php getScreenTimeIndikator($paivaOlio); ?>></i>
-                                    </div>
+                                    
                                 </div>
 
-                                <div class="ikoniWrapper" onclick="dayInfo('infoPains')">
-                                <div style='color:<?php $value = $paivaOlio->user_pain; getIconColorPains($value); ?>;'>
+                                <div class="ikoniWrapper" style='color:<?php $value = $paivaOlio->user_pain; getIconColorPains($value); ?>;' onclick="dayInfo('infoPains')">
                                     <i class='fas fa-band-aid ikoni'></i>
                                     <i <?php getPainIndikator($paivaOlio); ?>></i>
-                                    </div>
+                                    
                                 </div>
 
-                                <script>
-                                function dayInfo(i) {
-                                document.getElementById(i).style.visibility='visible';
-                                }
-
-                                function closeDayInfo(i) {
-                                document.getElementById(i).style.visibility='hidden';
-                                }
-                                </script>
 
                                 <div class=infoDaily id="infoFood" style="visibility: hidden">
                                     <div class="infoContent">
@@ -435,6 +413,7 @@
 
                             <!--DetailsivuIconit-->
                             <?php include("viikkoNakymaDetail.php"); ?>
+
                         </div>
                     </div>
                 </div>

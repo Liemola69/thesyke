@@ -703,3 +703,12 @@ function deleteIndicators(){
         }
     }
 }
+//detail-sivujen pop-up aukeaa
+function dayInfo(i) {
+    document.getElementById(i).style.visibility='visible';
+    }
+//detail-sivujen pop-up sulkeutuu
+    function closeDayInfo(i) {
+    document.getElementById(i).style.visibility='hidden';
+    }
+
