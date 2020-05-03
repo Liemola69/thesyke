@@ -3,7 +3,6 @@ let hampurilaisValikko = document.getElementById("hampurilaisValikko");
 let ylaValikko = document.querySelectorAll("ul")[0];
 let ylaNav = document.getElementById("ylaNav");
 let alaNav = document.getElementById("alaNav");
-let raportitValikkoLinkki = document.getElementById("raportitValikkoLinkki");
 let sivunNimi = document.getElementById("sivunNimi");
 let auki = false;
 
@@ -120,26 +119,6 @@ hampurilaisMenu.addEventListener('click', function(evt){
         auki = false;
     }
     
-});
-
-// Siirry raportti-sivulle
-raportitValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "raportit.php";
-});
-
-// Siirry omat tiedot -sivulle
-omattiedotValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "omattiedot.php";
-});
-
-// Siirry apua-sivulle
-apuaValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "apua.php";
-});
-
-// Siirry käyttöehdot-sivulle
-kayttoehdotValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "kayttoehdot.php";
 });
 
 // Estä sivuswipe, jos detail-sivulla

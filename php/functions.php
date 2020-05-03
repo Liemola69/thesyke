@@ -1028,6 +1028,21 @@
             return null;
         }
     }
+
+    // Hae käyttäjän parametritiedot tietokannasta
+    function getUserParameters($user_ID, $DBH){
+        $sql = "SELECT * FROM `ts_user_parameters` WHERE `user_ID` = " . "'" . $user_ID . "';";
+        $kysely = $DBH->prepare($sql);
+        $kysely->execute();
+        $kysely -> setFetchMode(PDO::FETCH_OBJ);
+        $userParametersOlio = $kysely->fetch();
+
+        if($userParametersOlio){
+            return $userParametersOlio;
+        } else{
+            return null;
+        }
+    }
  
     // Hae päivän data tietokannasta
     function getDateData($user_ID, $currentDay, $DBH){
@@ -1413,35 +1428,33 @@
             }
         }
 
-        echo("<div>" . $pos . "-" . $neg . "</div>");
+
+        if($pos == 0 && $neg == 0){
+            $pospro = 0;
+            $negpro = 0;
+        } elseif($pos == 0){
+            $pospro = 0;
+            $negpro = 100;
+        } elseif($neg == 0){
+            $pospro = 100;
+            $negpro = 0;
+        } else{
+            $pospro = round(($pos/($pos+$neg))*100);
+            $negpro = 100 - $pospro;
+        }
+
+        echo("<div>" . $pospro . " - " . $negpro . "</div>");
 
         if($pos == 0 && $neg == 0){
             //echo("<div>" . 50 . "-" . 50 . "</div>");
-            return 50;
-        } elseif($pos == $neg){
+            return 0;
+        } elseif($pos == 0){
             //echo("<div>" . 50 . "-" . 50 . "</div>");
-            return 50;
-        } elseif($neg > $pos){
-            $tulos = round(100*(0.5 + ($pos-$neg)/$neg));
-            if($tulos < 0){
-                $tulos = 0;
-            } elseif($tulos > 100){
-                $tulos = 100;
-            }
-            //echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
-            return $tulos;
-        }else{
-            if($neg == 0){
-                $neg = 1;
-            }
-            $tulos = round(100*(0.5 + ($pos-$neg)/$neg));
-
-            if($tulos < 0){
-                $tulos = 0;
-            } elseif($tulos > 100){
-                $tulos = 100;
-            }
-            //echo("<div>" . $tulos . "-" . (100-$tulos) . "</div>");
+            return 1;
+        } elseif($neg == 0){
+            return 100;
+        } else{
+            $tulos = round(($pos/($pos+$neg))*100);
             return $tulos;
         }
     }
