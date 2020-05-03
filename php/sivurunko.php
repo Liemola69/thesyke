@@ -113,8 +113,7 @@
                                 <div class="dailyIcon">  
                                     <i id="dailyKysely" onclick="openKysely()" <?php 
                                     if($paivaOlio == null){
-                                        echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
-                                        echo('<script>document.querySelector(".speechBubble").style.visibility = "visible";</script>');                                    
+                                        echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');                                    
                                     } else{
                                         getHymio($paivaOlio);
                                     }
