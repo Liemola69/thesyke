@@ -15,7 +15,8 @@
         "fa-band-aid"
     ];
 
-    $date = $currentDay;
+    $viikko = getWeekDays($_SESSION['currentDay']);
+    $date = $viikko[0];
 
     // Hae koko viikon ikonit loopilla omiin taulukoihin
     for($i = 0; $i < 7; $i++){
@@ -23,7 +24,7 @@
         
         $food[$i] = $paivaOlio->user_food;
         $alcohol[$i] = $paivaOlio->user_alcohol;
-        $activity[$i] = 0;
+        $activity[$i] = $paivaOlio->user_activity;
         $smoke[$i] = $paivaOlio->user_smoke;
         $vitality[$i] = $paivaOlio->user_vitality;
         $coffee[$i] = $paivaOlio->user_stimulant;

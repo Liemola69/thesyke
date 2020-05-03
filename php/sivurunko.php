@@ -72,13 +72,13 @@
         <div id="hampurilaisMenu" class="fa fa-bars"></div>
         <div id="hampurilaisValikko">
             <ul id="ylaValikko">
-                <li id="raportitValikkoLinkki">Raportit</li>
-                <li id="omattiedotValikkoLinkki">Omat tiedot</li>
+                <li onclick='window.location.href="raportit.php"'>Raportit</li>
+                <li onclick='window.location.href="omattiedot.php"'>Omat tiedot</li>
                 <li id="polarLinkitys">Synkronoi Polar</li>
                 <li class="hidden polarLisaValikko">Synkronoi tiedot</li>
                 <li id="polarPoistaLinkitys" class="hidden polarLisaValikko">Poista Polar synkronointi</li>
-                <li id="apuaValikkoLinkki">Apua</li>
-                <li id="kayttoehdotValikkoLinkki">Käyttöehdot</li>
+                <li onclick='window.location.href="apua.php"'>Apua</li>
+                <li onclick='window.location.href="kayttoehdot.php"'>Käyttöehdot</li>
                 <li></li>
                 <li onclick='window.location.href="sivurunko.php?logOut=true"'>Kirjaudu ulos </li>
                 <li onclick='window.location.href="deleteAccount.php"'>Poista tili </li>
@@ -86,35 +86,6 @@
             </ul>
         </div>
     </nav>
-
-    <!--<div class="raportitPage valikkoBackground">
-                    <div class="raportitContent valikkoContent">
-                    <?php
-                    include("php/raportit.php");
-                    ?>
-                </div>
-
-                <div class="omattiedotPage valikkoBackground">
-                    <div class="omattiedotContent valikkoContent">
-                    <?php
-                    include("php/omattiedot.php");
-                    ?>
-                </div>
-
-                <div class="apuaPage valikkoBackground">
-                    <div class="apuaContent valikkoContent">
-                    <?php
-                    include("php/apua.php");
-                    ?>
-                </div>
-
-                <div class="kayttoehdotPage valikkoBackground">
-                    <div class="kayttoehdotContent valikkoContent">
-                    <?php
-                    include("php/kayttoehdot.php");
-                    ?>
-                </div>
-    -->
 
     <!--sisäkkäin, päällimmäinen hoitaa sivut, alempi taso pää/detail-->
     <div class="swiper-pageContainer">
@@ -136,42 +107,58 @@
                             <!-- Unenlaatu hymiö -->
                             <div class="dailySmiley">
                                 <!-- Menee päiväkyselysivulle -->
-                                <a class="dailyButton fas fa-plus-circle" href="kysely.php"></a>  
-                                <i <?php 
+                                <div class=speechBubble id="speechBubble">
+                                    <div class="dailySpeechBubble dailySpeechBubbleLeft">Klikkaa mua!</div>
+                                </div>
+                                <div class="dailyIcon">  
+                                    <i id="dailyKysely" onclick="openKysely()" <?php 
                                     if($paivaOlio == null){
                                         echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
-                                                                            
+                                        echo('<script>document.querySelector(".speechBubble").style.visibility = "visible";</script>');                                    
                                     } else{
                                         getHymio($paivaOlio);
                                     }
                                     ?>>
-                                </i>
-                                <a class="dailyButton fas fa-info-circle"></a>
+                                    </i>
+                                </div>
                             </div>
 
                             <!--inforuudut-->
-                            <div class="box">
-                                <div>
-                                    <p>UNIAIKA</p><p> <?php echo(getUniAika($paivaOlio)); ?> </p>
-                                </div>
-                                <div>
-                                    <p>UNISYKLIT</p><p> <?php echo(getUniSykli($paivaOlio)); ?> </p>
-                                </div>
+                            <div class="box" onclick="changeSleepDetails('changeSleepTime')">
+                                <div class="boxOtsikko1">UNIAIKA</div>
+                                <div class="boxTeksti1"><?php echo(getUniAika($paivaOlio));?></div>
+                                <div class="boxOtsikko2">UNISYKLIT</div>
+                                <div class="boxTeksti2"><?php echo(getUniSykli($paivaOlio));?></div>
+                            </div>
                                  <!--LISÄÄ AO. TIEDOT PÄIVÄOLIOON-->
+                                 
+                            <div class="box2" onclick="changeSleepDetails('changeWakeUpTime')">
+                                <div class="boxOtsikko1">TÄNÄÄN NUKKUMAAN</div>
+                                <div class="boxTeksti1">22.45</div>
+                                <div class="boxOtsikko2">HERÄTYS HUOMENNA</div>
+                                <div class="boxTeksti2">06.30</div>     
                             </div>
-                            <div class="box">
-                                <div>
-                                    <p>TÄNÄÄN NUKKUMAAN</p><p>22.45</p>
-                                </div>
-                                <div>
-                                    <p>HERÄTYS HUOMENNA</p><p>06.30</p>
-                                </div>       
-                            </div>
+
+                            <script>
+                                function openKysely() {
+                                    document.location = 'kysely.php';
+                                }
+
+                                function changeSleepDetails(i) {
+                                    document.getElementById(i).style.visibility='visible';
+                                }
+
+                                function closeSleepDetails(i) {
+                                    document.getElementById(i).style.visibility='hidden';
+                                }
+                            </script>
 
                             <!--progress/meter bar-->
                             <div class="clear">
                                 <h3>UNEEN VAIKUTTAVAT TEKIJÄT</H3>
-                                <progress class="attributes_balance progressBarPaiva" value="' . getDayProgressValue($day) . '" min="0" max="100"></progress>
+                                <?php
+                                echo('<progress class="attributes_balance progressBarPaiva" value="' . getDayProgressValue($_SESSION['currentDay']) . '" min="0" max="100"></progress>');
+                                ?>
                             </div>
                            
                             <!--sivuvaihtoNuoli-->
@@ -180,6 +167,31 @@
                             <div class="alaNavRow"></div>
 
                         </div>
+
+                        <div class=infoDaily id="changeSleepTime" style="visibility: hidden">
+                            <div class="infoContent">
+                                <i class="far fa-times-circle infoClose" onclick="closeSleepDetails('changeSleepTime')"></i>
+                                <h3>Vaihda nukkumisaikaa</h3>
+                                <script>
+                                    function closeSleepDetails(i) {
+                                    document.getElementById(i).style.visibility='hidden';
+                                    }
+                                </script>
+                            </div>
+                        </div>​​​​​​​​​​​
+                        
+                        <div class=infoDaily id="changeWakeUpTime" style="visibility: hidden">
+                            <div class="infoContent">
+                                <i class="far fa-times-circle infoClose" onclick="closeSleepDetails('changeWakeUpTime')"></i>
+                                <h3>Vaihda heräämisaika</h3>
+                                <script>
+                                    function closeSleepDetails(i) {
+                                    document.getElementById(i).style.visibility='hidden';
+                                    }
+                                </script>
+                            </div>
+                        </div>  ​​​​​​​​​​​​​​​​   
+
                         <div id="paivaDetailSivu" class="swiper-slide detailWrapper">
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-up'></i>
@@ -196,7 +208,9 @@
                                     <i <?php getAlcoholIndikator($paivaOlio); ?>></i>
                                 </div>
 
-                                <div class="ikoniWrapper" style='color: <?php $value = $paivaOlio->user_alcohol; getIconColorActivity($value); ?>;' onclick="dayInfo('infoActivity')">
+
+                                <div class="ikoniWrapper" style='color: <?php $value = $paivaOlio->user_activity; getIconColorActivity($value); ?>;' onclick="dayInfo('infoActivity')">
+
                                     <i class='fas fa-walking ikoni'></i>
                                     <i <?php getActivityIndikator($paivaOlio); ?>></i>
                                     
@@ -257,6 +271,7 @@
                                 </div>
 
 
+                                
                                 <div class=infoDaily id="infoFood" style="visibility: hidden">
                                     <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoFood')"></i>
@@ -376,8 +391,8 @@
                                         <br>
                                         <p>Lisää kivun ja unen vaikutuksista voit lukea täältä <a href="ohjePain.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
-                                </div>
-                                ​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                                </div>           ​​​​​​​​​​​​​​
+                                
                         </div>
                     </div>
                 </div>
