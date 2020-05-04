@@ -7,6 +7,8 @@
     $tempDay = $_GET['tempMonth']; //temp day aina yyyy-mm-01
     $currentMonth = date('m', strtotime($tempDay));
     $currentYear = date('Y', strtotime($tempDay));
+    
+    // Laske kuinka monta päivää kuukaudessa on
     $loops = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
 
     // Hae koko kuukauden hymiöt loopilla
@@ -16,5 +18,6 @@
         $tempDay = date('Y-m-d', strtotime('+1 day', strtotime($tempDay)));
     }
 
+    // Tulosta kuukauden hymiöt kuukausinäkymään JSONina
     echo(json_encode($hymiot));
 ?>

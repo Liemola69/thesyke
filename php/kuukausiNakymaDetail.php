@@ -1,4 +1,5 @@
 <?php
+    // Ikonien classit taulukkona
     $iconName = [
         "fa-utensils", 
         "fa-glass-cheers", 
@@ -14,6 +15,7 @@
         "fa-band-aid"
     ];
 
+    // Infojen nimet taulukkona
     $infoName = [
         "infoFood",
         "infoAlcohol",

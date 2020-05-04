@@ -227,6 +227,7 @@ poista.addEventListener('click', function(evt){
     }
 })
 
+// Korjaa swiperin containerit ja pää/detailsivujen gridit responsiivisesti
 function korjaaSisallonKorkeus(){
     //**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
     swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
@@ -261,6 +262,7 @@ let highlightDate;
 checkCurrentDay();
 
 // Rakentaa kalenterin
+// Rakennettu How to create calendar: https://www.youtube.com/watch?v=rDsdBAAXkAU pohjalta
 function renderDate(currentDay) {
     dt = new Date(currentDay.split("-")[0], (currentDay.split("-")[1] - 1));
     dt.setDate(1);
@@ -418,6 +420,7 @@ function moveDate(para) {
     }
 }
 
+// AJAX-request kuukausinäkymän selaamiseen
 function requestTempMonth(tempMonth){
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -430,6 +433,7 @@ function requestTempMonth(tempMonth){
     xhttp.send();
 }
 
+// Päivittää kuukausinäkymän kuukausia selatessa nuolinäppäimistä
 function getTempMonth(tempDate, ajaxResponse){
     renderDate(tempDate);
     printMonthHymio(ajaxResponse);
@@ -674,6 +678,7 @@ function getIndicator(iconColor){
     return indikaattori;
 }
 
+// Tulostaa snackbarin
 function showSnack(){
     let snack = document.createElement('div');
     snack.setAttribute('class', 'snackbar');
