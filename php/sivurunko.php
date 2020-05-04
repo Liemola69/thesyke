@@ -392,7 +392,7 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoStimulant')"></i>
                                         <h3>Kofeiini</h3>
-                                        <p>Tämä ikoni kuvaa uneen tai nukahtamiseen vaikuttavien lääkkeiden käyttämistä edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <p>Tämä ikoni kuvaa äyttämäsi kofeiinin määrää edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
                                         <br>
                                         <p>Lisää kofeiinin ja unen vaikutuksista voit lukea täältä <a href="ohjeCaffeine.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
@@ -402,9 +402,9 @@
                                 <div class="infoContent">
                                         <i class="far fa-times-circle infoClose" onclick="closeDayInfo('infoMedicine')"></i>
                                         <h3>Lääkkeet</h3>
-                                        <p>Tämä ikoni kuvaa nauttimasi kofeiinin määrää edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
+                                        <p>Tämä ikoni kuvaa uni-/nukahtamislääkkeiden käyttöä eilen. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.</p>
                                         <br>
-                                        <p>Lisää kofeiinin ja unen vaikutuksista voit lukea täältä <a href="ohjeMedicine.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
+                                        <p>Lisää unilääkkeiden ja unen vaikutuksista voit lukea täältä <a href="ohjeMedicine.php" class="fas fa-angle-double-right" style='font-size:30px;color:var(--tehosteVari)'></a></p>
                                     </div>
                                 </div>
                                 ​​​​​​​​​​​​​​​​​​​​​​​​​​​
