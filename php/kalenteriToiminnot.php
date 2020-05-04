@@ -88,7 +88,9 @@
     
     //Laske uniaika/sykli päivältä
     $previousDay = getDateData($user_ID, getPrevDay($_SESSION['currentDay']), $DBH);
-    calculateSleepData($paivaOlio, $previousDay, $DBH);
-    // Päivitetään päiväolio, jotta uniaika/-syklin lasku päivittyy myös
-    $paivaOlio = getDateData($user_ID, $_SESSION['currentDay'], $DBH);
+    if($paivaOlio != null){
+        calculateSleepData($paivaOlio, $previousDay, $DBH);
+        // Päivitetään päiväolio, jotta uniaika/-syklin lasku päivittyy myös
+        $paivaOlio = getDateData($user_ID, $_SESSION['currentDay'], $DBH);
+    }
 ?>

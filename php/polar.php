@@ -3,6 +3,7 @@
     include_once("../config/config.php");
     include_once("functions.php");
 
+    // Sovelluksen client tiedot Polarin palvelimille
     $client_id = "2162ed96-e5cf-4253-b576-b9002418a1b8";
     $client_secret = "716efb59-b9ea-4edb-ab98-01c6d8287662";
     
@@ -17,6 +18,7 @@
         createToken($authCode, $clientEncoded, $DBH, $_SESSION['user_ID']);
         $serverResponse = registerUser($DBH, $_SESSION['user_ID']);
 
+        // Jos rekisteröinti onnistui
         if($serverResponse == "200"){
             $_SESSION['polarRegisterationTrue'] = true;
         } else{
