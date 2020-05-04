@@ -50,37 +50,37 @@
         </div>
         <div class="valikkoSivuBody">
             <form method="post">
-            Sähköposti: <input type="text" name="email" value="<?php echo $_SESSION['got_email'];?>">
+            Sähköposti: <input type="text" class="textboxGeneric" name="email" value="<?php echo $_SESSION['got_email'];?>">
             <br>
-            Etunimi: <input type="text" name="email" value="<?php echo $_SESSION['got_first_name'];?>">
+            Etunimi: <input type="text" class="textboxGeneric" name="first_name" value="<?php echo $_SESSION['got_first_name'];?>">
             <br>
-            Sukunimi: <input type="text" name="email" value="<?php echo $_SESSION['got_last_name'];?>">
+            Sukunimi: <input type="text" class="textboxGeneric" name="last_name" value="<?php echo $_SESSION['got_last_name'];?>">
             <br>
-            Sukupuoli: <input type="text" name="email" value="<?php echo $_SESSION['got_gender'];?>">
+            Sukupuoli: <input type="text" class="textboxGeneric" name="gender" value="<?php echo $_SESSION['got_gender'];?>">
             <br>
-            Pituus: <input type="text" name="email" value="<?php echo $_SESSION['got_height'];?>">
+            Pituus: <input type="text" class="textboxGeneric" name="height" value="<?php echo $_SESSION['got_height'];?>">
             <br>
-            Paino: <input type="text" name="email" value="<?php echo $_SESSION['got_weight'];?>">
+            Paino: <input type="text" class="textboxGeneric" name="weight" value="<?php echo $_SESSION['got_weight'];?>">
             <br>
-            Syntymäaika: <input type="text" name="email" value="<?php echo $_SESSION['got_birthday'];?>">
+            Syntymäaika: <input type="date" class="textboxGeneric" name="birthdate" value="<?php echo $_SESSION['got_birthday'];?>">
             <br>
-            Käytän nikotiinituotteita: <input type="text" name="email" value="<?php echo $_SESSION['got_parameters_stimulants'];?>">
+            Käytän kofeiinituotteita: <input type="checkbox" class="checkboxGeneric" name="stimulants" value="<?php echo $_SESSION['got_parameters_stimulants'];?>">
             <br>
-            Käytän alkoholia: <input type="text" name="email" value="<?php echo $_SESSION['got_parameters_alcohol'];?>">
+            Käytän alkoholia: <input type="checkbox" class="checkboxGeneric" name="alcohol" value="<?php echo $_SESSION['got_parameters_alcohol'];?>">
             <br>
-            Käytän unilääkkeitä: <input type="text" name="email" value="<?php echo $_SESSION['got_parameters_medicine'];?>">
+            Käytän unilääkkeitä: <input type="checkbox" class="checkboxGeneric" name="medicine" value="<?php echo $_SESSION['got_parameters_medicine'];?>">
             <br>
-            Käytän huumeita: <input type="text" name="email" value="<?php echo $_SESSION['got_parameters_drug'];?>">
+            Käytän huumeita: <input type="checkbox" class="checkboxGeneric" name="drugs" value="<?php echo $_SESSION['got_parameters_drug'];?>">
             <br>
-            Käytän tietokonetta/kännykkää: <input type="text" name="email" value="<?php echo $_SESSION['got_parameters_screen_time'];?>">
+            Käytän tietokonetta/kännykkää: <input type="checkbox" class="checkboxGeneric" name="screen_time" value="<?php echo $_SESSION['got_parameters_screen_time'];?>">
             <br>
-            Käytän nikotiinituotteita: <input type="text" name="email" value="<?php echo $_SESSION['got_parameters_smoke'];?>">
+            Käytän nikotiinituotteita: <input type="checkbox" class="checkboxGeneric" name="cigarette" value="<?php echo $_SESSION['got_parameters_smoke'];?>">
             <br>
-            Käyttöehdot: <input type="text" name="user_agreement" value="<?php echo $_SESSION['got_parameters_user_agreement'];?>">
+            Käyttöehdot: <input type="checkbox" class="checkboxGeneric" name="user_agreement" value="<?php echo $_SESSION['got_parameters_user_agreement'];?>">
             <br>
-            Sähköpostimarkkinointi: <input type="text" name="email_marketing" value="<?php echo $_SESSION['got_parameters_email_marketing'];?>">
+            Sähköpostimarkkinointi: <input type="checkbox" class="checkboxGeneric" name="email_marketing" value="<?php echo $_SESSION['got_parameters_email_marketing'];?>">
             <br>
-            Henkilötietojen käsittely: <input type="text" name="gdpr" value="<?php echo $_SESSION['got_parameters_gdpr'];?>">
+            Henkilötietojen käsittely: <input type="checkbox" class="checkboxGeneric" name="gdpr" value="<?php echo $_SESSION['got_parameters_gdpr'];?>">
             <br>
         <input class="buttonGeneric" type="submit" name="saveUserDetails" value="Tallenna">
         <input class="buttonGeneric" type="reset" value="Peruuta">
