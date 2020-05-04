@@ -796,7 +796,6 @@ p{
     border-radius: 2px;
     box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
     font-size: 1.3em;
-    margin-top: 10%;
 }
     
     .boxOtsikko1{
@@ -833,6 +832,10 @@ p{
 }
 
 /* meter bar - janin kokeilu */
+#progressBarOtsikko{
+    margin-top: 0px;
+    font-size: 1.7em;
+}
 
 ::-webkit-progress-bar {
     background-color: var(--liikennevaloPunainen);
@@ -1202,10 +1205,30 @@ i[class^="fas fa-chevron"]{
     #year{
         font-size: 1.5em;
     }
+
+    #progressBarOtsikko{
+        font-size: 1.5em;
+    }
 }
 
 @media only screen and (max-height: 540px){
     .daysOfMonth div{
         padding: 3px 0;
+    }
+}
+
+@media only screen and (max-height: 520px){
+    #progressBarOtsikko{
+        font-size: 1.3em;
+    }
+    
+    .attributes_balance{
+        height: 2em;
+    }
+}
+
+@media only screen and (max-height: 500px){
+    .hymio{
+        font-size: 25vw;
     }
 }
