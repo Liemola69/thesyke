@@ -142,10 +142,9 @@
                 <li id="polarPoistaLinkitys" class="hidden polarLisaValikko">Poista Polar synkronointi</li>
                 <li onclick='window.location.href="apua.php"'>Apua</li>
                 <li onclick='window.location.href="kayttoehdot.php"'>Käyttöehdot</li>
+                <li onclick='window.location.href="deleteAccount.php"'>Poista tili </li>
                 <li></li>
                 <li onclick='window.location.href="sivurunko.php?logOut=true"'>Kirjaudu ulos </li>
-                <li onclick='window.location.href="deleteAccount.php"'>Poista tili </li>
-                
             </ul>
         </div>
     </nav>
