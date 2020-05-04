@@ -29,26 +29,45 @@
         }
 
         // Jos käyttäjällä on jo Polar-ID tietokannassa
-        if(isset($_SESSION['polarAccountTrue']) && (!isset($_SESSION['polarSync']))){
+        if(isset($_SESSION['polarAccountTrue']) && isset($_SESSION['polarClicked']) && (!isset($_GET['deletePolar']))){
             $polar_ID = getPolarID($DBH, $_SESSION['user_ID']);
             $polar_token = getPolarToken($DBH, $_SESSION['user_ID']);
-
             $transactionID = getPolarActivityTransaction($polar_ID, $polar_token);
-            //$transactionID = "230945953";
-            echo('<script>console.log("Transaction ID: ' . $transactionID . '")</script>');
             $activityIDArray = getPolarActivityList($polar_ID, $polar_token, $transactionID);
+
             getPolarZoneData($polar_ID, $polar_token, $transactionID, $activityIDArray, $_SESSION['user_ID'], $DBH);
             commitPolarTransaction($polar_ID, $polar_token, $transactionID);
-            $_SESSION['polarSync'] = true;
-            echo('<script>console.log("Polar synkronoitu")</script>');
+            unset($_SESSION['polarClicked']);
         }
 
         // Jos Polar rekisteröinti on onnistunut (server response 200 OK)
         if(isset($_SESSION['polarRegisterationTrue'])){
             if($_SESSION['polarRegisterationTrue']){
-                echo('<script>console.log("Rekisteröinti onnistui")</script>');
+                //Rekisteröinti onnistui
+                echo('<script>
+                let snack = document.createElement("div");
+                snack.setAttribute("class", "snackbar");
+                let text = document.createTextNode("Rekisteröinti onnistui! Aloita keräämään unidataa");
+                snack.classList.add("show");
+                snack.appendChild(text);
+                document.body.appendChild(snack);
+                setTimeout(function(){ 
+                    document.body.removeChild(snack); 
+                }, 3000);
+                </script>');
             } else{
-                echo('<script>console.log("Rekisteröinti epäonnistui")</script>');
+                //Rekisteröinti epäonnistui
+                echo('<script>
+                let snack = document.createElement("div");
+                snack.setAttribute("class", "snackbar");
+                let text = document.createTextNode("Rekisteröinnissä tapahtui virhe, yritä uudelleen!");
+                snack.classList.add("show");
+                snack.appendChild(text);
+                document.body.appendChild(snack);
+                setTimeout(function(){ 
+                    document.body.removeChild(snack); 
+                }, 3000);
+                </script>');
             }
             unset($_SESSION['polarRegisterationTrue']);
         }
@@ -59,17 +78,61 @@
             $polar_token = getPolarToken($DBH, $_SESSION['user_ID']);
 
             $serverResponse = deletePolar($polar_ID, $polar_token, $DBH);
-            if($serverResponse == "204"){
-                echo('<script>console.log("Poistettu")</script>');
+            
+            if($polar_ID == null){
+                // Jos linkitys on jo poistettu
+                echo('<script>
+                let snack = document.createElement("div");
+                snack.setAttribute("class", "snackbar");
+                let text = document.createTextNode("Polar-linkitys on jo poistettu!");
+                snack.classList.add("show");
+                snack.appendChild(text);
+                document.body.appendChild(snack);
+                setTimeout(function(){ 
+                    document.body.removeChild(snack); 
+                }, 3000);
+                </script>');
             } else{
-                echo('<script>console.log("Poisto epäonnistui: ' . $serverResponse . '")</script>');
+                if($serverResponse == "204"){
+                    // Poisto onnistui
+                    echo('<script>
+                    let snack = document.createElement("div");
+                    snack.setAttribute("class", "snackbar");
+                    let text = document.createTextNode("Polar-linkitys poistettu!");
+                    snack.classList.add("show");
+                    snack.appendChild(text);
+                    document.body.appendChild(snack);
+                    setTimeout(function(){ 
+                        document.body.removeChild(snack); 
+                    }, 3000);
+                    </script>');
+                    unset($_SESSION['polarAccountTrue']);
+                } else{
+                    // Poisto epäonnistui
+                    echo('<script>
+                    let snack = document.createElement("div");
+                    snack.setAttribute("class", "snackbar");
+                    let text = document.createTextNode("Polar-linkityksen poistossa tapahtui virhe, yritä uudelleen!");
+                    snack.classList.add("show");
+                    snack.appendChild(text);
+                    document.body.appendChild(snack);
+                    setTimeout(function(){ 
+                        document.body.removeChild(snack); 
+                    }, 3000);
+                    </script>');
+                }
             }
         }
     ?>
 
     <nav id="ylaNav">
         <div id="sivunNimi"><b>PÄIVÄNÄKYMÄ</b></div>
-        <div id="hampurilaisMenu" class="fa fa-bars"></div>
+        <div id="hampurilaisMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <div id="hampurilaisValikko">
             <ul id="ylaValikko">
                 <li onclick='window.location.href="raportit.php"'>Raportit</li>
@@ -90,20 +153,20 @@
     <!--sisäkkäin, päällimmäinen hoitaa sivut, alempi taso pää/detail-->
     <div class="swiper-pageContainer">
         <div class="swiper-wrapper" id="sivuSwipeWrapper">
-                
+
             <!--päiväsivu-->
             <div id="paivaSivu" class="swiper-slide">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         <div id="paivaPaasivu" class="swiper-slide paasivuPaivaWrapper">
-                            
+
                             <!--Ylälaidan päiväbanneri-->
                             <div id="paasivuPaivaNav">
                                 <i id="prevDayNuoli" class='fas fa-chevron-left'></i>
                                 <?php getDayFormatted($_SESSION['currentDay']); ?>
                                 <i id="nextDayNuoli" class='fas fa-chevron-right'></i>
                             </div>
-                            
+
                             <!-- Unenlaatu hymiö -->
                             <div class="dailySmiley">
                                 <!-- Menee päiväkyselysivulle -->
@@ -113,11 +176,14 @@
                                 <div class="dailyIcon">  
                                     <i id="dailyKysely" onclick="openKysely()" <?php 
                                     if($paivaOlio == null){
-                                        echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');                                    
+                                        echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
                                     } else{
                                         getHymio($paivaOlio);
                                     }
                                     ?>>
+                                    <?php if($paivaOlio == null){
+                                        echo('<script>document.querySelector(".speechBubble").style.visibility = "visible"</script>');
+                                    }?>
                                     </i>
                                 </div>
                             </div>
@@ -130,12 +196,12 @@
                                 <div class="boxTeksti2"><?php echo(getUniSykli($paivaOlio));?></div>
                             </div>
                                  <!--LISÄÄ AO. TIEDOT PÄIVÄOLIOON-->
-                                 
+
                             <div class="box2" onclick="changeSleepDetails('changeWakeUpTime')">
                                 <div class="boxOtsikko1">TÄNÄÄN NUKKUMAAN</div>
                                 <div class="boxTeksti1">22.45</div>
                                 <div class="boxOtsikko2">HERÄTYS HUOMENNA</div>
-                                <div class="boxTeksti2">06.30</div>     
+                                <div class="boxTeksti2">06.30</div>
                             </div>
 
                             <script>
@@ -159,7 +225,7 @@
                                 echo('<progress class="attributes_balance progressBarPaiva" value="' . getDayProgressValue($_SESSION['currentDay']) . '" min="0" max="100"></progress>');
                                 ?>
                             </div>
-                           
+
                             <!--sivuvaihtoNuoli-->
                             <i class='fas fa-chevron-down'></i>
 
@@ -173,23 +239,23 @@
                                 <h3>Vaihda nukkumisaikaa</h3>
                                 <script>
                                     function closeSleepDetails(i) {
-                                    document.getElementById(i).style.visibility='hidden';
+                                        document.getElementById(i).style.visibility='hidden';
                                     }
                                 </script>
                             </div>
                         </div>​​​​​​​​​​​
-                        
+
                         <div class=infoDaily id="changeWakeUpTime" style="visibility: hidden">
                             <div class="infoContent">
                                 <i class="far fa-times-circle infoClose" onclick="closeSleepDetails('changeWakeUpTime')"></i>
                                 <h3>Vaihda heräämisaika</h3>
                                 <script>
                                     function closeSleepDetails(i) {
-                                    document.getElementById(i).style.visibility='hidden';
+                                        document.getElementById(i).style.visibility='hidden';
                                     }
                                 </script>
                             </div>
-                        </div>  ​​​​​​​​​​​​​​​​   
+                        </div>
 
                         <div id="paivaDetailSivu" class="swiper-slide detailWrapper">
                             <!--sivuvaihtoNuoli-->

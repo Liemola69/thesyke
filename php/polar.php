@@ -27,6 +27,7 @@
 
     } elseif($polarID != null){
         $_SESSION['polarAccountTrue'] = true;
+        $_SESSION['polarClicked'] = true;
         header("Location: sivurunko.php");
     } else{ // Ensimmäistä kertaa linkittämässä -> siirretään antamaan lupa Polarin sivuille
         header("Location: https://flow.polar.com/oauth2/authorization?response_type=code&client_id=" . $client_id);
