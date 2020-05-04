@@ -163,7 +163,7 @@
                             <!--Ylälaidan päiväbanneri-->
                             <div id="paasivuPaivaNav">
                                 <i id="prevDayNuoli" class='fas fa-chevron-left'></i>
-                                <?php getDayFormatted($_SESSION['currentDay']); ?>
+                                <div class="paivaOtsikko"><?php getDayFormatted($_SESSION['currentDay']); ?></div>
                                 <i id="nextDayNuoli" class='fas fa-chevron-right'></i>
                             </div>
 
@@ -222,7 +222,7 @@
                             <div class="clear">
                                 <h3>UNEEN VAIKUTTAVAT TEKIJÄT</H3>
                                 <?php
-                                echo('<progress class="attributes_balance progressBarPaiva" value="' . getDayProgressValue($_SESSION['currentDay']) . '" min="0" max="100"></progress>');
+                                echo('<progress class="attributes_balance progressBarPaiva" value="' . getDayProgressValue($paivaOlio) . '" min="0" max="100"></progress>');
                                 ?>
                             </div>
 

@@ -503,7 +503,7 @@ function printMonthHymio(hymio){
 // Parametrina tietokannasta haettu numeroarvo
 function luoHymio(i){
     let hymio = document.createElement("i");
-    if(i == null || i == 0){
+    if(i == null){
         hymio.classList.add('fas');
         hymio.classList.add('fa-meh-blank');
         hymio.classList.add('hymio-kuukausi');

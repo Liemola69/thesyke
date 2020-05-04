@@ -1122,7 +1122,7 @@
     function getHymio($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
 
-        if($unenLaatu == null || $unenLaatu == 0){
+        if($unenLaatu == null){
             echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
         } elseif($unenLaatu > 2){
             //fa-laugh
@@ -1372,7 +1372,7 @@
     function getHymioFromDate($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
 
-        if($unenLaatu == null || $unenLaatu == 0){
+        if($unenLaatu == null){
             echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
         } elseif($unenLaatu > 2){
             //fa-laugh
