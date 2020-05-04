@@ -3,9 +3,7 @@ let hampurilaisValikko = document.getElementById("hampurilaisValikko");
 let ylaValikko = document.querySelectorAll("ul")[0];
 let ylaNav = document.getElementById("ylaNav");
 let alaNav = document.getElementById("alaNav");
-let raportitValikkoLinkki = document.getElementById("raportitValikkoLinkki");
 let sivunNimi = document.getElementById("sivunNimi");
-let auki = false;
 
 let prevDayNuoli = document.getElementById("prevDayNuoli");
 let nextDayNuoli = document.getElementById("nextDayNuoli");
@@ -25,7 +23,7 @@ let paasivuPaivaWrapper = document.querySelector(".paasivuPaivaWrapper");
 
 // Viikkonäkymän muuttujat
 let paasivuViikkoWrapper = document.querySelector(".paasivuViikkoWrapper");
-let viikonpaivaListaItem = document.getElementById("viikonpaivaLista").getElementsByTagName("li");
+let viikonpaivaListaItem = document.querySelectorAll(".viikkoNakymaTietue");
 
 // Kuukausinäkymän muuttujat
 let paasivuKuukausiWrapper = document.querySelector(".paasivuKuukausiWrapper");
@@ -38,6 +36,9 @@ let polarLinkitys = document.getElementById("polarLinkitys");
 let kalenteriKkPaivat;
 let kalenteriPaivat;
 let currentDay;
+
+let viikkoIkonit = document.getElementById('viikkoDetailSivu').querySelectorAll(".ikoniWrapper");
+let kuukausiIkonit = document.getElementById('kuukausiDetailSivu').querySelectorAll(".ikoniWrapper");
 
 // Luo olion, jolla seurataan vertikaalista swippausta
 let mySwiper = new Swiper ('.swiper-container', {
@@ -109,37 +110,15 @@ document.addEventListener("resize", function(evt){
 // Avaa hampurilaisvalikon klikkauksesta
 hampurilaisMenu.addEventListener('click', function(evt){
 
-    if(auki == false){
-        ylaValikko.style['display'] = "block";
-        hampurilaisValikko.style['top'] = ylaNav.clientHeight + "px";
-        //hampurilaisValikko.style['height'] = "fit-content";
-        auki = true;
-    } else{
+    if(hampurilaisMenu.classList.contains('open')){
         ylaValikko.style['display'] = "none";
         hampurilaisValikko.style['height'] = "0px";
-        auki = false;
+        hampurilaisMenu.classList.toggle('open');
+    } else{
+        ylaValikko.style['display'] = "block";
+        hampurilaisValikko.style['top'] = ylaNav.clientHeight + "px";
+        hampurilaisMenu.classList.toggle('open');
     }
-    
-});
-
-// Siirry raportti-sivulle
-raportitValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "raportit.php";
-});
-
-// Siirry omat tiedot -sivulle
-omattiedotValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "omattiedot.php";
-});
-
-// Siirry apua-sivulle
-apuaValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "apua.php";
-});
-
-// Siirry käyttöehdot-sivulle
-kayttoehdotValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "kayttoehdot.php";
 });
 
 // Estä sivuswipe, jos detail-sivulla
@@ -223,16 +202,23 @@ for(let i = 0; i < 7; i++){
     });
 }
 
+// Lisää nuoli hampurilaisvalikkoon Polar linkityksen viereen
+polarLinkitys.innerHTML += '<i class="fas fa-chevron-down" id="polarNuoli"></i>';
+
 // Avaa lisävalikko kun paina hampurilaisvalikosta Polar
 polarLinkitys.addEventListener('click', function(evt){
     paivita.classList.toggle('hidden');
     poista.classList.toggle('hidden');
+    let polarNuoli = document.getElementById('polarNuoli');
+    polarNuoli.classList.toggle('auki');
 });
 
+// Synkronoi Polar-painike
 paivita.addEventListener('click', function(evt){
     window.location.href = "polar.php";
 })
 
+// Poista Polar synkronointi-painike
 poista.addEventListener('click', function(evt){
     let varmistus = confirm("Haluatko varmasti poistaa linkityksen?");
     if(varmistus){
@@ -517,7 +503,7 @@ function printMonthHymio(hymio){
 // Parametrina tietokannasta haettu numeroarvo
 function luoHymio(i){
     let hymio = document.createElement("i");
-    if(i == null){
+    if(i == null || i == 0){
         hymio.classList.add('fas');
         hymio.classList.add('fa-meh-blank');
         hymio.classList.add('hymio-kuukausi');
@@ -613,15 +599,12 @@ let iconsMonth = document.getElementById('kuukausiDetailSivu').children;
  */
 function updateIconColor(values){
     let iconColor = JSON.parse(values);
+    //console.log(iconColor);
     let indikaattori;
     deleteIndicators();
 
     for(let i = 0; i < 12; i++){
-        if(i == 2){ // Aktiivisuus
-            iconsMonth[i+1].style.color = "var(--liikennevaloHarmaa)";
-            indikaattori = getIndicator(iconColor[i]);
-
-        } else if(i == 3){ // Tupakka
+        if(i == 3){ // Tupakka
 
             if(iconColor[i] == 0){
                 iconsMonth[i+1].style.color = "var(--liikennevaloHarmaa)";
@@ -690,6 +673,18 @@ function getIndicator(iconColor){
     return indikaattori;
 }
 
+function showSnack(){
+    let snack = document.createElement('div');
+    snack.setAttribute('class', 'snackbar');
+    let text = document.createTextNode("JOOOU!");
+    snack.classList.add('show');
+    snack.appendChild(text);
+    document.body.appendChild(snack);
+    setTimeout(function(){ 
+        document.body.removeChild(snack); 
+    }, 3000);
+}
+
 /**
  * Poistaa indikaattorit
  */
@@ -703,3 +698,129 @@ function deleteIndicators(){
         }
     }
 }
+
+// Lisää ohje pop-upit viikko/kuukausinäkymään 
+for(let i = 0; i < 12; i++){
+
+    let linkit = [
+        "ohjeFood.php", 
+        "ohjeAlcohol.php",
+        "ohjeActivity.php",
+        "ohjeSmoke.php",
+        null,
+        "ohjeCaffeine.php",
+        "ohjeMedicine.php",
+        "ohjeStress.php",
+        "ohjeMood.php",
+        "ohjeSleepAmount.php",
+        "ohjeScreenTime.php",
+        "ohjePain.php"
+    ];
+
+    let sisallot = [
+        "Tämä ikoni kuvaa ruokailuasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää ravinnon ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa alkoholin käyttöäsi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää alkoholin ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa edellisen päivän fyysistä aktiivisuuttasi ennen nukkumaan menemistä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää aktiivisuuden ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa tupakointiasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää tupakoinnin ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa subjektiivista kokemustasi tämän päivän vireystilasta. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä.<br><br>Vireydellä tarkoitetaan tässä sovelluksessa sitä, kuinka virkeäksi tai väsyneeksi koet itsesi kyseisenä päivänä",
+        "Tämä ikoni kuvaa nauttimasi kofeiinin määrää edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää kofeiinin ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa uneen tai nukahtamiseen vaikuttavien lääkkeiden käyttämistä edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää kofeiinin ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa stressitasoasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää stressin ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa mielialaasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää mielialan ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa edellisenä yönä nukutun unen määrää. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä sekä asettamasi uniaikatavoitteen täyttymisestä.<br><br>Lisää ihmisen unentarpeesta voit lukea täältä",
+        "Tämä ikoni kuvaa edellisen illan ruutuaikaa. Ruutuajalla tarkoitetaan aikaa, jonka on viettänyt katsoessa televisiota, ollessa tietokoneella tai tabletilla tai selatessa älypuhelinta. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää ruutuajan ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa edellisen päivän kiputuloja. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä.<br><br>Lisää kivun ja unen vaikutuksista voit lukea täältä"
+    ];
+    
+    let otsikot = [
+        "Ravinto",
+        "Alkoholi",
+        "Liikunta",
+        "Tupakointi",
+        "Vireystila",
+        "Kofeiini",
+        "Lääkkeet",
+        "Stressi",
+        "Mieliala",
+        "Unen määrä",
+        "Ruutuaika",
+        "Kivut"
+    ];
+
+    viikkoIkonit[i].addEventListener('click', function(evt){
+        let infoContent = document.createElement('div');
+        infoContent.classList.add('infoContent');
+        
+        let close = document.createElement('i');
+        close.classList.add('far');
+        close.classList.add('fa-times-circle');
+        close.classList.add('infoClose');
+
+        let otsikko = document.createElement('h3');
+        otsikko.innerText = otsikot[i];
+
+        let sisalto = document.createElement('p');
+        sisalto.innerHTML = sisallot[i];
+
+        let linkki = document.createElement('a');
+        linkki.classList.add('fas');
+        linkki.classList.add('fa-angle-double-right');
+        linkki.setAttribute('href', linkit[i]);
+        linkki.style.cssText = "font-size:30px; color:var(--tehosteVari);";
+        
+        infoContent.appendChild(close);
+        infoContent.appendChild(otsikko);
+        infoContent.appendChild(sisalto);
+        if(i != 4){
+            infoContent.appendChild(linkki);
+        }
+        document.body.appendChild(infoContent);
+
+        close.addEventListener('click', function(){
+            document.body.removeChild(infoContent);
+        });
+    });
+
+    kuukausiIkonit[i].addEventListener('click', function(evt){
+        let infoContent = document.createElement('div');
+        infoContent.classList.add('infoContent');
+        
+        let close = document.createElement('i');
+        close.classList.add('far');
+        close.classList.add('fa-times-circle');
+        close.classList.add('infoClose');
+
+        let otsikko = document.createElement('h3');
+        otsikko.innerText = otsikot[i];
+
+        let sisalto = document.createElement('p');
+        sisalto.innerHTML = sisallot[i];
+
+        let linkki = document.createElement('a');
+        linkki.classList.add('fas');
+        linkki.classList.add('fa-angle-double-right');
+        linkki.setAttribute('href', linkit[i]);
+        linkki.style.cssText = "font-size:30px; color:var(--tehosteVari);";
+        
+        infoContent.appendChild(close);
+        infoContent.appendChild(otsikko);
+        infoContent.appendChild(sisalto);
+        if(i != 4){
+            infoContent.appendChild(linkki);
+        }
+        document.body.appendChild(infoContent);
+
+        close.addEventListener('click', function(){
+            document.body.removeChild(infoContent);
+        });
+    });
+}
+
+//detail-sivujen pop-up aukeaa
+function dayInfo(i) {
+    document.getElementById(i).style.visibility='visible';
+    }
+//detail-sivujen pop-up sulkeutuu
+    function closeDayInfo(i) {
+    document.getElementById(i).style.visibility='hidden';
+    }

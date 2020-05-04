@@ -11,21 +11,20 @@
 
     $icons = [];
     
-
     // Hae koko kuukauden ikonit loopilla
     for($i = 0; $i < $loops; $i++){
         $paivaOlio = getDateData($user_ID, $tempDate, $DBH);
         
         $food[$i] = $paivaOlio->user_food;
         $alcohol[$i] = $paivaOlio->user_alcohol;
-        $activity[$i] = 0;
+        $activity[$i] = $paivaOlio->user_activity;
         $smoke[$i] = $paivaOlio->user_smoke;
         $vitality[$i] = $paivaOlio->user_vitality;
         $coffee[$i] = $paivaOlio->user_stimulant;
         $medicine[$i] = $paivaOlio->user_medicine;
         $stress[$i] = $paivaOlio->user_stress;
         $mood[$i] = $paivaOlio->user_mood;
-        $sleepTime[$i] = 0;
+        $sleepTime[$i] = $paivaOlio->sleep_amount;
         $screentime[$i] = $paivaOlio->user_screen_time;
         $pain[$i] = $paivaOlio->user_pain;
         

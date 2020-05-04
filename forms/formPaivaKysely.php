@@ -53,6 +53,7 @@
   <li>Pullo (0,5l) kolajuomaa&nbsp; 55 mg</li><br>
   <li>Tölkki (0,33l) energiajuomaa&nbsp; 106 mg</li><br>
   <li>Energiapatukka (45 g)&nbsp; 115 mg</li><br>
+  <li>Kofeiinitabletti (1 kpl)&nbsp; 100 mg</li><br>
   <li>Tumma suklaa (100 g)&nbsp; 55 mg</li><br>
   <li>Maitosuklaa (100 g)&nbsp; 17 mg</li>
   </ul></span></div>
@@ -73,7 +74,7 @@
   <input type="radio" id="kofeiini-2" name="given_Kofeiini" value="-2">
   <span class="checkmark"></span>
 </label>
-<label for="kofeiini-5" class="container">Yli 500 mg
+<label for="kofeiini-5" class="container">Yli 400 mg
   <input type="radio" id="kofeiini-5" name="given_Kofeiini" value="-5">
   <span class="checkmark"></span>
 </label>

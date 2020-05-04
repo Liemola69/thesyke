@@ -13,10 +13,25 @@
         "fa-mobile-alt", 
         "fa-band-aid"
     ];
+
+    $infoName = [
+        "infoFood",
+        "infoAlcohol",
+        "infoActivity",
+        "infoSmoke",
+        "infoVitality",
+        "infoStimulant",
+        "infoMedicine",
+        "infoStress",
+        "infoMood",
+        "infoSleepAmount",
+        "infoScreenTime",
+        "infoPains"
+    ];
     
     // Tulosta ikonit ja indikaattorit väreillä
     for($i = 0; $i < 12; $i++){
-        echo('<div class="ikoniWrapper">');
+        echo('<div id = "' . $infoName[$i] . '" class="ikoniWrapper">');
             echo('<i class="fas ' . $iconName[$i] . ' ikoni"></i>');
         echo('</div>');
     }
