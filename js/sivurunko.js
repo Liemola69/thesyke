@@ -37,6 +37,7 @@ let kalenteriKkPaivat;
 let kalenteriPaivat;
 let currentDay;
 
+let paivaIkonit = document.getElementById('paivaDetailSivu').querySelectorAll(".ikoniWrapper");
 let viikkoIkonit = document.getElementById('viikkoDetailSivu').querySelectorAll(".ikoniWrapper");
 let kuukausiIkonit = document.getElementById('kuukausiDetailSivu').querySelectorAll(".ikoniWrapper");
 
@@ -746,6 +747,40 @@ for(let i = 0; i < 12; i++){
         "Ruutuaika",
         "Kivut"
     ];
+
+    paivaIkonit[i].addEventListener('click', function(evt){
+        let infoContent = document.createElement('div');
+        infoContent.classList.add('infoContent');
+        
+        let close = document.createElement('i');
+        close.classList.add('far');
+        close.classList.add('fa-times-circle');
+        close.classList.add('infoClose');
+
+        let otsikko = document.createElement('h3');
+        otsikko.innerText = otsikot[i];
+
+        let sisalto = document.createElement('p');
+        sisalto.innerHTML = sisallot[i];
+
+        let linkki = document.createElement('a');
+        linkki.classList.add('fas');
+        linkki.classList.add('fa-angle-double-right');
+        linkki.setAttribute('href', linkit[i]);
+        linkki.style.cssText = "font-size:30px; color:var(--tehosteVari);";
+        
+        infoContent.appendChild(close);
+        infoContent.appendChild(otsikko);
+        infoContent.appendChild(sisalto);
+        if(i != 4){
+            infoContent.appendChild(linkki);
+        }
+        document.body.appendChild(infoContent);
+
+        close.addEventListener('click', function(){
+            document.body.removeChild(infoContent);
+        });
+    });
 
     viikkoIkonit[i].addEventListener('click', function(evt){
         let infoContent = document.createElement('div');
