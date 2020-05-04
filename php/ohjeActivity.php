@@ -17,7 +17,7 @@
         <div id="sivunNimi">AKTIIVISUUS+UNI</div>
         <a href="sivurunko.php?moveToDay=<?php echo($_SESSION['currentDay']);?>" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>      
     </nav>
-
+    <!-- Lähde: https://sydan.fi/fakta/unijaliikunta/ -->
     <div>
         <p class="ohjeOtsikko">Yleistä</p>
         <p>Liikunta ja fyysisesti aktiivinen toiminta pidentävät unen kestoa, parantavat sen laatua ja vähentävat yöllisiä heräämisiä.</p>

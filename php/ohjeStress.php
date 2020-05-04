@@ -17,7 +17,7 @@
         <div id="sivunNimi">STRESSI+UNI</div>
         <a href="sivurunko.php?moveToDay=<?php echo($_SESSION['currentDay']);?>" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>      
     </nav>
-
+<!-- Lähde: https://www.terveyskyla.fi/naistalo/lis%C3%A4%C3%A4ntymisterveys/elintavoista-apua-hedelm%C3%A4llisyyteen/uni/stressin-vaikutus-unettomuuteen -->
     <div>
         <p class="ohjeOtsikko">Yleistä</p>
         <p>Stressi vaikuttaa haitallisesti unen laatuun lisäämällä stressihormonien kasvua ja sitä kautta nostaa vireystasoa.</p>

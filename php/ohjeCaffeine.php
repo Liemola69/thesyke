@@ -20,6 +20,7 @@
 
     <div>
         <p class="ohjeOtsikko">Yleistä</p>
+        <!-- Lähde: https://www.ttl.fi/tyopiste/kuinka-kauan-kahvi-valvottaa/ -->
         <p>Kofeiinin nauttimisen ennen nukkumaanmenoa on todettu pidentävän nukahtamisviivettä, aiheuttavan heräilyjä, vähentävän unen kokonaisaikaa ja heikentävän unen laatua. Tämä on kuitenkin hyvin yksilöllistä.</p>
         <p><i class='fas fa-coffee' style='font-size:30px'></i>
         <p>Kofeiini imeytyy nopeasti ruoansulatuskanavasta vereen. Maksimivaikutus on nähtävissä jo puolen tunnin kuluttua. Vereen imeytyneen kofeiinin määrä puolittuu 3–6 tunnissa. Jos nukut huonosti, kannattaa miettiä kofeiinituotteen nauttimisen ajankohtaa.</p>
