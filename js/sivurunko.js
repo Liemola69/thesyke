@@ -4,7 +4,6 @@ let ylaValikko = document.querySelectorAll("ul")[0];
 let ylaNav = document.getElementById("ylaNav");
 let alaNav = document.getElementById("alaNav");
 let sivunNimi = document.getElementById("sivunNimi");
-let auki = false;
 
 let prevDayNuoli = document.getElementById("prevDayNuoli");
 let nextDayNuoli = document.getElementById("nextDayNuoli");
@@ -111,15 +110,14 @@ document.addEventListener("resize", function(evt){
 // Avaa hampurilaisvalikon klikkauksesta
 hampurilaisMenu.addEventListener('click', function(evt){
 
-    if(auki == false){
-        ylaValikko.style['display'] = "block";
-        hampurilaisValikko.style['top'] = ylaNav.clientHeight + "px";
-        //hampurilaisValikko.style['height'] = "fit-content";
-        auki = true;
-    } else{
+    if(hampurilaisMenu.classList.contains('open')){
         ylaValikko.style['display'] = "none";
         hampurilaisValikko.style['height'] = "0px";
-        auki = false;
+        hampurilaisMenu.classList.toggle('open');
+    } else{
+        ylaValikko.style['display'] = "block";
+        hampurilaisValikko.style['top'] = ylaNav.clientHeight + "px";
+        hampurilaisMenu.classList.toggle('open');
     }
 });
 
