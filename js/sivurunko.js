@@ -91,7 +91,7 @@ for(let i = 0; i < 3; i++){
 }
 
 // Aseta päänäkymän viimeinen grid alaNavin kokoiseksi
-paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 10% 10% auto 10% " + alaNav.clientHeight + "px";
+paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 10% 2% 10% auto 10% " + alaNav.clientHeight + "px";
 paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
 paasivuKuukausiWrapper.style.gridTemplateRows = "auto 10%" + alaNav.clientHeight + "px";
 
@@ -245,7 +245,7 @@ function korjaaSisallonKorkeus(){
     }
 
     // Aseta päänäkymän viimeinen grid alaNavin kokoiseksi
-    paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 15% auto 10% " + alaNav.clientHeight + "px";
+    paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 10% 2% 10% auto 10% " + alaNav.clientHeight + "px";
     paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
     paasivuKuukausiWrapper.style.gridTemplateRows = "auto 10%" + alaNav.clientHeight + "px";
 
@@ -725,7 +725,7 @@ for(let i = 0; i < 12; i++){
         "Tämä ikoni kuvaa tupakointiasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää tupakoinnin ja unen vaikutuksista voit lukea täältä",
         "Tämä ikoni kuvaa subjektiivista kokemustasi tämän päivän vireystilasta. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä.<br><br>Vireydellä tarkoitetaan tässä sovelluksessa sitä, kuinka virkeäksi tai väsyneeksi koet itsesi kyseisenä päivänä",
         "Tämä ikoni kuvaa nauttimasi kofeiinin määrää edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää kofeiinin ja unen vaikutuksista voit lukea täältä",
-        "Tämä ikoni kuvaa uneen tai nukahtamiseen vaikuttavien lääkkeiden käyttämistä edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää kofeiinin ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa uneen tai nukahtamiseen vaikuttavien lääkkeiden käyttämistä edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää lääkkeiden ja unen vaikutuksista voit lukea täältä",
         "Tämä ikoni kuvaa stressitasoasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää stressin ja unen vaikutuksista voit lukea täältä",
         "Tämä ikoni kuvaa mielialaasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää mielialan ja unen vaikutuksista voit lukea täältä",
         "Tämä ikoni kuvaa edellisenä yönä nukutun unen määrää. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä sekä asettamasi uniaikatavoitteen täyttymisestä.<br><br>Lisää ihmisen unentarpeesta voit lukea täältä",

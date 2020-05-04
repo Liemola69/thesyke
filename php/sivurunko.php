@@ -195,7 +195,9 @@
                                 <div class="boxOtsikko2">UNISYKLIT</div>
                                 <div class="boxTeksti2"><?php echo(getUniSykli($paivaOlio));?></div>
                             </div>
-                                 <!--LISÄÄ AO. TIEDOT PÄIVÄOLIOON-->
+                            
+                            <!--LISÄÄ AO. TIEDOT PÄIVÄOLIOON-->
+                            <div></div>
 
                             <div class="box2" onclick="changeSleepDetails('changeWakeUpTime')">
                                 <div class="boxOtsikko1">TÄNÄÄN NUKKUMAAN</div>
@@ -220,7 +222,7 @@
 
                             <!--progress/meter bar-->
                             <div class="clear">
-                                <h3>UNEEN VAIKUTTAVAT TEKIJÄT</H3>
+                                <h3 id="progressBarOtsikko">UNEEN VAIKUTTAVAT TEKIJÄT</H3>
                                 <?php
                                 echo('<progress class="attributes_balance progressBarPaiva" value="' . getDayProgressValue($paivaOlio) . '" min="0" max="100"></progress>');
                                 ?>
