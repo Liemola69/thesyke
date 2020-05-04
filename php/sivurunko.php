@@ -127,7 +127,12 @@
 
     <nav id="ylaNav">
         <div id="sivunNimi"><b>PÄIVÄNÄKYMÄ</b></div>
-        <div id="hampurilaisMenu" class="fa fa-bars"></div>
+        <div id="hampurilaisMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <div id="hampurilaisValikko">
             <ul id="ylaValikko">
                 <li onclick='window.location.href="raportit.php"'>Raportit</li>
