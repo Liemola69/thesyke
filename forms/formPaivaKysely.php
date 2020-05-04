@@ -16,32 +16,32 @@
 
 <div><label for="myQuality">Miten nukuit viime yönä:</label><br></div>
 <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-<input type="range" min="-5" max="5" value = "<?php echo($paivaOlio->user_sleep_quality); ?>" step="1" class="slider" id="myQuality" name="given_Quality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+<input type="range" min="-5" max="5" value = "<?php echo($paivaOlio->user_sleep_quality); ?>" step="1" class="slider" id="myQuality" name="given_Quality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:1.1em"></span></div>
 
 
 <div><label for="myVitality">Minkälainen vireytesi on tänään:</label><br></div>
 <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-<input type="range" min="-5" max="5" value="<?php echo($paivaOlio->user_vitality); ?>" step="1" class="slider" id="myVitality" name="given_Vitality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+<input type="range" min="-5" max="5" value="<?php echo($paivaOlio->user_vitality); ?>" step="1" class="slider" id="myVitality" name="given_Vitality">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:1.1em"></span></div>
 
 
 <div><label for="myFood">Miten söit eilen:</label><br></div>
   <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-  <input type="range" min="-5" max="5" value="<?php echo($paivaOlio->user_food); ?>" step="1" class="slider" id="myFood" name="given_Food"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+  <input type="range" min="-5" max="5" value="<?php echo($paivaOlio->user_food); ?>" step="1" class="slider" id="myFood" name="given_Food"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:1.1em"></span></div>
     
 
   <div><label for="myMood">Minkälainen mielialasi on tänään:</label><br></div>
   <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-  <input type="range" min="-5" max="5" value="<?php echo($paivaOlio->user_mood); ?>" step="1" class="slider" id="myMood" name="given_Mood">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+  <input type="range" min="-5" max="5" value="<?php echo($paivaOlio->user_mood); ?>" step="1" class="slider" id="myMood" name="given_Mood">&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:1.1em"></span></div>
     
 
   <div><label for="myStress">Stressitasosi eilen:</label><br></div>
   <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-  <input type="range" min="-5" max="5" value="<?php echo($paivaOlio->user_stress); ?>" step="1" class="slider" id="myStress" name="given_Stress"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+  <input type="range" min="-5" max="5" value="<?php echo($paivaOlio->user_stress); ?>" step="1" class="slider" id="myStress" name="given_Stress"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:1.1em"></span></div>
     
 
   <div><label for="myPain">Kuvaile kiputilojasi eilen:</label><br></div>
   <div><span class="fas fa-frown" style="color: var(--liikennevaloPunainen);"></span>&ensp;
-  <input type="range" min="-5" max="5" value="<?php echo($paivaOlio->user_pain); ?>" step="1" class="slider" id="myPain" name="given_Pain"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:20px"></span></div>
+  <input type="range" min="-5" max="5" value="<?php echo($paivaOlio->user_pain); ?>" step="1" class="slider" id="myPain" name="given_Pain"></span>&ensp;<span class="fas fa-grin" style="color: var(--liikennevaloVihrea);font-size:1.1em"></span></div>
   
   <div style ="text-align:start;margin-left:10px">Eilen...</div>
 

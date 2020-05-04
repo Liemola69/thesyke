@@ -1375,13 +1375,23 @@
 
     // Nukuttu aika
     function getIconColorSleepAmount($value){
+        /*$sql = "SELECT `mapping_sleep_amount` FROM `ts_parameter_mapping` WHERE `user_ID` = " . "'" . $user_ID . "';";
+        $kysely = $DBH->prepare($sql);
+        $kysely->execute();
+        $sleepingGaol = $kysely->fetch();
+
         if($value == null){
             echo("var(--liikennevaloHarmaa)");
-        }elseif($value >= 28800){
+        }elseif($value >= $sleepingGoal){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value >= 21600 && $value < 28800){
-            echo("var(--liikennevaloKeltainen)");
-        } elseif($value < 21600 && $value > 0){
+        } elseif($value < $sleepingGaol){
+            echo("var(--liikennevaloPunainen)");
+        }*/
+        if($value == null){
+            echo("var(--liikennevaloHarmaa)");
+        }elseif($value >= 25200){
+            echo("var(--liikennevaloVihrea)");
+        } elseif($value < 25200){
             echo("var(--liikennevaloPunainen)");
         }
     }

@@ -9,6 +9,7 @@
 <head>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <link rel="stylesheet" href="../styles/kysely.css">
+<link href="https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -20,7 +21,7 @@
     <div class="kyselyOtsikko">&emsp;<?php getDayFormatted($_SESSION['currentDay']); 
     //echo($currentDay);
     ?>
-    päivän kysely 
+     
     </div>
     <div class=slideSivu>
 
