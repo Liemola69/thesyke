@@ -38,9 +38,8 @@ body{
     flex-direction: column;
     align-items: center;
     width: 100%;
-    
-
 }
+
   .slidecontainer > div{
     width: 80%;
     margin: 10px;

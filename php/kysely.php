@@ -17,6 +17,7 @@
         <div id="sivunNimi">PÄIVÄKYSELY</div>
         <a href="sivurunko.php?moveToDay=<?php echo($_SESSION['currentDay']);?>" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>      
     </nav>
+    
     <br>
     <div class="kyselyOtsikko">&emsp;<?php getDayFormatted($_SESSION['currentDay']); 
     //echo($currentDay);
