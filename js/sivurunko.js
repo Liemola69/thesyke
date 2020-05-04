@@ -3,7 +3,6 @@ let hampurilaisValikko = document.getElementById("hampurilaisValikko");
 let ylaValikko = document.querySelectorAll("ul")[0];
 let ylaNav = document.getElementById("ylaNav");
 let alaNav = document.getElementById("alaNav");
-let raportitValikkoLinkki = document.getElementById("raportitValikkoLinkki");
 let sivunNimi = document.getElementById("sivunNimi");
 let auki = false;
 
@@ -120,26 +119,6 @@ hampurilaisMenu.addEventListener('click', function(evt){
         auki = false;
     }
     
-});
-
-// Siirry raportti-sivulle
-raportitValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "raportit.php";
-});
-
-// Siirry omat tiedot -sivulle
-omattiedotValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "omattiedot.php";
-});
-
-// Siirry apua-sivulle
-apuaValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "apua.php";
-});
-
-// Siirry käyttöehdot-sivulle
-kayttoehdotValikkoLinkki.addEventListener('click', function(evt){
-    window.location = "kayttoehdot.php";
 });
 
 // Estä sivuswipe, jos detail-sivulla
@@ -613,15 +592,12 @@ let iconsMonth = document.getElementById('kuukausiDetailSivu').children;
  */
 function updateIconColor(values){
     let iconColor = JSON.parse(values);
+    console.log(iconColor);
     let indikaattori;
     deleteIndicators();
 
     for(let i = 0; i < 12; i++){
-        if(i == 2){ // Aktiivisuus
-            iconsMonth[i+1].style.color = "var(--liikennevaloHarmaa)";
-            indikaattori = getIndicator(iconColor[i]);
-
-        } else if(i == 3){ // Tupakka
+        if(i == 3){ // Tupakka
 
             if(iconColor[i] == 0){
                 iconsMonth[i+1].style.color = "var(--liikennevaloHarmaa)";
