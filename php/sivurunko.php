@@ -135,7 +135,7 @@
         </div>
         <div id="hampurilaisValikko">
             <ul id="ylaValikko">
-                <li onclick='window.location.href="raportit.php"'>Raportit</li>
+                <li onclick='window.location.href="raportit.php"'>Raportit (tulossa)</li>
                 <li onclick='window.location.href="omattiedot.php"'>Omat tiedot</li>
                 <li id="polarLinkitys">Synkronoi Polar</li>
                 <li class="hidden polarLisaValikko">Synkronoi tiedot</li>
