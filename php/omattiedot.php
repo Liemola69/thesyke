@@ -116,10 +116,16 @@
             $_SESSION['parameters_drug'] = '0';
         }
 
-        if(isset($_POST['cigarette'])) {
-            $_SESSION['parameters_parameters_smoke'] = '1';
+        if(isset($_POST['screen_time'])) {
+            $_SESSION['parameters_screen_time'] = '1';
         } else {
-            $_SESSION['parameters_parameters_smoke'] = '0';
+            $_SESSION['parameters_screen_time'] = '0';
+        }
+
+        if(isset($_POST['cigarette'])) {
+            $_SESSION['parameters_smoke'] = '1';
+        } else {
+            $_SESSION['parameters_smoke'] = '0';
         }
 
         if(isset($_POST['user_agreement'])) {
@@ -143,9 +149,7 @@
 
         //tiedot data-muuttujiin
         $data['user_ID']= $_SESSION['user_ID'];
-
-
-            
+    
             try{
                 $sql = 'UPDATE `ts_user` 
                 SET
@@ -154,13 +158,37 @@
                 `last_name` = "' . $_SESSION['last_name'] . '", 
                 `gender` = "' . $_SESSION['gender'] . '",
                 `height` = "' . $_SESSION['height'] . '", 
-                `weight` = "' . $_SESSION['weight'] . '"
+                `weight` = "' . $_SESSION['weight'] . '",
+                `birthday` = "' . $_SESSION['birthdate'] . '"
                 WHERE `user_ID` = "' . $_SESSION['user_ID'] . '" ;';
 
                 $kysely = $DBH->prepare($sql);
                 $kysely->execute($data);
 
-                
+                echo $sql;                
+
+            }catch(PDOException $e){
+                file_put_contents('../log/DBErrors.txt', 'Upadate fails ' . $e->getMessage() . "\n", FILE_APPEND);
+
+            } try{
+
+                $sql2 = 'UPDATE `ts_user_parameters` 
+                SET
+                `parameters_stimulants` = "' . $_SESSION['parameters_stimulants'] . '",
+                `parameters_alcohol` = "' . $_SESSION['parameters_alcohol'] . '",
+                `parameters_medicine` = "' . $_SESSION['parameters_medicine'] . '",
+                `parameters_drug` = "' . $_SESSION['parameters_drug'] . '",
+                `parameters_screen_time` = "' . $_SESSION['parameters_screen_time'] . '",
+                `parameters_smoke` = "' . $_SESSION['parameters_smoke'] . '",
+                `parameters_user_agreement` = "' . $_SESSION['parameters_user_agreement'] . '",
+                `parameters_email_marketing` = "' . $_SESSION['parameters_email_marketing'] . '",
+                `parameters_gdpr` = "' . $_SESSION['parameters_gdpr'] . '"
+                WHERE `user_ID` = "' . $_SESSION['user_ID'] . '" ;';
+
+                echo $sql2;
+
+                $kysely2 = $DBH->prepare($sql2);
+                $kysely2->execute($data);
 
             }catch(PDOException $e){
                 file_put_contents('../log/DBErrors.txt', 'Upadate fails ' . $e->getMessage() . "\n", FILE_APPEND);

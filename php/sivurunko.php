@@ -126,7 +126,7 @@
     ?>
 
     <nav id="ylaNav">
-        <div id="sivunNimi"><b>PÄIVÄNÄKYMÄ</b></div>
+        <div id="sivunNimi">PÄIVÄNÄKYMÄ</div>
         <div id="hampurilaisMenu">
             <span></span>
             <span></span>
@@ -170,7 +170,7 @@
                             <div class="dailySmiley">
                                 <!-- Menee päiväkyselysivulle -->
                                 <div class=speechBubble id="speechBubble">
-                                    <div class="dailySpeechBubble dailySpeechBubbleLeft">Klikkaa mua!</div>
+                                    <div class="dailySpeechBubble dailySpeechBubbleLeft">Klikkaa hymiötä!</div>
                                 </div>
                                 <div class="dailyIcon">  
                                     <i id="dailyKysely" onclick="openKysely()" <?php 

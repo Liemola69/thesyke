@@ -36,28 +36,31 @@
     $data['password'] = $_SESSION['password'];
     $data['first_name'] = $_SESSION['first_name'];
     $data['last_name'] = $_SESSION['last_name'];
-    $data['age'] = (int)$_SESSION['age'];
+    $data['age'] = $_SESSION['age'];
     $data['gender'] = $_SESSION['gender'];
     $data['height'] = (int)$_SESSION['height'];
     $data['weight'] = (int)$_SESSION['weight'];
 
     $data2['email'] = $_SESSION['email'];
 
-    $data3['parameters_user_agreement'] = $_SESSION['parameters_user_agreement'];
-    $data3['parameters_email_marketing'] = $_SESSION['parameters_email_marketing'];
-    $data3['parameters_gdpr'] = $_SESSION['parameters_gdpr'];
     $data3['parameters_stimulants'] = $_SESSION['parameters_stimulants'];
     $data3['parameters_alcohol'] = $_SESSION['parameters_alcohol'];
     $data3['parameters_medicine'] = $_SESSION['parameters_medicine'];
     $data3['parameters_drug'] = $_SESSION['parameters_drug'];
     $data3['parameters_smoke'] = $_SESSION['parameters_smoke'];
 
+    $data3['parameters_user_agreement'] = $_SESSION['parameters_user_agreement'];
+    $data3['parameters_email_marketing'] = $_SESSION['parameters_email_marketing'];
+    $data3['parameters_gdpr'] = $_SESSION['parameters_gdpr'];
+
+
+
 
 
 
     try{
         // SQL-lause $data-taulukon tiedoille :key -> value
-        $sql = "INSERT INTO `ts_user` (`user_ID`, `email`, `password`, `first_name`, `last_name`, `age`, `gender`, `height`, `weight`)            
+        $sql = "INSERT INTO `ts_user` (`user_ID`, `email`, `password`, `first_name`, `last_name`, `birthday`, `gender`, `height`, `weight`)            
         VALUES (NULL, :email, :password, :first_name, :last_name, :age, :gender, :height, :weight)";
 
         $kysely = $DBH->prepare($sql);
@@ -78,7 +81,7 @@
         VALUES (:user_ID, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
         
         $kysely = $DBH->prepare($sql);
-        $kysely->execute($data);
+        $kysely->execute($data3);
 
     } catch(PDOException $e){
         file_put_contents('log/DBErrors.txt', 'Connection: ' . $e->getMessage() . "\n", FILE_APPEND);
