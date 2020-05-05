@@ -59,21 +59,20 @@ session_start();
     <option value="190"><option value="191"><option value="192"><option value="193"><option value="194"><option value="195"><option value="196"><option value="197"><option value="198"><option value="199">
     </datalist>
     <br>
+    <p class="textGeneric">Hyväksyn...</p>
     <div class="checkboxDiv">
-        <p class="textGeneric">Hyväksyn käyttöehdot
+        <p class="textGeneric">...käyttöehdot</p>
         <input class="checkboxGeneric" type="checkbox" name="given_parameters_user_agreement">
-        </p>
     </div>
     <div class="checkboxDiv">
-    <p class="textGeneric">Hyväksyn henkilötietojen käsittelyn
+    <p class="textGeneric">...henkilötietojen käsittelyn</p>
     <input class="checkboxGeneric" type="checkbox" name="given_parameters_gdpr">
-    </p>
     </div>
     <div class="checkboxDiv">
-    <p class="textGeneric">Sallin sähköpostimainonnan
+    <p class="textGeneric">...sähköpostimainonnan</p>
     <input class="checkboxGeneric" type="checkbox" name="given_parameters_email_marketing">
-    </p>
     </div>
+    <br>
     <input class="buttonGeneric" type="submit" name="createUserDetailsSubmit" value="Tallenna ja jatka">
     <br>
     <br>

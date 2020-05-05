@@ -44,7 +44,19 @@ session_start();
                 if(password_verify($_POST['givenLoginPassword'], $vastaus->password)){
                     $_SESSION['loggedIn'] = true;
                     $_SESSION['user_ID'] = $vastaus->user_ID;
+
                     header("Location: php/sivurunko.php");
+                    echo('<script>
+                    let kirjauduttuSisaan = document.createElement("div");
+                    kirjauduttuSisaan.setAttribute("class", "snackbar");
+                    let kirjauduttuSisaanText = document.createTextNode("Hei! Tervetuloa käyttämään the Syke -sovellusta.");
+                    kirjauduttuSisaan.classList.add("show");
+                    kirjauduttuSisaan.appendChild(kirjauduttuSisaanText);
+                    document.body.appendChild(kirjauduttuSisaan);
+                    setTimeout(function(){ 
+                        document.body.removeChild(kirjauduttuSisaan);
+                    }, 5000);
+                    </script>');
                 } else{
                     echo("Väärä salasana!");
     ?>

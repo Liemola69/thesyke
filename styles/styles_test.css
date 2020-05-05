@@ -44,7 +44,7 @@ body {
     background: var(--tehosteVari);
     color: var(--fonttiVari);
     font-family: 'Baloo Da 2', cursive, sans-serif;
-    font-size: x-large;
+    font-size: large;
     text-transform: uppercase;
     display: inline-block;
     text-align: center;
@@ -63,7 +63,7 @@ body {
     width: 100%;
     border-radius: 5px;
     font-family: 'Baloo Da 2', cursive, sans-serif;
-    font-size: x-large;
+    font-size: large;
 }
 
 .checkboxGeneric {
@@ -613,7 +613,7 @@ font-size: 1.4em;
 #sivunNimi{
     width: 100%;
     color: var(--tehosteVari);
-    font-size: 1.4em;
+    font-size: 2.5em;
 }
 
 
@@ -1130,12 +1130,12 @@ i[class^="fas fa-chevron"]{
     width: auto;
     margin: 5%;
     border-radius: 5px;
-    color: #fff;
+    color: black;
     padding: 20px;
     text-align: center;
-    font-weight: 900;
     position: relative;
     background-color: var(--tehosteVari);
+    font-size: medium;
 }
 
 .dailySpeechBubbleLeft:before {
@@ -1230,4 +1230,9 @@ i[class^="fas fa-chevron"]{
     .hymio{
         font-size: 25vw;
     }
+    }
+
+.apua {
+    margin: 20px;
+    font-size: 1.4em;
 }
