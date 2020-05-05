@@ -38,54 +38,141 @@
     $_SESSION['got_parameters_email_marketing'] = $userParametersOlio->parameters_email_marketing;
     $_SESSION['got_parameters_gdpr'] = $userParametersOlio->parameters_gdpr;
 
+    if ($_SESSION['got_parameters_stimulants'] == '1') {
+        $_SESSION['got_parameters_stimulants_checked'] = 'checked';
+    }
+
+    if ($_SESSION['got_parameters_alcohol'] == '1') {
+        $_SESSION['got_parameters_alcohol_checked'] = 'checked';
+    }
+
+    if ($_SESSION['got_parameters_medicine'] == '1') {
+        $_SESSION['got_parameters_medicine_checked'] = 'checked';
+    }
+
+    if ($_SESSION['got_parameters_drug'] == '1') {
+        $_SESSION['got_parameters_drug_checked'] = 'checked';
+    }
+
+    if ($_SESSION['got_parameters_screen_time'] == '1') {
+        $_SESSION['got_parameters_screen_time_checked'] = 'checked';
+    }
+
+    if ($_SESSION['got_parameters_smoke'] == '1') {
+        $_SESSION['got_parameters_smoke'] = 'checked';
+    }
+
+    if ($_SESSION['got_parameters_user_agreement'] == '1') {
+        $_SESSION['got_parameters_user_agreement_checked'] = 'checked';
+    }
+
+    if ($_SESSION['got_parameters_email_marketing'] == '1') {
+        $_SESSION['got_parameters_email_marketing_checked'] = 'checked';
+    }
+
+    if ($_SESSION['got_parameters_gdpr'] == '1') {
+        $_SESSION['got_parameters_gdpr_checked'] = 'checked';
+    }
+
     //testiprinttaus sessiomuuttujista, kommentoi pois
     //print_r($_SESSION);
 
     ?>
 
-    <div class="valikkoSivuWrapper">
-        <div class="valikkoSivuNavNimi">OMAT TIEDOT</div>
-        <div class="valikkoSivuNavKuvake">
-            <i id="closeOmattiedot" class='fas fa-times-circle'></i>
-        </div>
-        <div class="valikkoSivuBody">
-            <form method="post">
-            Sähköposti: <input type="text" class="textboxGeneric" name="email" value="<?php echo $_SESSION['got_email'];?>">
-            <br>
-            Etunimi: <input type="text" class="textboxGeneric" name="first_name" value="<?php echo $_SESSION['got_first_name'];?>">
-            <br>
-            Sukunimi: <input type="text" class="textboxGeneric" name="last_name" value="<?php echo $_SESSION['got_last_name'];?>">
-            <br>
-            Sukupuoli: <input type="text" class="textboxGeneric" name="gender" value="<?php echo $_SESSION['got_gender'];?>">
-            <br>
-            Pituus: <input type="text" class="textboxGeneric" name="height" value="<?php echo $_SESSION['got_height'];?>">
-            <br>
-            Paino: <input type="text" class="textboxGeneric" name="weight" value="<?php echo $_SESSION['got_weight'];?>">
-            <br>
-            Syntymäaika: <input type="date" class="textboxGeneric" name="birthdate" value="<?php echo $_SESSION['got_birthday'];?>">
-            <br>
-            Käytän kofeiinituotteita: <input type="checkbox" class="checkboxGeneric" name="stimulants" value="<?php echo $_SESSION['got_parameters_stimulants'];?>">
-            <br>
-            Käytän alkoholia: <input type="checkbox" class="checkboxGeneric" name="alcohol" value="<?php echo $_SESSION['got_parameters_alcohol'];?>">
-            <br>
-            Käytän unilääkkeitä: <input type="checkbox" class="checkboxGeneric" name="medicine" value="<?php echo $_SESSION['got_parameters_medicine'];?>">
-            <br>
-            Käytän huumeita: <input type="checkbox" class="checkboxGeneric" name="drugs" value="<?php echo $_SESSION['got_parameters_drug'];?>">
-            <br>
-            Käytän tietokonetta/kännykkää: <input type="checkbox" class="checkboxGeneric" name="screen_time" value="<?php echo $_SESSION['got_parameters_screen_time'];?>">
-            <br>
-            Käytän nikotiinituotteita: <input type="checkbox" class="checkboxGeneric" name="cigarette" value="<?php echo $_SESSION['got_parameters_smoke'];?>">
-            <br>
-            Käyttöehdot: <input type="checkbox" class="checkboxGeneric" name="user_agreement" value="<?php echo $_SESSION['got_parameters_user_agreement'];?>">
-            <br>
-            Sähköpostimarkkinointi: <input type="checkbox" class="checkboxGeneric" name="email_marketing" value="<?php echo $_SESSION['got_parameters_email_marketing'];?>">
-            <br>
-            Henkilötietojen käsittely: <input type="checkbox" class="checkboxGeneric" name="gdpr" value="<?php echo $_SESSION['got_parameters_gdpr'];?>">
-            <br>
-        <input class="buttonGeneric" type="submit" name="saveUserDetails" value="Tallenna">
-        <input class="buttonGeneric" type="reset" value="Peruuta">
-        </div>
-    </div>
+    <?php
+    if(isset($_POST['saveUserDetails'])){
+
+        //lomakkeen tiedot sessiomuuttujiin
+
+        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['first_name'] = $_POST['first_name'];
+        $_SESSION['last_name'] = $_POST['last_name'];
+        $_SESSION['gender'] = $_POST['gender'];
+        $_SESSION['height'] = (int)$_POST['height'];
+        $_SESSION['weight'] = (int)$_POST['weight'];
+        $_SESSION['birthdate'] = $_POST['birthdate'];
+
+        if(isset($_POST['stimulants'])) {
+            $_SESSION['parameters_stimulants'] = '1';
+        } else {
+            $_SESSION['parameters_stimulants'] = '0';
+        }
+
+        if(isset($_POST['stimulants'])) {
+            $_SESSION['parameters_alcohol'] = '1';
+        } else {
+            $_SESSION['parameters_alcohol'] = '0';
+        }
+
+        if(isset($_POST['stimulants'])) {
+            $_SESSION['parameters_medicine'] = '1';
+        } else {
+            $_SESSION['parameters_medicine'] = '0';
+        }
+
+        if(isset($_POST['drugss'])) {
+            $_SESSION['parameters_drug'] = '1';
+        } else {
+            $_SESSION['parameters_drug'] = '0';
+        }
+
+        if(isset($_POST['cigarette'])) {
+            $_SESSION['parameters_parameters_smoke'] = '1';
+        } else {
+            $_SESSION['parameters_parameters_smoke'] = '0';
+        }
+
+        if(isset($_POST['user_agreement'])) {
+            $_SESSION['parameters_user_agreement'] = '1';
+        } else {
+            $_SESSION['parameters_user_agreement'] = '0';
+        }
+
+        if(isset($_POST['email_marketing'])) {
+            $_SESSION['parameters_email_marketing'] = '1';
+        } else {
+            $_SESSION['parameters_email_marketing'] = '0';
+        }
+
+        if(isset($_POST['gdpr'])) {
+            $_SESSION['parameters_gdpr'] = '1';
+        } else {
+            $_SESSION['parameters_gdpr'] = '0';
+        }
+    
+
+        //tiedot data-muuttujiin
+        $data['user_ID']= $_SESSION['user_ID'];
+
+
+            
+            try{
+                $sql = 'UPDATE `ts_user` 
+                SET
+                `email` = "' . $_SESSION['email'] . '",
+                `first_name` = "' . $_SESSION['first_name'] . '",
+                `last_name` = "' . $_SESSION['last_name'] . '", 
+                `gender` = "' . $_SESSION['gender'] . '",
+                `height` = "' . $_SESSION['height'] . '", 
+                `weight` = "' . $_SESSION['weight'] . '"
+                WHERE `user_ID` = "' . $_SESSION['user_ID'] . '" ;';
+
+                $kysely = $DBH->prepare($sql);
+                $kysely->execute($data);
+
+                
+
+            }catch(PDOException $e){
+                file_put_contents('../log/DBErrors.txt', 'Upadate fails ' . $e->getMessage() . "\n", FILE_APPEND);
+
+            }
+            
+            header("Location: sivurunko.php");
+        }else{
+            include("../forms/formOmattiedot.php");
+        }
+
+        ?>
 
     <script>
         document.getElementById("closeOmattiedot").addEventListener("click", function(){

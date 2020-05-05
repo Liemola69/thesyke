@@ -84,7 +84,18 @@
         file_put_contents('log/DBErrors.txt', 'Connection: ' . $e->getMessage() . "\n", FILE_APPEND);
     }
 
-    header("Location: teaser.php");
+    echo('<script>
+                        let tunnusLuotu = document.createElement("div");
+                        tunnusLuotu.setAttribute("class", "snackbar");
+                        let tunnusLuotuText = document.createTextNode("Käyttäjätunnus luotu onnistuneesti! Voit kirjautua sisään luomillasi tunnuksilla.");
+                        tunnusLuotu.classList.add("show");
+                        tunnusLuotu.appendChild(tunnusLuotuText);
+                        document.body.appendChild(tunnusLuotu);
+                        setTimeout(function(){ 
+                            document.body.removeChild(tunnusLuotu);
+                        }, 5000);
+                        </script>');
+    header("Location: php/resetVariables.php");
     
 }
     
