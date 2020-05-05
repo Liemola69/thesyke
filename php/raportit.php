@@ -16,12 +16,15 @@
 		    -webkit-user-select: none;
 		    -ms-user-select: none;
 	    }
-    </style>
+	</style>
+	<!-- Seuraavat skriptit ja raporttirakenne käytännössä copy-paste chart.js -kirjastosta-->
     <script src="../js/Chart.min.js"></script>
 	<script src="../js/utils.js"></script>
     
 </head>
 <body>
+
+
 
 <div class="valikkoSivuWrapper">
     <div class="valikkoSivuNavNimi">RAPORTIT</div>

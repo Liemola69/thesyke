@@ -16,13 +16,17 @@
 body{
     background-color: var(--paaTaustavari);
     color: var(--fonttiVari);
-    font-family: sans-serif;
+    font-family: 'Baloo Da 2', cursive, sans-serif;
     font-size: 20px;
     margin: 0;
-    
-    
 }
 
+.textboxGeneric {
+  width: 80%;
+  border-radius: 5px;
+  font-family: 'Baloo Da 2', cursive, sans-serif;
+  font-size: x-large;
+}
 
 .slideSivu{
   background-color: var(--paaTaustavari);
@@ -38,14 +42,13 @@ body{
     flex-direction: column;
     align-items: center;
     width: 100%;
-    
-
 }
+
   .slidecontainer > div{
     width: 80%;
     margin: 10px;
     text-align: center;
-    font-size: 20px; 
+    font-size: 1.1em; 
     
   }
 
@@ -143,7 +146,8 @@ body{
     height: 80%;
     border-radius: 5px;
     box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-    font-size: x-large;
+    font-size: xx-large;
+    padding: 15px;
 }
 p{
   font-size: 20px;
@@ -159,7 +163,7 @@ p{
 
 #closeMenu{
   color: var(--tehosteVari);
-  font-size: 30px;
+  font-size: 2em;
   width: fit-content;
   padding: 10px 15px;
   position: absolute;
@@ -298,11 +302,11 @@ p{
 
 #questonmark{
   color: var(--tehosteVari);
-  font-size: 30px;
+  font-size: 1.4em;
 }
 #kysymys1{
   color: var(--tehosteVari);
-  font-size: 30px;
+  font-size: 1.4em;
 }
 
 #myDeleteAccount{
@@ -375,9 +379,9 @@ p{
 	background: white;
 }
 .kyselyOtsikko{
-  text-align: center;
-  font-family: sans-serif;
-  font-size: 22px;
+  margin-left: 10px;
+  font-family: 'Baloo Da 2', cursive, sans-serif;
+  font-size: 18px;
 }
 
 p{
@@ -388,7 +392,8 @@ p{
   font-size: 22px;
 }
 
-
-
-
-  
+@media only screen and (max-width: 315px){
+  .deleteAccountButton{
+    font-size: x-large;
+  }
+}

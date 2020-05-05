@@ -17,7 +17,7 @@
         <div id="sivunNimi">RUUTUAIKA+UNI</div>
         <a href="sivurunko.php?moveToDay=<?php echo($_SESSION['currentDay']);?>" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>      
     </nav>
-
+    <!-- Lähde: https://tekniikanmaailma.fi/sininen-valo-ei-ole-paasyyllinen-vasyneisiin-silmiin-ja-unenpuutteeseen-vaikka-moni-niin-luulee-tassa-selitys-miksi-ei/ -->
     <div>
         <p class="ohjeOtsikko">Yleistä</p>
         <p>Ruutuajalla tarkoitetaan aikaa, jonka on viettänyt katsoessa televisiota, ollessa tietokoneella tai tabletilla tai selatessa älypuhelinta.</p>

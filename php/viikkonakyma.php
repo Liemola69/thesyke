@@ -2,6 +2,7 @@
 
     $weekdays = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"];
 
+    // Luo viikkonäkymän päivät ja korostaa sovelluksen kuluvan päivän
     for($i = 0; $i < 7; $i++){
         $day = getDateData($user_ID, $_SESSION['days'][$i], $DBH);
         if($_SESSION['days'][$i] == $_SESSION['currentDay']){

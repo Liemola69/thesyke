@@ -7,6 +7,8 @@
     $tempDate = $_GET['iconMonth']; //temp day aina yyyy-mm-01
     $currentMonth = date('m', strtotime($tempDate));
     $currentYear = date('Y', strtotime($tempDate));
+    
+    // Hae kuinka monta päivää kuukaudessa
     $loops = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
 
     $icons = [];
@@ -33,6 +35,7 @@
 
     $iconsArray = [$food, $alcohol, $activity, $smoke, $vitality, $coffee, $medicine, $stress, $mood, $sleepTime, $screentime, $pain];
 
+    // Laske kuukauden lukuarvojen keskiarvo
     for($i = 0; $i < count($iconsArray); $i++){
         $summa = 0;
         $jakaja = 0;
@@ -51,5 +54,6 @@
         }
     }
     
+    // Tulosta ikonien kk-keskiarvo JSONina
     echo(json_encode($icons));
 ?>

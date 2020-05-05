@@ -7,9 +7,8 @@ session_start();
     <br>
     <i class="far fa-user"></i>
     <h1>POLAR-KELLON LISÄYS</h1>
-    TULOSSA! Polar-kirjautumisen kautta tietojen haku sovellukseen. TULOSSA!
-    <br>
-    <br>
+    <p>TULOSSA!</p>
+    <p>Polar-kirjautumisen kautta henkilötietojen haku sovellukseen. Täytä tietosi toistaiseksi manuaalisesti.</p>
     <br>
     <input class="buttonGeneric" type="submit" name="createPolarSubmit" value="Ohita">
     <br>

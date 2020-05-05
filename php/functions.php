@@ -10,6 +10,7 @@
      * @param   object $DBH         Tietokanta viite
     */
     function calculateSleepData($paivaOlio, $previousDay, $DBH){
+        // Sarakkeet day-taulussa
         $timeLines = [
             "00_to_01",
             "01_to_02",
@@ -272,22 +273,27 @@
                     $kysely = $DBH->prepare($sql);
                     $kysely->execute();
                     echo('<script>console.log("Tiedot päivitetty")</script>');
+
+                    // Jos ei zone-dataa saatavilla -> uniaika ja -sykli = 0
+                    // Tulostetaan snackbar, joka ohjaa käyttäjää synkronoimaan Polar laitteen
+                    if($sleepTime == 0 && $sleepCycle == 0){
+                        echo('<script>
+                        let uniAika = document.createElement("div");
+                        uniAika.setAttribute("class", "snackbar");
+                        let uniAikaText = document.createTextNode("Synkronoithan Polar kellosi, jotta uniaika voidaan laskea oikein!");
+                        uniAika.classList.add("show");
+                        uniAika.appendChild(uniAikaText);
+                        document.body.appendChild(uniAika);
+                        setTimeout(function(){ 
+                            document.body.removeChild(uniAika);
+                        }, 5000);
+                        </script>');
+                    }
                 } catch(PDOException $e){
                     file_put_contents('../log/DBErrors.txt', 'calculateSleepData() failed to save sleeptime: ' . $e->getMessage() . "\n", FILE_APPEND);
                 }
             } else{
                 //echo('<script>console.log("No data from yesterday, can`t calculate uniaika/sykli")</script>');
-                /*echo('<script>
-                let uniAika = document.createElement("div");
-                uniAika.setAttribute("class", "snackbar");
-                let uniAikaText = document.createTextNode("Uniaikaa ei voitu laskea, koska tiedot eiliseltä puuttuvat.");
-                uniAika.classList.add("show");
-                uniAika.appendChild(uniAikaText);
-                document.body.appendChild(uniAika);
-                setTimeout(function(){ 
-                    document.body.removeChild(uniAika);
-                }, 3000);
-                </script>');*/
             }
         } else{
             //echo('<script>console.log("Tiedot löytyy jo")</script>');
@@ -465,6 +471,8 @@
             return "-3";
         } elseif($aika >= 10){
             return "-1";
+        } elseif($aika == 0){
+            return 0;            
         } else{
             return "5";
         }
@@ -473,9 +481,14 @@
     /**
      * Tarkistaa Polarin serveriltä, onko uutta dataa tuotu laitteelta
      * Palauttaa transaction id:n, jolla voidaan hakea dataa sovellukseen
+     * @param   integer $polar_ID       Käyttäjän Polar ID tietokannasta
+     * @param   integer $polar_token    Käyttäjän Polar OAuth2 token tietokannasta
+     * 
+     * @return  integer $transactionID  Tietojen vaihdon yksilöllinen ID, jolla voidaan hakea dataa Polarin serveriltä
      */
     function getPolarActivityTransaction($polar_ID, $polar_token){
         // Hae user-ID:llä activity transactions
+        // Request luotu Postmanilla
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -506,10 +519,15 @@
 
     /**
      * Hakee transaction id:llä listan datasta, jota ei ole vielä tuotu sovellukseen.
-     * Palauttaa taulukon, johon tallennettu aktiivisuusdatan id:t 
+     * @param   integer $polar_ID           Käyttäjän Polar ID tietokannasta
+     * @param   integer $polar_token        Käyttäjän Polar OAuth2 token tietokannasta
+     * @param   integer $transactionID      Tietojen vaihdon yksilöllinen ID, jolla voidaan hakea dataa Polarin serveriltä
+     * 
+     * @return  array   $activityIDArray    Palauttaa taulukon, johon tallennettu päiväkohtaisen aktiivisuusdatan id:t 
      */
     function getPolarActivityList($polar_ID, $polar_token, $transactionID){
         // Transaction ID:llä activity lista
+        // Request luotu Postmanilla
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -564,6 +582,13 @@
      * Tarkistaa tietokannasta (day-taulu), onko samalla päivämäärällä jo tietuetta,
      *  jos ei -> luo uuden tietueen ja täyttää kellonaika-sarakkeet
      *  jos on -> päivittää vain kellonaika-sarakkeet tietueeseen
+     * 
+     * @param   integer $polar_ID           Käyttäjän Polar ID tietokannasta
+     * @param   integer $polar_token        Käyttäjän Polar OAuth2 token tietokannasta
+     * @param   integer $transactionID      Tietojen vaihdon yksilöllinen ID, jolla voidaan hakea dataa Polarin serveriltä
+     * @param   array   $activityIDArray    Palauttaa taulukon, johon tallennettu päiväkohtaisen aktiivisuusdatan id:t
+     * @param   integer $user_ID            Käyttäjän user-ID tietokannan user-taulusta
+     * @param   object  $DBH                Tietokanta viite
      */
     function getPolarZoneData($polar_ID, $polar_token, $transactionID, $activityIDArray, $user_ID, $DBH){
         // Estää virheilmoituksen, jos Polarilta ei päivitettävää dataa
@@ -575,6 +600,7 @@
         
         for($i = 0; $i < $activityCount; $i++){
             // Hae activity summary
+            // Request luotu Postmanilla
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -601,6 +627,7 @@
             $activityDate = $activitySummaryJSON->date;
 
             // Hae activityn zonet
+            // Request luotu Postmanilla
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -838,8 +865,13 @@
     
     /**
      * Kuittaa haetut tiedot Polarille, ettei niitä haeta enää uudestaan
+     * 
+     * @param   integer $polar_ID           Käyttäjän Polar ID tietokannasta
+     * @param   integer $polar_token        Käyttäjän Polar OAuth2 token tietokannasta
+     * @param   integer $transactionID      Tietojen vaihdon yksilöllinen ID, jolla voidaan hakea dataa Polarin serveriltä
      */
     function commitPolarTransaction($polar_ID, $polar_token, $transactionID){
+        // Request luotu Postmanilla
         $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -860,11 +892,18 @@
 
             curl_exec($curl);
             $serverResponse = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-            //echo("Commit: " . $serverResponse);
             curl_close($curl);
     }
 
+    /**
+     * Poistaa Polar linkityksen
+     * 
+     * @param   integer $polar_ID           Käyttäjän Polar ID tietokannasta
+     * @param   integer $polar_token        Käyttäjän Polar OAuth2 token tietokannasta
+     * @param   object  $DBH                Tietokanta viite
+     */
     function deletePolar($polar_ID, $polar_token, $DBH){
+        // Request luotu Postmanilla
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -893,6 +932,15 @@
         return $serverResponse;
     }
 
+    /**
+     * Hakee tietokannasta Polar tokenin user-taulusta
+     * 
+     * @param   object  $DBH            Tietokanta viite
+     * @param   integer $user_ID        Käyttäjän user-ID tietokannan user-taulusta
+     * 
+     * @return  integer $polar_token    Jos löytyi
+     * @return  null    $polar_token    Jos ei löytynyt
+     */
     function getPolarToken($DBH, $user_ID){
         try{
             $sql = 'SELECT `polar_token` FROM `ts_user` WHERE `user_ID` = "' . $user_ID . '";';
@@ -910,7 +958,15 @@
         }
     }
     
-    // Palauttaa Polar ID:n tietokannasta
+    /**
+     * Palauttaa Polar ID:n tietokannasta
+     * 
+     * @param   object  $DBH            Tietokanta viite
+     * @param   integer $user_ID        Käyttäjän user-ID tietokannan user-taulusta
+     * 
+     * @return  integer $polar_ID       Jos löytyi
+     * @return  null    $polar_ID       Jos ei löytynyt
+     */
     function getPolarID($DBH, $user_ID){
         try{
             $sql = 'SELECT `polar_ID` FROM `ts_user` WHERE `user_ID` = "' . $user_ID . '";';
@@ -927,10 +983,17 @@
             file_put_contents('../log/DBErrors.txt', 'getPolarID() failed: ' . $e->getMessage() . "\n", FILE_APPEND);
         }
     }
-    
-    // Hae Polarilta käyttäjän access token ja tallenna tietokantaan
+     
+    /**
+     * Hae Polarilta käyttäjän access token ja tallenna tietokantaan
+     * 
+     * @param   string  $authCode       Polarilta saatu OAuth2-autentisointi koodi
+     * @param   string  $clientEncoded  Base64-kryptattu sovelluksen rekisteröintikoodi Polarin palvelimilla
+     * @param   object  $DBH            Tietokanta viite
+     * @param   integer $user_ID        Käyttäjän user-ID tietokannan user-taulusta
+     */
     function createToken($authCode, $clientEncoded, $DBH, $user_ID){
-        // Postmanista saatu POST-kysely
+        // Request tehty Postmanilla
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -970,7 +1033,14 @@
         
     }
 
-    // Rekisteröi käyttäjän Polar linkityksen sovellukseen
+    /**
+     * Rekisteröi käyttäjän Polar linkityksen sovellukseen
+     * 
+     * @param   object      $DBH                Tietokanta viite
+     * @param   integer     $user_ID            Käyttäjän user-ID tietokannan user-taulusta
+     * 
+     * @return  integer     $serverResponse     Palauttaa Polarin serverin vastauksen, josta nähdään onnistuiko rekisteröinti 
+     */
     function registerUser($DBH, $user_ID){
 
         // Haetaan käyttäjä oliona
@@ -984,6 +1054,7 @@
             file_put_contents('../log/DBErrors.txt', 'Couldnt get userdata to register user, registerUser(): ' . $e->getMessage() . "\n", FILE_APPEND);
         }
 
+        // Request luotu Postmanilla
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -1102,7 +1173,20 @@
     function getUniAika($paivaOlio){
         if($paivaOlio->sleep_amount == NULL){
             return "- tuntia - min";
-        } else{
+        } elseif($paivaOlio->sleep_amount == 0){
+            echo('<script>
+                let uniAika = document.createElement("div");
+                uniAika.setAttribute("class", "snackbar");
+                let uniAikaText = document.createTextNode("Synkronoithan Polar kellosi, jotta uniaika voidaan laskea oikein!");
+                uniAika.classList.add("show");
+                uniAika.appendChild(uniAikaText);
+                document.body.appendChild(uniAika);
+                setTimeout(function(){ 
+                    document.body.removeChild(uniAika);
+                }, 3000);
+                </script>');
+            return "0 tuntia 0 min";
+        }else{
             $tunnit = $paivaOlio->sleep_amount/3600 % 3600;
             $minuutit = ($paivaOlio->sleep_amount/60) % 60;
             return $tunnit . " tuntia " . $minuutit . " min";
@@ -1122,7 +1206,7 @@
     function getHymio($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
 
-        if($unenLaatu == null || $unenLaatu == 0){
+        if($unenLaatu == null){
             echo('class="fas fa-meh-blank hymio" style="color: var(--liikennevaloHarmaa);"');
         } elseif($unenLaatu > 2){
             //fa-laugh
@@ -1372,7 +1456,7 @@
     function getHymioFromDate($paivaOlio){
         $unenLaatu = $paivaOlio->user_sleep_quality;
 
-        if($unenLaatu == null || $unenLaatu == 0){
+        if($unenLaatu == null){
             echo('class="fas fa-meh-blank hymio-viikko" style="color: var(--liikennevaloHarmaa);"');
         } elseif($unenLaatu > 2){
             //fa-laugh
@@ -1406,16 +1490,6 @@
         
         return $days;
     }
-
-    /*function getMonthDays($currentDay){
-
-        $mountDays = ['yksi','kaksi','kolme', '4', '5', '6', '7','8','9', '10', '11', '12', '13','14','15', '16', '17', '18', '19','20','21', '22', '23', '24', '25','26','27', '28', '29', '30', '31'];
-        for($i = 0; $i < 31; $i++){
-            $mounths[$i] = date('Y-m-d', strtotime($mountDays[$i] . ' this mounth', strtotime($currentDay)));
-        }
-        
-        return $mounths;
-    }*/
 
     // Hakee päivämäärän mukaan kyselyn tiedot tietokannasta ja palauttaa muutos% progressbariin
     function getDayProgressValue($day){
@@ -1606,11 +1680,23 @@
 
     // Nukuttu aika
     function getIconColorSleepAmount($value){
+        /*$sql = "SELECT `mapping_sleep_amount` FROM `ts_parameter_mapping` WHERE `user_ID` = " . "'" . $user_ID . "';";
+        $kysely = $DBH->prepare($sql);
+        $kysely->execute();
+        $sleepingGaol = $kysely->fetch();
+
         if($value == null){
             echo("var(--liikennevaloHarmaa)");
-        }elseif($value >= 28800){
+        }elseif($value >= $sleepingGoal){
             echo("var(--liikennevaloVihrea)");
-        } elseif($value < 28800){
+        } elseif($value < $sleepingGaol){
+            echo("var(--liikennevaloPunainen)");
+        }*/
+        if($value == null || $value == 0){
+            echo("var(--liikennevaloHarmaa)");
+        }elseif($value >= 25200){
+            echo("var(--liikennevaloVihrea)");
+        } elseif($value < 25200){
             echo("var(--liikennevaloPunainen)");
         }
     }

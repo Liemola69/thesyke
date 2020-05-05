@@ -11,9 +11,9 @@
     <li>Voit halutessasi tehdä uuden tilin poistetun tilalle</li><br>
 </span></div>
 
-    <input type="text" placeholder="sähköpostiosoite" name="givenEmail">
+    <input class="textboxGeneric" type="text" placeholder="Sähköpostiosoite" name="givenEmail">
     <br>
-    <input type="password" placeholder="Salasana" name="givenPassword">
+    <input class="textboxGeneric" type="password" placeholder="Salasana" name="givenPassword">
     <br>
 <input type="submit" name="delete" value="POISTA TILI" class="deleteAccountButton"></input>
 </div>

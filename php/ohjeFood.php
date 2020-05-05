@@ -17,7 +17,7 @@
         <div id="sivunNimi">RAVINTO+UNI</div>
         <a href="sivurunko.php?moveToDay=<?php echo($_SESSION['currentDay']);?>" id="closeMenu" class='fas fa-times-circle' style='text-decoration:none;'></a>      
     </nav>
-
+    <!-- Lähde: https://sydan.fi/fakta/hyvan-unen-ruokavinkit/ -->
     <div>
         <p class="ohjeOtsikko">Yleistä</p>
         <p>Päivän aikana ja varsinkin ennen nukkumaan menoa nautitulla ravinnolla voi olla uneen ja unen laatuun vaikuttavia tekijöitä.</p>

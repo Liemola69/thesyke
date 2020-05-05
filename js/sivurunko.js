@@ -37,6 +37,7 @@ let kalenteriKkPaivat;
 let kalenteriPaivat;
 let currentDay;
 
+let paivaIkonit = document.getElementById('paivaDetailSivu').querySelectorAll(".ikoniWrapper");
 let viikkoIkonit = document.getElementById('viikkoDetailSivu').querySelectorAll(".ikoniWrapper");
 let kuukausiIkonit = document.getElementById('kuukausiDetailSivu').querySelectorAll(".ikoniWrapper");
 
@@ -90,7 +91,7 @@ for(let i = 0; i < 3; i++){
 }
 
 // Aseta päänäkymän viimeinen grid alaNavin kokoiseksi
-paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 10% 10% auto 10% " + alaNav.clientHeight + "px";
+paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 10% 2% 10% auto 10% " + alaNav.clientHeight + "px";
 paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
 paasivuKuukausiWrapper.style.gridTemplateRows = "auto 10%" + alaNav.clientHeight + "px";
 
@@ -226,6 +227,7 @@ poista.addEventListener('click', function(evt){
     }
 })
 
+// Korjaa swiperin containerit ja pää/detailsivujen gridit responsiivisesti
 function korjaaSisallonKorkeus(){
     //**  Korjaa vertikaalisen swiperin ja wrappereiden korkeuden */
     swiperPageContainer.setAttribute('style', "height: " + (window.innerHeight - alaNav.clientHeight) + "px;");
@@ -244,7 +246,7 @@ function korjaaSisallonKorkeus(){
     }
 
     // Aseta päänäkymän viimeinen grid alaNavin kokoiseksi
-    paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 15% auto 10% " + alaNav.clientHeight + "px";
+    paasivuPaivaWrapper.style.gridTemplateRows = "10% auto 10% 2% 10% auto 10% " + alaNav.clientHeight + "px";
     paasivuViikkoWrapper.style.gridTemplateRows = "10% auto 10% " + alaNav.clientHeight + "px";
     paasivuKuukausiWrapper.style.gridTemplateRows = "auto 10%" + alaNav.clientHeight + "px";
 
@@ -260,6 +262,7 @@ let highlightDate;
 checkCurrentDay();
 
 // Rakentaa kalenterin
+// Rakennettu How to create calendar: https://www.youtube.com/watch?v=rDsdBAAXkAU pohjalta
 function renderDate(currentDay) {
     dt = new Date(currentDay.split("-")[0], (currentDay.split("-")[1] - 1));
     dt.setDate(1);
@@ -417,6 +420,7 @@ function moveDate(para) {
     }
 }
 
+// AJAX-request kuukausinäkymän selaamiseen
 function requestTempMonth(tempMonth){
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -429,6 +433,7 @@ function requestTempMonth(tempMonth){
     xhttp.send();
 }
 
+// Päivittää kuukausinäkymän kuukausia selatessa nuolinäppäimistä
 function getTempMonth(tempDate, ajaxResponse){
     renderDate(tempDate);
     printMonthHymio(ajaxResponse);
@@ -503,7 +508,7 @@ function printMonthHymio(hymio){
 // Parametrina tietokannasta haettu numeroarvo
 function luoHymio(i){
     let hymio = document.createElement("i");
-    if(i == null || i == 0){
+    if(i == null){
         hymio.classList.add('fas');
         hymio.classList.add('fa-meh-blank');
         hymio.classList.add('hymio-kuukausi');
@@ -673,6 +678,7 @@ function getIndicator(iconColor){
     return indikaattori;
 }
 
+// Tulostaa snackbarin
 function showSnack(){
     let snack = document.createElement('div');
     snack.setAttribute('class', 'snackbar');
@@ -724,7 +730,7 @@ for(let i = 0; i < 12; i++){
         "Tämä ikoni kuvaa tupakointiasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää tupakoinnin ja unen vaikutuksista voit lukea täältä",
         "Tämä ikoni kuvaa subjektiivista kokemustasi tämän päivän vireystilasta. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä.<br><br>Vireydellä tarkoitetaan tässä sovelluksessa sitä, kuinka virkeäksi tai väsyneeksi koet itsesi kyseisenä päivänä",
         "Tämä ikoni kuvaa nauttimasi kofeiinin määrää edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää kofeiinin ja unen vaikutuksista voit lukea täältä",
-        "Tämä ikoni kuvaa uneen tai nukahtamiseen vaikuttavien lääkkeiden käyttämistä edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää kofeiinin ja unen vaikutuksista voit lukea täältä",
+        "Tämä ikoni kuvaa uneen tai nukahtamiseen vaikuttavien lääkkeiden käyttämistä edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää lääkkeiden ja unen vaikutuksista voit lukea täältä",
         "Tämä ikoni kuvaa stressitasoasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää stressin ja unen vaikutuksista voit lukea täältä",
         "Tämä ikoni kuvaa mielialaasi edellisenä päivänä. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä ja pohjautuvat terveyssuosituksiin.<br><br>Lisää mielialan ja unen vaikutuksista voit lukea täältä",
         "Tämä ikoni kuvaa edellisenä yönä nukutun unen määrää. Väri ja emojin ilme tulevat täyttämäsi tiedon perusteella päiväkyselystä sekä asettamasi uniaikatavoitteen täyttymisestä.<br><br>Lisää ihmisen unentarpeesta voit lukea täältä",
@@ -746,6 +752,40 @@ for(let i = 0; i < 12; i++){
         "Ruutuaika",
         "Kivut"
     ];
+
+    paivaIkonit[i].addEventListener('click', function(evt){
+        let infoContent = document.createElement('div');
+        infoContent.classList.add('infoContent');
+        
+        let close = document.createElement('i');
+        close.classList.add('far');
+        close.classList.add('fa-times-circle');
+        close.classList.add('infoClose');
+
+        let otsikko = document.createElement('h3');
+        otsikko.innerText = otsikot[i];
+
+        let sisalto = document.createElement('p');
+        sisalto.innerHTML = sisallot[i];
+
+        let linkki = document.createElement('a');
+        linkki.classList.add('fas');
+        linkki.classList.add('fa-angle-double-right');
+        linkki.setAttribute('href', linkit[i]);
+        linkki.style.cssText = "font-size:30px; color:var(--tehosteVari);";
+        
+        infoContent.appendChild(close);
+        infoContent.appendChild(otsikko);
+        infoContent.appendChild(sisalto);
+        if(i != 4){
+            infoContent.appendChild(linkki);
+        }
+        document.body.appendChild(infoContent);
+
+        close.addEventListener('click', function(){
+            document.body.removeChild(infoContent);
+        });
+    });
 
     viikkoIkonit[i].addEventListener('click', function(evt){
         let infoContent = document.createElement('div');

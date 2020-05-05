@@ -25,7 +25,7 @@
 
         $_SESSION['first_name'] = $_POST['given_first_name'];
         $_SESSION['last_name'] = $_POST['given_last_name'];
-        $_SESSION['age'] = (int)$_POST['given_age'];
+        $_SESSION['age'] = $_POST['given_age'];
         $_SESSION['gender'] = $_POST['given_gender'];
         $_SESSION['height'] = (int)$_POST['given_height'];
         $_SESSION['weight'] = (int)$_POST['given_weight'];

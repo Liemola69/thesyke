@@ -9,7 +9,7 @@
 <head>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <link rel="stylesheet" href="../styles/kysely.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -17,6 +17,7 @@
         <div id="sivunNimi">POISTA TILI </div>
         <a href="sivurunko.php" id="closeDeleteAccount" class='fas fa-times-circle' style='text-decoration:none;'></a>      
 </nav>
+
 <?php
 
 //jos formissa on painettu delete-nappulaa
